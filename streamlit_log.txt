@@ -1,0 +1,1776 @@
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://192.168.15.51:8501
+  External URL: http://177.16.35.248:8501
+
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:3 in <module>                                        |
+|                                                                                      |
+|    1 import streamlit as st                                                          |
+|    2 from pathlib import Path                                                        |
+| >  3 from langchain.text_splitter import RecursiveCharacterTextSplitter              |
+|    4 from langchain.embeddings import HuggingFaceEmbeddings                          |
+|    5 from langchain.vectorstores import Chroma                                       |
+|    6 from langchain.schema import Document                                           |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'langchain.text_splitter'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:3 in <module>                                        |
+|                                                                                      |
+|    1 import streamlit as st                                                          |
+|    2 from pathlib import Path                                                        |
+| >  3 from langchain.text_splitter import RecursiveCharacterTextSplitter              |
+|    4 from langchain.embeddings import HuggingFaceEmbeddings                          |
+|    5 from langchain.vectorstores import Chroma                                       |
+|    6 from langchain.schema import Document                                           |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'langchain.text_splitter'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:3 in <module>                                        |
+|                                                                                      |
+|    1 import streamlit as st                                                          |
+|    2 from pathlib import Path                                                        |
+| >  3 from langchain_text_splitters import RecursiveCharacterTextSplitter             |
+|    4 from langchain.embeddings import HuggingFaceEmbeddings                          |
+|    5 from langchain.vectorstores import Chroma                                       |
+|    6 from langchain.schema import Document                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\langchain_t |
+| ext_splitters\__init__.py:20 in <module>                                             |
+|                                                                                      |
+|   17     CharacterTextSplitter,                                                      |
+|   18     RecursiveCharacterTextSplitter,                                             |
+|   19 )                                                                               |
+| > 20 from langchain_text_splitters.html import (                                     |
+|   21     ElementType,                                                                |
+|   22     HTMLHeaderTextSplitter,                                                     |
+|   23     HTMLSectionSplitter,                                                        |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\langchain_t |
+| ext_splitters\html.py:30 in <module>                                                 |
+|                                                                                      |
+|     27     from bs4.element import ResultSet                                         |
+|     28                                                                               |
+|     29 try:                                                                          |
+| >   30     import nltk                                                               |
+|     31                                                                               |
+|     32     _HAS_NLTK = True                                                          |
+|     33 except ImportError:                                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\__init__.py:133   |
+| in <module>                                                                          |
+|                                                                                      |
+|   130                                                                                |
+|   131 # Import top-level functionality into top-level namespace                      |
+|   132                                                                                |
+| > 133 from nltk.collocations import *                                                |
+|   134 from nltk.decorators import decorator, memoize                                 |
+|   135 from nltk.featstruct import *                                                  |
+|   136 from nltk.grammar import *                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\collocations.py:3 |
+| 6 in <module>                                                                        |
+|                                                                                      |
+|    33 import itertools as _itertools                                                 |
+|    34                                                                                |
+|    35 # these two unused imports are referenced in collocations.doctest              |
+| >  36 from nltk.metrics import (                                                     |
+|    37     BigramAssocMeasures,                                                       |
+|    38     ContingencyMeasures,                                                       |
+|    39     QuadgramAssocMeasures,                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\metrics\__init__. |
+| py:18 in <module>                                                                    |
+|                                                                                      |
+|   15                                                                                 |
+|   16 from nltk.metrics.agreement import AnnotationTask                               |
+|   17 from nltk.metrics.aline import align                                            |
+| > 18 from nltk.metrics.association import (                                          |
+|   19     BigramAssocMeasures,                                                        |
+|   20     ContingencyMeasures,                                                        |
+|   21     NgramAssocMeasures,                                                         |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\metrics\associati |
+| on.py:26 in <module>                                                                 |
+|                                                                                      |
+|    23 _SMALL = 1e-20                                                                 |
+|    24                                                                                |
+|    25 try:                                                                           |
+| >  26     from scipy.stats import fisher_exact                                       |
+|    27 except ImportError:                                                            |
+|    28                                                                                |
+|    29     def fisher_exact(*_args, **_kwargs):                                       |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\stats\__init__.p |
+| y:608 in <module>                                                                    |
+|                                                                                      |
+|   605                                                                                |
+|   606 from ._warnings_errors import (ConstantInputWarning, NearConstantInputWarning, |
+|   607                                DegenerateDataWarning, FitError)                |
+| > 608 from ._stats_py import *                                                       |
+|   609 from ._variation import variation                                              |
+|   610 from .distributions import *                                                   |
+|   611 from ._morestats import *                                                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\stats\_stats_py. |
+| py:39 in <module>                                                                    |
+|                                                                                      |
+|      36 from numpy.lib import NumpyVersion                                           |
+|      37 from numpy.testing import suppress_warnings                                  |
+|      38                                                                              |
+| >    39 from scipy.spatial.distance import cdist                                     |
+|      40 from scipy.ndimage import _measurements                                      |
+|      41 from scipy._lib._util import (check_random_state, MapWrapper, _get_nan,      |
+|      42                               rng_integers, _rename_parameter, _contains_nan |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\spatial\__init__ |
+| .py:110 in <module>                                                                  |
+|                                                                                      |
+|   107    QhullError                                                                  |
+|   108 """                                                                            |
+|   109                                                                                |
+| > 110 from ._kdtree import *                                                         |
+|   111 from ._ckdtree import *                                                        |
+|   112 from ._qhull import *                                                          |
+|   113 from ._spherical_voronoi import SphericalVoronoi                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\spatial\_kdtree. |
+| py:4 in <module>                                                                     |
+|                                                                                      |
+|     1 # Copyright Anne M. Archibald 2008                                             |
+|     2 # Released under the scipy license                                             |
+|     3 import numpy as np                                                             |
+| >   4 from ._ckdtree import cKDTree, cKDTreeNode                                     |
+|     5                                                                                |
+|     6 __all__ = ['minkowski_distance_p', 'minkowski_distance',                       |
+|     7            'distance_matrix',                                                  |
+|                                                                                      |
+| in init scipy.spatial._ckdtree:1                                                     |
++--------------------------------------------------------------------------------------+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 
+from C header, got 88 from PyObject
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:3 in <module>                                        |
+|                                                                                      |
+|    1 import streamlit as st                                                          |
+|    2 from pathlib import Path                                                        |
+| >  3 from langchain_text_splitters import RecursiveCharacterTextSplitter             |
+|    4 from langchain.embeddings import HuggingFaceEmbeddings                          |
+|    5 from langchain.vectorstores import Chroma                                       |
+|    6 from langchain.schema import Document                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\langchain_t |
+| ext_splitters\__init__.py:20 in <module>                                             |
+|                                                                                      |
+|   17     CharacterTextSplitter,                                                      |
+|   18     RecursiveCharacterTextSplitter,                                             |
+|   19 )                                                                               |
+| > 20 from langchain_text_splitters.html import (                                     |
+|   21     ElementType,                                                                |
+|   22     HTMLHeaderTextSplitter,                                                     |
+|   23     HTMLSectionSplitter,                                                        |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\langchain_t |
+| ext_splitters\html.py:30 in <module>                                                 |
+|                                                                                      |
+|     27     from bs4.element import ResultSet                                         |
+|     28                                                                               |
+|     29 try:                                                                          |
+| >   30     import nltk                                                               |
+|     31                                                                               |
+|     32     _HAS_NLTK = True                                                          |
+|     33 except ImportError:                                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\__init__.py:133   |
+| in <module>                                                                          |
+|                                                                                      |
+|   130                                                                                |
+|   131 # Import top-level functionality into top-level namespace                      |
+|   132                                                                                |
+| > 133 from nltk.collocations import *                                                |
+|   134 from nltk.decorators import decorator, memoize                                 |
+|   135 from nltk.featstruct import *                                                  |
+|   136 from nltk.grammar import *                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\collocations.py:3 |
+| 6 in <module>                                                                        |
+|                                                                                      |
+|    33 import itertools as _itertools                                                 |
+|    34                                                                                |
+|    35 # these two unused imports are referenced in collocations.doctest              |
+| >  36 from nltk.metrics import (                                                     |
+|    37     BigramAssocMeasures,                                                       |
+|    38     ContingencyMeasures,                                                       |
+|    39     QuadgramAssocMeasures,                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\metrics\__init__. |
+| py:18 in <module>                                                                    |
+|                                                                                      |
+|   15                                                                                 |
+|   16 from nltk.metrics.agreement import AnnotationTask                               |
+|   17 from nltk.metrics.aline import align                                            |
+| > 18 from nltk.metrics.association import (                                          |
+|   19     BigramAssocMeasures,                                                        |
+|   20     ContingencyMeasures,                                                        |
+|   21     NgramAssocMeasures,                                                         |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\nltk\metrics\associati |
+| on.py:26 in <module>                                                                 |
+|                                                                                      |
+|    23 _SMALL = 1e-20                                                                 |
+|    24                                                                                |
+|    25 try:                                                                           |
+| >  26     from scipy.stats import fisher_exact                                       |
+|    27 except ImportError:                                                            |
+|    28                                                                                |
+|    29     def fisher_exact(*_args, **_kwargs):                                       |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\stats\__init__.p |
+| y:608 in <module>                                                                    |
+|                                                                                      |
+|   605                                                                                |
+|   606 from ._warnings_errors import (ConstantInputWarning, NearConstantInputWarning, |
+|   607                                DegenerateDataWarning, FitError)                |
+| > 608 from ._stats_py import *                                                       |
+|   609 from ._variation import variation                                              |
+|   610 from .distributions import *                                                   |
+|   611 from ._morestats import *                                                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\stats\_stats_py. |
+| py:39 in <module>                                                                    |
+|                                                                                      |
+|      36 from numpy.lib import NumpyVersion                                           |
+|      37 from numpy.testing import suppress_warnings                                  |
+|      38                                                                              |
+| >    39 from scipy.spatial.distance import cdist                                     |
+|      40 from scipy.ndimage import _measurements                                      |
+|      41 from scipy._lib._util import (check_random_state, MapWrapper, _get_nan,      |
+|      42                               rng_integers, _rename_parameter, _contains_nan |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\spatial\__init__ |
+| .py:110 in <module>                                                                  |
+|                                                                                      |
+|   107    QhullError                                                                  |
+|   108 """                                                                            |
+|   109                                                                                |
+| > 110 from ._kdtree import *                                                         |
+|   111 from ._ckdtree import *                                                        |
+|   112 from ._qhull import *                                                          |
+|   113 from ._spherical_voronoi import SphericalVoronoi                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\spatial\_kdtree. |
+| py:4 in <module>                                                                     |
+|                                                                                      |
+|     1 # Copyright Anne M. Archibald 2008                                             |
+|     2 # Released under the scipy license                                             |
+|     3 import numpy as np                                                             |
+| >   4 from ._ckdtree import cKDTree, cKDTreeNode                                     |
+|     5                                                                                |
+|     6 __all__ = ['minkowski_distance_p', 'minkowski_distance',                       |
+|     7            'distance_matrix',                                                  |
+|                                                                                      |
+| in init scipy.spatial._ckdtree:1                                                     |
++--------------------------------------------------------------------------------------+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 
+from C header, got 88 from PyObject
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|    1 import streamlit as st                                                          |
+|    2 from pathlib import Path                                                        |
+|    3 from langchain_text_splitters import RecursiveCharacterTextSplitter             |
+| >  4 from langchain.embeddings import HuggingFaceEmbeddings                          |
+|    5 from langchain.vectorstores import Chroma                                       |
+|    6 from langchain.schema import Document                                           |
+|    7                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:10 in <module>                                                |
+|                                                                                      |
+|    7 import os                                                                       |
+|    8 import warnings                                                                 |
+|    9                                                                                 |
+| > 10 from sentence_transformers.backend import (                                     |
+|   11     export_dynamic_quantized_onnx_model,                                        |
+|   12     export_optimized_onnx_model,                                                |
+|   13     export_static_quantized_openvino_model,                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\__init__.py:5 in <module>                                         |
+|                                                                                      |
+|    2                                                                                 |
+|    3 from .load import load_onnx_model, load_openvino_model                          |
+|    4 from .optimize import export_optimized_onnx_model                               |
+| >  5 from .quantize import export_dynamic_quantized_onnx_model, export_static_quanti |
+|    6 from .utils import _save_pretrained_wrapper, backend_should_export, backend_war |
+|    7                                                                                 |
+|    8 __all__ = [                                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\quantize.py:7 in <module>                                         |
+|                                                                                      |
+|     4 from typing import TYPE_CHECKING, Literal                                      |
+|     5                                                                                |
+|     6 from sentence_transformers.backend.utils import save_or_push_to_hub_model      |
+| >   7 from sentence_transformers.util import disable_datasets_caching, is_datasets_a |
+|     8                                                                                |
+|     9 logger = logging.getLogger(__name__)                                           |
+|    10                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\__init__.py:25 in <module>                                           |
+|                                                                                      |
+|    22     import_module_class,                                                       |
+|    23 )                                                                              |
+|    24 from .quantization import quantize_embeddings                                  |
+| >  25 from .retrieval import (                                                       |
+|    26     community_detection,                                                       |
+|    27     information_retrieval,                                                     |
+|    28     paraphrase_mining,                                                         |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\retrieval.py:14 in <module>                                          |
+|                                                                                      |
+|    11 from torch import Tensor                                                       |
+|    12 from tqdm.autonotebook import tqdm                                             |
+|    13                                                                                |
+| >  14 from .similarity import cos_sim                                                |
+|    15 from .tensor import normalize_embeddings                                       |
+|    16                                                                                |
+|    17 logger = logging.getLogger(__name__)                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\similarity.py:9 in <module>                                          |
+|                                                                                      |
+|     6 import numpy as np                                                             |
+|     7 import torch                                                                   |
+|     8 from numpy import ndarray                                                      |
+| >   9 from sklearn.metrics import pairwise_distances                                 |
+|    10 from torch import Tensor                                                       |
+|    11 from transformers.utils import logging                                         |
+|    12                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:19 in <module>                                                                  |
+|                                                                                      |
+|     16 from . import __version__                                                     |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+| >   19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+|     20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\__init__. |
+| py:276 in <module>                                                                   |
+|                                                                                      |
+|   273 from ._base import *                                                           |
+|   274 from ._csr import *                                                            |
+|   275 from ._csc import *                                                            |
+| > 276 from ._lil import *                                                            |
+|   277 from ._dok import *                                                            |
+|   278 from ._coo import *                                                            |
+|   279 from ._dia import *                                                            |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\_lil.py:1 |
+| 7 in <module>                                                                        |
+|                                                                                      |
+|    14 from ._index import IndexMixin, INT_TYPES, _broadcast_arrays                   |
+|    15 from ._sputils import (getdtype, isshape, isscalarlike, upcast_scalar,         |
+|    16                        check_shape, check_reshape_kwargs)                      |
+| >  17 from . import _csparsetools                                                    |
+|    18                                                                                |
+|    19                                                                                |
+|    20 class _lil_base(_spbase, IndexMixin):                                          |
+|                                                                                      |
+| in init _csparsetools:1                                                              |
++--------------------------------------------------------------------------------------+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 
+from C header, got 88 from PyObject
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:10 in <module>                                                |
+|                                                                                      |
+|    7 import os                                                                       |
+|    8 import warnings                                                                 |
+|    9                                                                                 |
+| > 10 from sentence_transformers.backend import (                                     |
+|   11     export_dynamic_quantized_onnx_model,                                        |
+|   12     export_optimized_onnx_model,                                                |
+|   13     export_static_quantized_openvino_model,                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\__init__.py:5 in <module>                                         |
+|                                                                                      |
+|    2                                                                                 |
+|    3 from .load import load_onnx_model, load_openvino_model                          |
+|    4 from .optimize import export_optimized_onnx_model                               |
+| >  5 from .quantize import export_dynamic_quantized_onnx_model, export_static_quanti |
+|    6 from .utils import _save_pretrained_wrapper, backend_should_export, backend_war |
+|    7                                                                                 |
+|    8 __all__ = [                                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\quantize.py:7 in <module>                                         |
+|                                                                                      |
+|     4 from typing import TYPE_CHECKING, Literal                                      |
+|     5                                                                                |
+|     6 from sentence_transformers.backend.utils import save_or_push_to_hub_model      |
+| >   7 from sentence_transformers.util import disable_datasets_caching, is_datasets_a |
+|     8                                                                                |
+|     9 logger = logging.getLogger(__name__)                                           |
+|    10                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\__init__.py:25 in <module>                                           |
+|                                                                                      |
+|    22     import_module_class,                                                       |
+|    23 )                                                                              |
+|    24 from .quantization import quantize_embeddings                                  |
+| >  25 from .retrieval import (                                                       |
+|    26     community_detection,                                                       |
+|    27     information_retrieval,                                                     |
+|    28     paraphrase_mining,                                                         |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\retrieval.py:14 in <module>                                          |
+|                                                                                      |
+|    11 from torch import Tensor                                                       |
+|    12 from tqdm.autonotebook import tqdm                                             |
+|    13                                                                                |
+| >  14 from .similarity import cos_sim                                                |
+|    15 from .tensor import normalize_embeddings                                       |
+|    16                                                                                |
+|    17 logger = logging.getLogger(__name__)                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\similarity.py:9 in <module>                                          |
+|                                                                                      |
+|     6 import numpy as np                                                             |
+|     7 import torch                                                                   |
+|     8 from numpy import ndarray                                                      |
+| >   9 from sklearn.metrics import pairwise_distances                                 |
+|    10 from torch import Tensor                                                       |
+|    11 from transformers.utils import logging                                         |
+|    12                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\__init__. |
+| py:276 in <module>                                                                   |
+|                                                                                      |
+|   273 from ._base import *                                                           |
+|   274 from ._csr import *                                                            |
+|   275 from ._csc import *                                                            |
+| > 276 from ._lil import *                                                            |
+|   277 from ._dok import *                                                            |
+|   278 from ._coo import *                                                            |
+|   279 from ._dia import *                                                            |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\_lil.py:1 |
+| 7 in <module>                                                                        |
+|                                                                                      |
+|    14 from ._index import IndexMixin, INT_TYPES, _broadcast_arrays                   |
+|    15 from ._sputils import (getdtype, isshape, isscalarlike, upcast_scalar,         |
+|    16                        check_shape, check_reshape_kwargs)                      |
+| >  17 from . import _csparsetools                                                    |
+|    18                                                                                |
+|    19                                                                                |
+|    20 class _lil_base(_spbase, IndexMixin):                                          |
+|                                                                                      |
+| in init _csparsetools:1                                                              |
++--------------------------------------------------------------------------------------+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 
+from C header, got 88 from PyObject
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:10 in <module>                                                |
+|                                                                                      |
+|    7 import os                                                                       |
+|    8 import warnings                                                                 |
+|    9                                                                                 |
+| > 10 from sentence_transformers.backend import (                                     |
+|   11     export_dynamic_quantized_onnx_model,                                        |
+|   12     export_optimized_onnx_model,                                                |
+|   13     export_static_quantized_openvino_model,                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\__init__.py:5 in <module>                                         |
+|                                                                                      |
+|    2                                                                                 |
+|    3 from .load import load_onnx_model, load_openvino_model                          |
+|    4 from .optimize import export_optimized_onnx_model                               |
+| >  5 from .quantize import export_dynamic_quantized_onnx_model, export_static_quanti |
+|    6 from .utils import _save_pretrained_wrapper, backend_should_export, backend_war |
+|    7                                                                                 |
+|    8 __all__ = [                                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\quantize.py:7 in <module>                                         |
+|                                                                                      |
+|     4 from typing import TYPE_CHECKING, Literal                                      |
+|     5                                                                                |
+|     6 from sentence_transformers.backend.utils import save_or_push_to_hub_model      |
+| >   7 from sentence_transformers.util import disable_datasets_caching, is_datasets_a |
+|     8                                                                                |
+|     9 logger = logging.getLogger(__name__)                                           |
+|    10                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\__init__.py:25 in <module>                                           |
+|                                                                                      |
+|    22     import_module_class,                                                       |
+|    23 )                                                                              |
+|    24 from .quantization import quantize_embeddings                                  |
+| >  25 from .retrieval import (                                                       |
+|    26     community_detection,                                                       |
+|    27     information_retrieval,                                                     |
+|    28     paraphrase_mining,                                                         |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\retrieval.py:14 in <module>                                          |
+|                                                                                      |
+|    11 from torch import Tensor                                                       |
+|    12 from tqdm.autonotebook import tqdm                                             |
+|    13                                                                                |
+| >  14 from .similarity import cos_sim                                                |
+|    15 from .tensor import normalize_embeddings                                       |
+|    16                                                                                |
+|    17 logger = logging.getLogger(__name__)                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\similarity.py:9 in <module>                                          |
+|                                                                                      |
+|     6 import numpy as np                                                             |
+|     7 import torch                                                                   |
+|     8 from numpy import ndarray                                                      |
+| >   9 from sklearn.metrics import pairwise_distances                                 |
+|    10 from torch import Tensor                                                       |
+|    11 from transformers.utils import logging                                         |
+|    12                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\__init__. |
+| py:276 in <module>                                                                   |
+|                                                                                      |
+|   273 from ._base import *                                                           |
+|   274 from ._csr import *                                                            |
+|   275 from ._csc import *                                                            |
+| > 276 from ._lil import *                                                            |
+|   277 from ._dok import *                                                            |
+|   278 from ._coo import *                                                            |
+|   279 from ._dia import *                                                            |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\_lil.py:1 |
+| 7 in <module>                                                                        |
+|                                                                                      |
+|    14 from ._index import IndexMixin, INT_TYPES, _broadcast_arrays                   |
+|    15 from ._sputils import (getdtype, isshape, isscalarlike, upcast_scalar,         |
+|    16                        check_shape, check_reshape_kwargs)                      |
+| >  17 from . import _csparsetools                                                    |
+|    18                                                                                |
+|    19                                                                                |
+|    20 class _lil_base(_spbase, IndexMixin):                                          |
+|                                                                                      |
+| in init _csparsetools:1                                                              |
++--------------------------------------------------------------------------------------+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 
+from C header, got 88 from PyObject
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:10 in <module>                                                |
+|                                                                                      |
+|    7 import os                                                                       |
+|    8 import warnings                                                                 |
+|    9                                                                                 |
+| > 10 from sentence_transformers.backend import (                                     |
+|   11     export_dynamic_quantized_onnx_model,                                        |
+|   12     export_optimized_onnx_model,                                                |
+|   13     export_static_quantized_openvino_model,                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\__init__.py:5 in <module>                                         |
+|                                                                                      |
+|    2                                                                                 |
+|    3 from .load import load_onnx_model, load_openvino_model                          |
+|    4 from .optimize import export_optimized_onnx_model                               |
+| >  5 from .quantize import export_dynamic_quantized_onnx_model, export_static_quanti |
+|    6 from .utils import _save_pretrained_wrapper, backend_should_export, backend_war |
+|    7                                                                                 |
+|    8 __all__ = [                                                                     |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\backend\quantize.py:7 in <module>                                         |
+|                                                                                      |
+|     4 from typing import TYPE_CHECKING, Literal                                      |
+|     5                                                                                |
+|     6 from sentence_transformers.backend.utils import save_or_push_to_hub_model      |
+| >   7 from sentence_transformers.util import disable_datasets_caching, is_datasets_a |
+|     8                                                                                |
+|     9 logger = logging.getLogger(__name__)                                           |
+|    10                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\__init__.py:25 in <module>                                           |
+|                                                                                      |
+|    22     import_module_class,                                                       |
+|    23 )                                                                              |
+|    24 from .quantization import quantize_embeddings                                  |
+| >  25 from .retrieval import (                                                       |
+|    26     community_detection,                                                       |
+|    27     information_retrieval,                                                     |
+|    28     paraphrase_mining,                                                         |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\retrieval.py:14 in <module>                                          |
+|                                                                                      |
+|    11 from torch import Tensor                                                       |
+|    12 from tqdm.autonotebook import tqdm                                             |
+|    13                                                                                |
+| >  14 from .similarity import cos_sim                                                |
+|    15 from .tensor import normalize_embeddings                                       |
+|    16                                                                                |
+|    17 logger = logging.getLogger(__name__)                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\util\similarity.py:9 in <module>                                          |
+|                                                                                      |
+|     6 import numpy as np                                                             |
+|     7 import torch                                                                   |
+|     8 from numpy import ndarray                                                      |
+| >   9 from sklearn.metrics import pairwise_distances                                 |
+|    10 from torch import Tensor                                                       |
+|    11 from transformers.utils import logging                                         |
+|    12                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\__init__. |
+| py:276 in <module>                                                                   |
+|                                                                                      |
+|   273 from ._base import *                                                           |
+|   274 from ._csr import *                                                            |
+|   275 from ._csc import *                                                            |
+| > 276 from ._lil import *                                                            |
+|   277 from ._dok import *                                                            |
+|   278 from ._coo import *                                                            |
+|   279 from ._dia import *                                                            |
+|                                                                                      |
+| C:\Users\guilh\AppData\Roaming\Python\Python310\site-packages\scipy\sparse\_lil.py:1 |
+| 7 in <module>                                                                        |
+|                                                                                      |
+|    14 from ._index import IndexMixin, INT_TYPES, _broadcast_arrays                   |
+|    15 from ._sputils import (getdtype, isshape, isscalarlike, upcast_scalar,         |
+|    16                        check_shape, check_reshape_kwargs)                      |
+| >  17 from . import _csparsetools                                                    |
+|    18                                                                                |
+|    19                                                                                |
+|    20 class _lil_base(_spbase, IndexMixin):                                          |
+|                                                                                      |
+| in init _csparsetools:1                                                              |
++--------------------------------------------------------------------------------------+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 
+from C header, got 88 from PyObject
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:3 in <module>                                                 |
+|                                                                                      |
+|    1 from __future__ import annotations                                              |
+|    2                                                                                 |
+| >  3 __version__ = "5.5.1"                                                           |
+|    4 __MODEL_HUB_ORGANIZATION__ = "sentence-transformers"                            |
+|    5                                                                                 |
+|    6 import importlib                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\__init__.py:3 in <module>                                        |
+|                                                                                      |
+|    1 from .DenoisingAutoEncoderDataset import DenoisingAutoEncoderDataset            |
+|    2 from .NoDuplicatesDataLoader import NoDuplicatesDataLoader                      |
+| >  3 from .ParallelSentencesDataset import ParallelSentencesDataset                  |
+|    4 from .SentencesDataset import SentencesDataset                                  |
+|    5 from .SentenceLabelDataset import SentenceLabelDataset                          |
+|    6                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\ParallelSentencesDataset.py:4 in <module>                        |
+|                                                                                      |
+|     1 from torch.utils.data import Dataset                                           |
+|     2 import logging                                                                 |
+|     3 import gzip                                                                    |
+| >   4 from .. import SentenceTransformer                                             |
+|     5 from ..readers import InputExample                                             |
+|     6 from typing import List                                                        |
+|     7 import random                                                                  |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\SentenceTransformer.py:25 in <module>                                     |
+|                                                                                      |
+|     22 import tempfile                                                               |
+|     23                                                                               |
+|     24 from . import __MODEL_HUB_ORGANIZATION__                                      |
+| >   25 from .evaluation import SentenceEvaluator                                     |
+|     26 from .util import (                                                           |
+|     27     import_from_string,                                                       |
+|     28     batch_to_device,                                                          |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\__init__.py:3 in <module>                                      |
+|                                                                                      |
+|    1 from .SentenceEvaluator import SentenceEvaluator                                |
+|    2 from .SimilarityFunction import SimilarityFunction                              |
+| >  3 from .BinaryClassificationEvaluator import BinaryClassificationEvaluator        |
+|    4 from .EmbeddingSimilarityEvaluator import EmbeddingSimilarityEvaluator          |
+|    5 from .InformationRetrievalEvaluator import InformationRetrievalEvaluator        |
+|    6 from .LabelAccuracyEvaluator import LabelAccuracyEvaluator                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\BinaryClassificationEvaluator.py:7 in <module>                 |
+|                                                                                      |
+|     4 import logging                                                                 |
+|     5 import os                                                                      |
+|     6 import csv                                                                     |
+| >   7 from sklearn.metrics.pairwise import paired_cosine_distances, paired_euclidean |
+|     8 from sklearn.metrics import average_precision_score                            |
+|     9 import numpy as np                                                             |
+|    10 from typing import List, Optional                                              |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'scipy.sparse'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:3 in <module>                                                 |
+|                                                                                      |
+|    1 __version__ = "2.7.0"                                                           |
+|    2 __MODEL_HUB_ORGANIZATION__ = "sentence-transformers"                            |
+| >  3 from .datasets import SentencesDataset, ParallelSentencesDataset                |
+|    4 from .LoggingHandler import LoggingHandler                                      |
+|    5 from .SentenceTransformer import SentenceTransformer                            |
+|    6 from .readers import InputExample                                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\__init__.py:3 in <module>                                        |
+|                                                                                      |
+|    1 from .DenoisingAutoEncoderDataset import DenoisingAutoEncoderDataset            |
+|    2 from .NoDuplicatesDataLoader import NoDuplicatesDataLoader                      |
+| >  3 from .ParallelSentencesDataset import ParallelSentencesDataset                  |
+|    4 from .SentencesDataset import SentencesDataset                                  |
+|    5 from .SentenceLabelDataset import SentenceLabelDataset                          |
+|    6                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\ParallelSentencesDataset.py:4 in <module>                        |
+|                                                                                      |
+|     1 from torch.utils.data import Dataset                                           |
+|     2 import logging                                                                 |
+|     3 import gzip                                                                    |
+| >   4 from .. import SentenceTransformer                                             |
+|     5 from ..readers import InputExample                                             |
+|     6 from typing import List                                                        |
+|     7 import random                                                                  |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\SentenceTransformer.py:25 in <module>                                     |
+|                                                                                      |
+|     22 import tempfile                                                               |
+|     23                                                                               |
+|     24 from . import __MODEL_HUB_ORGANIZATION__                                      |
+| >   25 from .evaluation import SentenceEvaluator                                     |
+|     26 from .util import (                                                           |
+|     27     import_from_string,                                                       |
+|     28     batch_to_device,                                                          |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\__init__.py:3 in <module>                                      |
+|                                                                                      |
+|    1 from .SentenceEvaluator import SentenceEvaluator                                |
+|    2 from .SimilarityFunction import SimilarityFunction                              |
+| >  3 from .BinaryClassificationEvaluator import BinaryClassificationEvaluator        |
+|    4 from .EmbeddingSimilarityEvaluator import EmbeddingSimilarityEvaluator          |
+|    5 from .InformationRetrievalEvaluator import InformationRetrievalEvaluator        |
+|    6 from .LabelAccuracyEvaluator import LabelAccuracyEvaluator                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\BinaryClassificationEvaluator.py:7 in <module>                 |
+|                                                                                      |
+|     4 import logging                                                                 |
+|     5 import os                                                                      |
+|     6 import csv                                                                     |
+| >   7 from sklearn.metrics.pairwise import paired_cosine_distances, paired_euclidean |
+|     8 from sklearn.metrics import average_precision_score                            |
+|     9 import numpy as np                                                             |
+|    10 from typing import List, Optional                                              |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'scipy.sparse'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:3 in <module>                                                 |
+|                                                                                      |
+|    1 __version__ = "2.7.0"                                                           |
+|    2 __MODEL_HUB_ORGANIZATION__ = "sentence-transformers"                            |
+| >  3 from .datasets import SentencesDataset, ParallelSentencesDataset                |
+|    4 from .LoggingHandler import LoggingHandler                                      |
+|    5 from .SentenceTransformer import SentenceTransformer                            |
+|    6 from .readers import InputExample                                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\__init__.py:3 in <module>                                        |
+|                                                                                      |
+|    1 from .DenoisingAutoEncoderDataset import DenoisingAutoEncoderDataset            |
+|    2 from .NoDuplicatesDataLoader import NoDuplicatesDataLoader                      |
+| >  3 from .ParallelSentencesDataset import ParallelSentencesDataset                  |
+|    4 from .SentencesDataset import SentencesDataset                                  |
+|    5 from .SentenceLabelDataset import SentenceLabelDataset                          |
+|    6                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\ParallelSentencesDataset.py:4 in <module>                        |
+|                                                                                      |
+|     1 from torch.utils.data import Dataset                                           |
+|     2 import logging                                                                 |
+|     3 import gzip                                                                    |
+| >   4 from .. import SentenceTransformer                                             |
+|     5 from ..readers import InputExample                                             |
+|     6 from typing import List                                                        |
+|     7 import random                                                                  |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\SentenceTransformer.py:25 in <module>                                     |
+|                                                                                      |
+|     22 import tempfile                                                               |
+|     23                                                                               |
+|     24 from . import __MODEL_HUB_ORGANIZATION__                                      |
+| >   25 from .evaluation import SentenceEvaluator                                     |
+|     26 from .util import (                                                           |
+|     27     import_from_string,                                                       |
+|     28     batch_to_device,                                                          |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\__init__.py:3 in <module>                                      |
+|                                                                                      |
+|    1 from .SentenceEvaluator import SentenceEvaluator                                |
+|    2 from .SimilarityFunction import SimilarityFunction                              |
+| >  3 from .BinaryClassificationEvaluator import BinaryClassificationEvaluator        |
+|    4 from .EmbeddingSimilarityEvaluator import EmbeddingSimilarityEvaluator          |
+|    5 from .InformationRetrievalEvaluator import InformationRetrievalEvaluator        |
+|    6 from .LabelAccuracyEvaluator import LabelAccuracyEvaluator                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\BinaryClassificationEvaluator.py:7 in <module>                 |
+|                                                                                      |
+|     4 import logging                                                                 |
+|     5 import os                                                                      |
+|     6 import csv                                                                     |
+| >   7 from sklearn.metrics.pairwise import paired_cosine_distances, paired_euclidean |
+|     8 from sklearn.metrics import average_precision_score                            |
+|     9 import numpy as np                                                             |
+|    10 from typing import List, Optional                                              |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'scipy.sparse'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:3 in <module>                                                 |
+|                                                                                      |
+|    1 __version__ = "2.7.0"                                                           |
+|    2 __MODEL_HUB_ORGANIZATION__ = "sentence-transformers"                            |
+| >  3 from .datasets import SentencesDataset, ParallelSentencesDataset                |
+|    4 from .LoggingHandler import LoggingHandler                                      |
+|    5 from .SentenceTransformer import SentenceTransformer                            |
+|    6 from .readers import InputExample                                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\__init__.py:3 in <module>                                        |
+|                                                                                      |
+|    1 from .DenoisingAutoEncoderDataset import DenoisingAutoEncoderDataset            |
+|    2 from .NoDuplicatesDataLoader import NoDuplicatesDataLoader                      |
+| >  3 from .ParallelSentencesDataset import ParallelSentencesDataset                  |
+|    4 from .SentencesDataset import SentencesDataset                                  |
+|    5 from .SentenceLabelDataset import SentenceLabelDataset                          |
+|    6                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\ParallelSentencesDataset.py:4 in <module>                        |
+|                                                                                      |
+|     1 from torch.utils.data import Dataset                                           |
+|     2 import logging                                                                 |
+|     3 import gzip                                                                    |
+| >   4 from .. import SentenceTransformer                                             |
+|     5 from ..readers import InputExample                                             |
+|     6 from typing import List                                                        |
+|     7 import random                                                                  |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\SentenceTransformer.py:25 in <module>                                     |
+|                                                                                      |
+|     22 import tempfile                                                               |
+|     23                                                                               |
+|     24 from . import __MODEL_HUB_ORGANIZATION__                                      |
+| >   25 from .evaluation import SentenceEvaluator                                     |
+|     26 from .util import (                                                           |
+|     27     import_from_string,                                                       |
+|     28     batch_to_device,                                                          |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\__init__.py:3 in <module>                                      |
+|                                                                                      |
+|    1 from .SentenceEvaluator import SentenceEvaluator                                |
+|    2 from .SimilarityFunction import SimilarityFunction                              |
+| >  3 from .BinaryClassificationEvaluator import BinaryClassificationEvaluator        |
+|    4 from .EmbeddingSimilarityEvaluator import EmbeddingSimilarityEvaluator          |
+|    5 from .InformationRetrievalEvaluator import InformationRetrievalEvaluator        |
+|    6 from .LabelAccuracyEvaluator import LabelAccuracyEvaluator                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\BinaryClassificationEvaluator.py:7 in <module>                 |
+|                                                                                      |
+|     4 import logging                                                                 |
+|     5 import os                                                                      |
+|     6 import csv                                                                     |
+| >   7 from sklearn.metrics.pairwise import paired_cosine_distances, paired_euclidean |
+|     8 from sklearn.metrics import average_precision_score                            |
+|     9 import numpy as np                                                             |
+|    10 from typing import List, Optional                                              |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'scipy.sparse'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:3 in <module>                                                 |
+|                                                                                      |
+|    1 __version__ = "2.7.0"                                                           |
+|    2 __MODEL_HUB_ORGANIZATION__ = "sentence-transformers"                            |
+| >  3 from .datasets import SentencesDataset, ParallelSentencesDataset                |
+|    4 from .LoggingHandler import LoggingHandler                                      |
+|    5 from .SentenceTransformer import SentenceTransformer                            |
+|    6 from .readers import InputExample                                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\__init__.py:3 in <module>                                        |
+|                                                                                      |
+|    1 from .DenoisingAutoEncoderDataset import DenoisingAutoEncoderDataset            |
+|    2 from .NoDuplicatesDataLoader import NoDuplicatesDataLoader                      |
+| >  3 from .ParallelSentencesDataset import ParallelSentencesDataset                  |
+|    4 from .SentencesDataset import SentencesDataset                                  |
+|    5 from .SentenceLabelDataset import SentenceLabelDataset                          |
+|    6                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\ParallelSentencesDataset.py:4 in <module>                        |
+|                                                                                      |
+|     1 from torch.utils.data import Dataset                                           |
+|     2 import logging                                                                 |
+|     3 import gzip                                                                    |
+| >   4 from .. import SentenceTransformer                                             |
+|     5 from ..readers import InputExample                                             |
+|     6 from typing import List                                                        |
+|     7 import random                                                                  |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\SentenceTransformer.py:25 in <module>                                     |
+|                                                                                      |
+|     22 import tempfile                                                               |
+|     23                                                                               |
+|     24 from . import __MODEL_HUB_ORGANIZATION__                                      |
+| >   25 from .evaluation import SentenceEvaluator                                     |
+|     26 from .util import (                                                           |
+|     27     import_from_string,                                                       |
+|     28     batch_to_device,                                                          |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\__init__.py:3 in <module>                                      |
+|                                                                                      |
+|    1 from .SentenceEvaluator import SentenceEvaluator                                |
+|    2 from .SimilarityFunction import SimilarityFunction                              |
+| >  3 from .BinaryClassificationEvaluator import BinaryClassificationEvaluator        |
+|    4 from .EmbeddingSimilarityEvaluator import EmbeddingSimilarityEvaluator          |
+|    5 from .InformationRetrievalEvaluator import InformationRetrievalEvaluator        |
+|    6 from .LabelAccuracyEvaluator import LabelAccuracyEvaluator                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\BinaryClassificationEvaluator.py:7 in <module>                 |
+|                                                                                      |
+|     4 import logging                                                                 |
+|     5 import os                                                                      |
+|     6 import csv                                                                     |
+| >   7 from sklearn.metrics.pairwise import paired_cosine_distances, paired_euclidean |
+|     8 from sklearn.metrics import average_precision_score                            |
+|     9 import numpy as np                                                             |
+|    10 from typing import List, Optional                                              |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'scipy.sparse'
++------------------------- Traceback (most recent call last) --------------------------+
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\exec_code.py:129 in exec_func_with_error_handling                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\streamlit\r |
+| untime\scriptrunner\script_runner.py:789 in code_to_exec                             |
+|                                                                                      |
+| C:\OPENCODE\HACKATON\chatbot.py:4 in <module>                                        |
+|                                                                                      |
+|     1 import streamlit as st                                                         |
+|     2 from pathlib import Path                                                       |
+|     3 import numpy as np                                                             |
+| >   4 from sentence_transformers import SentenceTransformer                          |
+|     5 import pickle                                                                  |
+|     6 import re                                                                      |
+|     7                                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\__init__.py:3 in <module>                                                 |
+|                                                                                      |
+|    1 __version__ = "2.7.0"                                                           |
+|    2 __MODEL_HUB_ORGANIZATION__ = "sentence-transformers"                            |
+| >  3 from .datasets import SentencesDataset, ParallelSentencesDataset                |
+|    4 from .LoggingHandler import LoggingHandler                                      |
+|    5 from .SentenceTransformer import SentenceTransformer                            |
+|    6 from .readers import InputExample                                               |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\__init__.py:3 in <module>                                        |
+|                                                                                      |
+|    1 from .DenoisingAutoEncoderDataset import DenoisingAutoEncoderDataset            |
+|    2 from .NoDuplicatesDataLoader import NoDuplicatesDataLoader                      |
+| >  3 from .ParallelSentencesDataset import ParallelSentencesDataset                  |
+|    4 from .SentencesDataset import SentencesDataset                                  |
+|    5 from .SentenceLabelDataset import SentenceLabelDataset                          |
+|    6                                                                                 |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\datasets\ParallelSentencesDataset.py:4 in <module>                        |
+|                                                                                      |
+|     1 from torch.utils.data import Dataset                                           |
+|     2 import logging                                                                 |
+|     3 import gzip                                                                    |
+| >   4 from .. import SentenceTransformer                                             |
+|     5 from ..readers import InputExample                                             |
+|     6 from typing import List                                                        |
+|     7 import random                                                                  |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\SentenceTransformer.py:25 in <module>                                     |
+|                                                                                      |
+|     22 import tempfile                                                               |
+|     23                                                                               |
+|     24 from . import __MODEL_HUB_ORGANIZATION__                                      |
+| >   25 from .evaluation import SentenceEvaluator                                     |
+|     26 from .util import (                                                           |
+|     27     import_from_string,                                                       |
+|     28     batch_to_device,                                                          |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\__init__.py:3 in <module>                                      |
+|                                                                                      |
+|    1 from .SentenceEvaluator import SentenceEvaluator                                |
+|    2 from .SimilarityFunction import SimilarityFunction                              |
+| >  3 from .BinaryClassificationEvaluator import BinaryClassificationEvaluator        |
+|    4 from .EmbeddingSimilarityEvaluator import EmbeddingSimilarityEvaluator          |
+|    5 from .InformationRetrievalEvaluator import InformationRetrievalEvaluator        |
+|    6 from .LabelAccuracyEvaluator import LabelAccuracyEvaluator                      |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sentence_tr |
+| ansformers\evaluation\BinaryClassificationEvaluator.py:7 in <module>                 |
+|                                                                                      |
+|     4 import logging                                                                 |
+|     5 import os                                                                      |
+|     6 import csv                                                                     |
+| >   7 from sklearn.metrics.pairwise import paired_cosine_distances, paired_euclidean |
+|     8 from sklearn.metrics import average_precision_score                            |
+|     9 import numpy as np                                                             |
+|    10 from typing import List, Optional                                              |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\__i |
+| nit__.py:73 in <module>                                                              |
+|                                                                                      |
+|    70     __check_build,                                                             |
+|    71     _distributor_init,                                                         |
+|    72 )                                                                              |
+| >  73 from .base import clone  # noqa: E402                                          |
+|    74 from .utils._show_versions import show_versions  # noqa: E402                  |
+|    75                                                                                |
+|    76 _submodules = [                                                                |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\bas |
+| e.py:20 in <module>                                                                  |
+|                                                                                      |
+|     17 from ._config import config_context, get_config                               |
+|     18 from .exceptions import InconsistentVersionWarning                            |
+|     19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled    |
+| >   20 from .utils._missing import is_scalar_nan                                     |
+|     21 from .utils._param_validation import validate_parameter_constraints           |
+|     22 from .utils._repr_html.base import ReprHTMLMixin, _HTMLDocumentationLinkMixin |
+|     23 from .utils._repr_html.estimator import estimator_html_repr                   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\__init__.py:9 in <module>                                                         |
+|                                                                                      |
+|    6 from ..exceptions import DataConversionWarning                                  |
+|    7 from . import metadata_routing                                                  |
+|    8 from ._bunch import Bunch                                                       |
+| >  9 from ._chunking import gen_batches, gen_even_slices                             |
+|   10                                                                                 |
+|   11 # Make _safe_indexing importable from here for backward compat as this particul |
+|   12 # helper is considered semi-private and typically very useful for third-party   |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_chunking.py:11 in <module>                                                       |
+|                                                                                      |
+|     8 import numpy as np                                                             |
+|     9                                                                                |
+|    10 from .._config import get_config                                               |
+| >  11 from ._param_validation import Interval, validate_params                       |
+|    12                                                                                |
+|    13                                                                                |
+|    14 def chunk_generator(gen, chunksize):                                           |
+|                                                                                      |
+| C:\Users\guilh\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\uti |
+| ls\_param_validation.py:14 in <module>                                               |
+|                                                                                      |
+|    11 from numbers import Integral, Real                                             |
+|    12                                                                                |
+|    13 import numpy as np                                                             |
+| >  14 from scipy.sparse import csr_matrix, issparse                                  |
+|    15                                                                                |
+|    16 from .._config import config_context, get_config                               |
+|    17 from .validation import _is_arraylike_not_scalar                               |
++--------------------------------------------------------------------------------------+
+ModuleNotFoundError: No module named 'scipy.sparse'
