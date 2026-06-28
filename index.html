@@ -1090,31 +1090,17 @@ function getYoutubeId(url){
   return m ? m[1] : null;
 }
 var CACHE_DURACAO = {};
-function parseDurationToSeconds(dur){
-  if(!dur) return null;
-  if(typeof dur === 'number') return Math.round(dur);
-  var s = String(dur);
-  var m = s.match(/(\d+):(\d+):(\d+)/);
-  if(m) return parseInt(m[1])*3600 + parseInt(m[2])*60 + parseInt(m[3]);
-  m = s.match(/(\d+):(\d+)/);
-  if(m) return parseInt(m[1])*60 + parseInt(m[2]);
-  var n = parseFloat(s);
-  if(!isNaN(n)) return Math.round(n);
-  return null;
-}
 function obterDuracaoVideo(link, tipo){
   return new Promise(function(resolve){
     var key = link+'|'+tipo;
     if(CACHE_DURACAO[key] !== undefined) return resolve(CACHE_DURACAO[key]);
     var id = getYoutubeId(normalizeUrl(link));
     if(!id) { CACHE_DURACAO[key] = null; return resolve(null); }
-    fetch('https://noembed.com/embed?url=https://www.youtube.com/watch?v='+id)
+    fetch('/api/ytduration?v='+encodeURIComponent(id))
       .then(function(r){ return r.json() })
       .then(function(dados){
-        var secs = null;
-        if(dados && dados.duration) secs = parseDurationToSeconds(dados.duration);
-        if(secs === null && dados && dados.error) secs = null;
-        if(secs === null) { CACHE_DURACAO[key] = null; return resolve(null); }
+        if(!dados.ok || !dados.segundos) { CACHE_DURACAO[key] = null; return resolve(null); }
+        var secs = dados.segundos;
         var limite = tipo === 'prototipo' ? 120 : 180;
         var excedeu = secs > limite;
         CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
@@ -1145,10 +1131,12 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch, durProto, durPitc
   if(temVideo){
     html += '<div class="dash-overlay-videos">';
     if(linkProto){
-      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(normalizeUrl(linkProto))+'" target="_blank">abrir ↗</a>'+(durProto&&durProto.excedeu?' <span style="color:#ff4444;font-size:.65rem;font-weight:700">⚠️ Excede 2min ('+Math.round(durProto.segundos/60*10)/10+'min)</span>':'')+'</div>'+linkOrEmbed(linkProto, 'Abrir protótipo')+'</div>';
+      var protoStatus = durProto ? (durProto.excedeu ? '<span style="color:#ff4444;font-weight:700">⚠️ '+Math.round(durProto.segundos/60*10)/10+'min (excede 2min)</span>' : '<span style="color:#25D366;font-weight:700">✅ '+Math.round(durProto.segundos/60*10)/10+'min</span>') : '<span style="color:rgba(255,255,255,.2)">⏳ verificando...</span>';
+      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(normalizeUrl(linkProto))+'" target="_blank">abrir ↗</a> '+protoStatus+'</div>'+linkOrEmbed(linkProto, 'Abrir protótipo')+'</div>';
     }
     if(linkPitch){
-      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(normalizeUrl(linkPitch))+'" target="_blank">abrir ↗</a>'+(durPitch&&durPitch.excedeu?' <span style="color:#ff4444;font-size:.65rem;font-weight:700">⚠️ Excede 3min ('+Math.round(durPitch.segundos/60*10)/10+'min)</span>':'')+'</div>'+linkOrEmbed(linkPitch, 'Abrir pitch')+'</div>';
+      var pitchStatus = durPitch ? (durPitch.excedeu ? '<span style="color:#ff4444;font-weight:700">⚠️ '+Math.round(durPitch.segundos/60*10)/10+'min (excede 3min)</span>' : '<span style="color:#25D366;font-weight:700">✅ '+Math.round(durPitch.segundos/60*10)/10+'min</span>') : '<span style="color:rgba(255,255,255,.2)">⏳ verificando...</span>';
+      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(normalizeUrl(linkPitch))+'" target="_blank">abrir ↗</a> '+pitchStatus+'</div>'+linkOrEmbed(linkPitch, 'Abrir pitch')+'</div>';
     }
     if(linkExtra){
       html += '<div class="dash-overlay-video"><div class="label">📎 Link Extra <a href="'+esc(normalizeUrl(linkExtra))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkExtra, 'Abrir link extra')+'</div>';
