@@ -33,6 +33,9 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .tag-filter-group:last-child{margin-bottom:0}
 .tag-filter-group .label{font-size:.65rem;font-weight:800;color:#EC008C;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;padding-left:2px}
 .tag-filter-group .tags{display:flex;flex-wrap:wrap;gap:5px}
+.filter-tag{display:inline-block;padding:5px 12px;border-radius:6px;font-size:.7rem;font-weight:700;cursor:pointer;background:rgba(255,255,255,.04);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.06);transition:all .15s;font-family:'Nunito Sans',sans-serif}
+.filter-tag.active{background:rgba(236,0,140,.12);color:#EC008C;border-color:rgba(236,0,140,.2)}
+.filter-tag:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
 .tag-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:rgba(255,255,255,.55);font-size:.75rem;cursor:pointer;user-select:none;font-family:'Nunito Sans',sans-serif;font-weight:600;transition:all .2s;text-transform:uppercase;letter-spacing:.3px}
 .tag-btn:hover{border-color:rgba(0,191,255,.2);background:rgba(0,191,255,.05);color:#00BFFF}
 .tag-btn.active{background:#EC008C;color:#fff;border-color:#EC008C;box-shadow:0 2px 12px rgba(236,0,140,.3)}
@@ -231,7 +234,7 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 <span class="header-hack">haCARthon</span>
 <span class="badge active" id="tabMentores" onclick="switchTab('mentores')">MENTORES</span>
 <span class="badge" id="tabChat" onclick="switchTab('chat')">CHAT IA</span>
-<span class="badge" id="tabDash" onclick="switchTab('dash')">DASH ENTREGAS</span>
+<span class="badge" id="tabDash" onclick="switchTab('dash')">ENTREGAS</span>
 <span class="badge" id="tabGerenciamento" onclick="switchTab('gerenciamento')">GERENCIAMENTO</span>
 </div>
 <span class="sub" id="headerSub">88 mentores cadastrados</span>
@@ -287,7 +290,7 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 <div class="main" style="flex:1;min-width:0">
 <div class="chat-toolbar" style="margin-bottom:8px">
-<h3 style="color:#fff;font-weight:800;font-size:1rem">📋 Dash Entregas</h3>
+<h3 style="color:#fff;font-weight:800;font-size:1rem">📋 Entregas</h3>
 <button class="download-chat-btn" onclick="recarregarDash()" style="font-size:.7rem;padding:6px 14px">🔄 Atualizar</button>
 </div>
 <div class="stats" id="dashStats" style="font-size:.75rem"></div>
@@ -490,7 +493,7 @@ function switchTab(tab){
   document.getElementById('chatView').classList.toggle('active', tab==='chat');
   document.getElementById('dashView').style.display = tab==='dash' ? 'block' : 'none';
   document.getElementById('gerenciamentoView').classList.toggle('active', tab==='gerenciamento');
-  var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'dash': 'Dash Entregas', 'gerenciamento': 'Gerenciar documentos'};
+  var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'dash': 'Entregas', 'gerenciamento': 'Gerenciar documentos'};
   document.getElementById('headerSub').textContent = subs[tab] || '';
   if(tab==='dash') carregarDash();
 }
@@ -859,31 +862,38 @@ var FLT_DASH = {aval:'', desafio:'', entrega:''};
 function montarDashFiltros(){
   var area = document.getElementById('dashFilterArea');
   if(!area) return;
-  area.innerHTML = '<div style="margin-bottom:16px"><input type="text" id="dashSearch" placeholder="Buscar equipe..." oninput="renderDash()" style="width:100%;padding:8px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:\'Nunito Sans\',sans-serif"></div>';
-  area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Avaliação</div>';
-  area.innerHTML += '<div class="tag-filter-area" id="dashFltAval">'+
-    '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'aval\',\'\',this)">Todas</span>'+
-    '<span class="filter-tag" data-val="avaliado" onclick="dashFiltroClick(\'aval\',\'avaliado\',this)">✅ Avaliado</span>'+
-    '<span class="filter-tag" data-val="nao" onclick="dashFiltroClick(\'aval\',\'nao\',this)">❌ Não avaliado</span>'+
-  '</div>';
-  area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px">Desafio</div>';
-  area.innerHTML += '<div class="tag-filter-area" id="dashFltDesafio">'+
-    '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'desafio\',\'\',this)">Todos</span>'+
-    '<span class="filter-tag" data-val="D1" onclick="dashFiltroClick(\'desafio\',\'D1\',this)" style="border-color:rgba(0,191,255,.2)">D1</span>'+
-    '<span class="filter-tag" data-val="D2" onclick="dashFiltroClick(\'desafio\',\'D2\',this)" style="border-color:rgba(37,211,102,.2)">D2</span>'+
-    '<span class="filter-tag" data-val="D3" onclick="dashFiltroClick(\'desafio\',\'D3\',this)" style="border-color:rgba(255,165,0,.2)">D3</span>'+
-  '</div>';
-  area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px">Entrega</div>';
-  area.innerHTML += '<div class="tag-filter-area" id="dashFltEntrega">'+
-    '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'entrega\',\'\',this)">Todas</span>'+
-    '<span class="filter-tag" data-val="ideia_ok" onclick="dashFiltroClick(\'entrega\',\'ideia_ok\',this)">💡 Ideação ✔</span>'+
-    '<span class="filter-tag" data-val="ideia_nao" onclick="dashFiltroClick(\'entrega\',\'ideia_nao\',this)">💡 Ideação ✘</span>'+
-    '<span class="filter-tag" data-val="proto_ok" onclick="dashFiltroClick(\'entrega\',\'proto_ok\',this)">🎬 Protótipo ✔</span>'+
-    '<span class="filter-tag" data-val="proto_nao" onclick="dashFiltroClick(\'entrega\',\'proto_nao\',this)">🎬 Protótipo ✘</span>'+
-    '<span class="filter-tag" data-val="pitch_ok" onclick="dashFiltroClick(\'entrega\',\'pitch_ok\',this)">🎤 Pitch ✔</span>'+
-    '<span class="filter-tag" data-val="pitch_nao" onclick="dashFiltroClick(\'entrega\',\'pitch_nao\',this)">🎤 Pitch ✘</span>'+
-    '<span class="filter-tag" data-val="extra_ok" onclick="dashFiltroClick(\'entrega\',\'extra_ok\',this)">📎 Extra ✔</span>'+
-  '</div>';
+  var h = '<div style="margin-bottom:12px"><input type="text" id="dashSearch" placeholder="Buscar equipe..." oninput="renderDash()" style="width:100%;padding:8px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:\'Nunito Sans\',sans-serif"></div>';
+  h += '<div class="tag-filter-group"><div class="label" style="color:rgba(255,255,255,.3)">Avaliação</div><div class="tags">';
+  h += '<span class="filter-tag active" data-val="" data-grp="aval" onclick="dashFiltroClick(this)">Todas</span>';
+  h += '<span class="filter-tag" data-val="avaliado" data-grp="aval" onclick="dashFiltroClick(this)">✅ Avaliado</span>';
+  h += '<span class="filter-tag" data-val="nao" data-grp="aval" onclick="dashFiltroClick(this)">❌ Não avaliado</span>';
+  h += '</div></div>';
+  h += '<div class="tag-filter-group"><div class="label" style="color:rgba(255,255,255,.3)">Desafio</div><div class="tags">';
+  h += '<span class="filter-tag active" data-val="" data-grp="desafio" onclick="dashFiltroClick(this)">Todos</span>';
+  h += '<span class="filter-tag" data-val="D1" data-grp="desafio" onclick="dashFiltroClick(this)">D1</span>';
+  h += '<span class="filter-tag" data-val="D2" data-grp="desafio" onclick="dashFiltroClick(this)">D2</span>';
+  h += '<span class="filter-tag" data-val="D3" data-grp="desafio" onclick="dashFiltroClick(this)">D3</span>';
+  h += '</div></div>';
+  h += '<div class="tag-filter-group"><div class="label" style="color:rgba(255,255,255,.3)">Entrega</div><div class="tags">';
+  h += '<span class="filter-tag active" data-val="" data-grp="entrega" onclick="dashFiltroClick(this)">Todas</span>';
+  h += '<span class="filter-tag" data-val="ideia_ok" data-grp="entrega" onclick="dashFiltroClick(this)">💡✔ Ideação</span>';
+  h += '<span class="filter-tag" data-val="ideia_nao" data-grp="entrega" onclick="dashFiltroClick(this)">💡✘ Ideação</span>';
+  h += '<span class="filter-tag" data-val="proto_ok" data-grp="entrega" onclick="dashFiltroClick(this)">🎬✔ Protótipo</span>';
+  h += '<span class="filter-tag" data-val="proto_nao" data-grp="entrega" onclick="dashFiltroClick(this)">🎬✘ Protótipo</span>';
+  h += '<span class="filter-tag" data-val="pitch_ok" data-grp="entrega" onclick="dashFiltroClick(this)">🎤✔ Pitch</span>';
+  h += '<span class="filter-tag" data-val="pitch_nao" data-grp="entrega" onclick="dashFiltroClick(this)">🎤✘ Pitch</span>';
+  h += '<span class="filter-tag" data-val="extra_ok" data-grp="entrega" onclick="dashFiltroClick(this)">📎✔ Extra</span>';
+  h += '</div></div>';
+  area.innerHTML = h;
+}
+function dashFiltroClick(el){
+  var grp = el.getAttribute('data-grp');
+  var val = el.getAttribute('data-val')||'';
+  FLT_DASH[grp] = val;
+  var parent = el.closest('.tag-filter-group');
+  if(parent) parent.querySelectorAll('.filter-tag').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  renderDash();
 }
 function dashFiltroClick(grupo, val, el){
   FLT_DASH[grupo] = val;
