@@ -1034,19 +1034,20 @@ function renderDash(){
       var statusTxt = cadastroOk ? '✅ Cadastro OK' : '⏳ Pendente';
       var durProto = dur[0];
       var durPitch = dur[1];
+      var protoErro = durProto && durProto.erro;
+      var pitchErro = durPitch && durPitch.erro;
       var excedeuProto = durProto && durProto.excedeu;
       var excedeuPitch = durPitch && durPitch.excedeu;
       var avisoTempo = excedeuProto || excedeuPitch;
-      var videoProtoOk = linkProto && durProto && !durProto.excedeu;
-      var videoPitchOk = linkPitch && durPitch && !durPitch.excedeu;
-      var videoProtoNao = linkProto && (!durProto || durProto.excedeu);
-      var videoPitchNao = linkPitch && (!durPitch || durPitch.excedeu);
+      var videoProtoOk = linkProto && durProto && durProto.excedeu === false;
+      var videoPitchOk = linkPitch && durPitch && durPitch.excedeu === false;
       // Tempo filter
       if(fltTempo.length){
-        var tempoSemVerif = !((linkProto||linkPitch) && durProto !== null && durPitch !== null) && !(!linkProto && !linkPitch);
-        var tempoOk = (linkProto||linkPitch) && !excedeuProto && !excedeuPitch;
+        var semLink = !linkProto && !linkPitch;
+        var tempoSemVerif = !semLink && !(durProto && durProto.excedeu !== undefined) && !(durPitch && durPitch.excedeu !== undefined);
+        var tempoOk = !semLink && !excedeuProto && !excedeuPitch && (durProto||!linkProto) && (durPitch||!linkPitch) && (durProto||durPitch);
         var tempoExcedeu = excedeuProto || excedeuPitch;
-        var passTempo = (fltTempo.includes('tempo_ok') && tempoOk) || (fltTempo.includes('tempo_excedeu') && tempoExcedeu) || (fltTempo.includes('tempo_sem') && (!(linkProto||linkPitch) || tempoSemVerif));
+        var passTempo = (fltTempo.includes('tempo_ok') && tempoOk) || (fltTempo.includes('tempo_excedeu') && tempoExcedeu) || (fltTempo.includes('tempo_sem') && (semLink || tempoSemVerif));
         if(!passTempo) { c.appendChild(card); return; }
       }
       (function(eq, lp, le, lpi, dP, dPi){
@@ -1064,8 +1065,8 @@ function renderDash(){
       card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
       card.innerHTML += '<div class="dash-delivery-line">';
       card.innerHTML += '<span class="dash-del-item"><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>💡Ideação</span>';
-      card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.'+(linkProto?(durProto?' <span style="font-size:.55rem">'+(excedeuProto?'⚠️'+Math.round(durProto.segundos/60*10)/10:'✔')+'min</span>':' <span style="font-size:.55rem;color:rgba(255,255,255,.2)">⌛</span>'):'')+'</span>';
-      card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch'+(linkPitch?(durPitch?' <span style="font-size:.55rem">'+(excedeuPitch?'⚠️'+Math.round(durPitch.segundos/60*10)/10:'✔')+'min</span>':' <span style="font-size:.55rem;color:rgba(255,255,255,.2)">⌛</span>'):'')+'</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.'+(linkProto?(durProto&&durProto.excedeu!==undefined?' <span style="font-size:.55rem">'+(excedeuProto?'⚠️'+Math.round(durProto.segundos/60*10)/10:'✔')+'min</span>':durProto&&durProto.erro?' <span style="font-size:.55rem;color:#ff4444">⚠️erro</span>':' <span style="font-size:.55rem;color:rgba(255,255,255,.2)">⌛</span>'):'')+'</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch'+(linkPitch?(durPitch&&durPitch.excedeu!==undefined?' <span style="font-size:.55rem">'+(excedeuPitch?'⚠️'+Math.round(durPitch.segundos/60*10)/10:'✔')+'min</span>':durPitch&&durPitch.erro?' <span style="font-size:.55rem;color:#ff4444">⚠️erro</span>':' <span style="font-size:.55rem;color:rgba(255,255,255,.2)">⌛</span>'):'')+'</span>';
       card.innerHTML += '<span class="dash-del-item"><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>📎Extra</span>';
       card.innerHTML += '</div>';
       if(qual) card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
@@ -1100,7 +1101,10 @@ function obterDuracaoVideo(link, tipo){
     fetch('/api/ytduration?v='+encodeURIComponent(id))
       .then(function(r){ return r.json() })
       .then(function(dados){
-        if(!dados.ok || !dados.segundos) { CACHE_DURACAO[key] = null; return resolve(null); }
+        if(!dados.ok || !dados.segundos) {
+          CACHE_DURACAO[key] = { erro: dados.erro || 'unknown' };
+          return resolve(CACHE_DURACAO[key]);
+        }
         var secs = dados.segundos;
         var limite = tipo === 'prototipo' ? 120 : 180;
         var excedeu = secs > limite;
@@ -1132,11 +1136,11 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch, durProto, durPitc
   if(temVideo){
     html += '<div class="dash-overlay-videos">';
     if(linkProto){
-      var protoStatus = durProto ? (durProto.excedeu ? '<span style="color:#ff4444;font-weight:700">⚠️ '+Math.round(durProto.segundos/60*10)/10+'min (excede 2min)</span>' : '<span style="color:#25D366;font-weight:700">✅ '+Math.round(durProto.segundos/60*10)/10+'min</span>') : '<span style="color:rgba(255,255,255,.2)">⏳ verificando...</span>';
+      var protoStatus = durProto && durProto.excedeu!==undefined ? (durProto.excedeu ? '<span style="color:#ff4444;font-weight:700">⚠️ '+Math.round(durProto.segundos/60*10)/10+'min (excede 2min)</span>' : '<span style="color:#25D366;font-weight:700">✅ '+Math.round(durProto.segundos/60*10)/10+'min</span>') : (durProto&&durProto.erro?'<span style="color:#ff4444;font-weight:700">⚠️ erro ao verificar</span>':'<span style="color:rgba(255,255,255,.2)">⏳ verificando...</span>');
       html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(normalizeUrl(linkProto))+'" target="_blank">abrir ↗</a> '+protoStatus+'</div>'+linkOrEmbed(linkProto, 'Abrir protótipo')+'</div>';
     }
     if(linkPitch){
-      var pitchStatus = durPitch ? (durPitch.excedeu ? '<span style="color:#ff4444;font-weight:700">⚠️ '+Math.round(durPitch.segundos/60*10)/10+'min (excede 3min)</span>' : '<span style="color:#25D366;font-weight:700">✅ '+Math.round(durPitch.segundos/60*10)/10+'min</span>') : '<span style="color:rgba(255,255,255,.2)">⏳ verificando...</span>';
+      var pitchStatus = durPitch && durPitch.excedeu!==undefined ? (durPitch.excedeu ? '<span style="color:#ff4444;font-weight:700">⚠️ '+Math.round(durPitch.segundos/60*10)/10+'min (excede 3min)</span>' : '<span style="color:#25D366;font-weight:700">✅ '+Math.round(durPitch.segundos/60*10)/10+'min</span>') : (durPitch&&durPitch.erro?'<span style="color:#ff4444;font-weight:700">⚠️ erro ao verificar</span>':'<span style="color:rgba(255,255,255,.2)">⏳ verificando...</span>');
       html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(normalizeUrl(linkPitch))+'" target="_blank">abrir ↗</a> '+pitchStatus+'</div>'+linkOrEmbed(linkPitch, 'Abrir pitch')+'</div>';
     }
     if(linkExtra){
