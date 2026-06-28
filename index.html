@@ -1090,6 +1090,18 @@ function getYoutubeId(url){
   return m ? m[1] : null;
 }
 var CACHE_DURACAO = {};
+function parseDurationToSeconds(dur){
+  if(!dur) return null;
+  if(typeof dur === 'number') return Math.round(dur);
+  var s = String(dur);
+  var m = s.match(/(\d+):(\d+):(\d+)/);
+  if(m) return parseInt(m[1])*3600 + parseInt(m[2])*60 + parseInt(m[3]);
+  m = s.match(/(\d+):(\d+)/);
+  if(m) return parseInt(m[1])*60 + parseInt(m[2]);
+  var n = parseFloat(s);
+  if(!isNaN(n)) return Math.round(n);
+  return null;
+}
 function obterDuracaoVideo(link, tipo){
   return new Promise(function(resolve){
     var key = link+'|'+tipo;
@@ -1099,16 +1111,10 @@ function obterDuracaoVideo(link, tipo){
     fetch('https://noembed.com/embed?url=https://www.youtube.com/watch?v='+id)
       .then(function(r){ return r.json() })
       .then(function(dados){
-        var dur = dados && dados.duration ? dados.duration : null;
-        if(!dur) { CACHE_DURACAO[key] = null; return resolve(null); }
-        var secs = 0;
-        var m2 = dur.match(/(\d+):(\d+):(\d+)/);
-        if(m2){ secs = parseInt(m2[1])*3600 + parseInt(m2[2])*60 + parseInt(m2[3]); }
-        else {
-          var m3 = dur.match(/(\d+):(\d+)/);
-          if(m3) secs = parseInt(m3[1])*60 + parseInt(m3[2]);
-          else secs = parseInt(dur) || 0;
-        }
+        var secs = null;
+        if(dados && dados.duration) secs = parseDurationToSeconds(dados.duration);
+        if(secs === null && dados && dados.error) secs = null;
+        if(secs === null) { CACHE_DURACAO[key] = null; return resolve(null); }
         var limite = tipo === 'prototipo' ? 120 : 180;
         var excedeu = secs > limite;
         CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
