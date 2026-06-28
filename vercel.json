@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/(.*)", "destination": "https://dash-hacarthon.vercel.app/$1", "permanent": false }
+  ],
   "functions": {
     "api/chat.py": {
       "maxDuration": 30
