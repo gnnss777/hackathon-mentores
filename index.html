@@ -289,7 +289,7 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 <div class="stats" id="dashStats"></div>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="dashFilters">
-  <select id="fltAval" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Avaliação: Todas</option><option value="avaliado">✅ Avaliado</option><option value="medio">⏳ Médio</option><option value="nao">❌ Não avaliado</option></select>
+  <select id="fltAval" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Avaliação: Todas</option><option value="avaliado">✅ Avaliado</option><option value="nao">❌ Não avaliado</option></select>
   <select id="fltDesafio" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Desafio: Todos</option><option value="D1">D1 - Simplificar CAR</option><option value="D2">D2 - Dados geoespaciais</option><option value="D3">D3 - Legislação</option></select>
   <select id="fltEntrega" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Entrega: Todas</option><option value="ideia_ok">💡 Ideação feita</option><option value="ideia_nao">💡 Ideação pendente</option><option value="proto_ok">🎬 Protótipo feito</option><option value="proto_nao">🎬 Protótipo pendente</option><option value="pitch_ok">🎤 Pitch feito</option><option value="pitch_nao">🎤 Pitch pendente</option><option value="extra_ok">📎 Extra enviado</option></select>
 </div>
@@ -896,14 +896,10 @@ function renderDash(){
     if(q && !eq.toLowerCase().includes(q)) return false;
     // Aval filter
     if(fltAval){
-      var salvou = avals[eq];
-      var temC1 = salvou && salvou.c1;
-      var temC2 = salvou && salvou.c2;
-      var temC3 = salvou && salvou.c3;
-      var temNota = salvou && salvou.nota;
-      if(fltAval === 'avaliado' && !(salvou && (temC1 || temC2 || temC3 || temNota))) return false;
-      if(fltAval === 'medio' && !(salvou && (temC1 || temC2 || temC3) && !temNota)) return false;
-      if(fltAval === 'nao' && (salvou && (temC1 || temC2 || temC3 || temNota))) return false;
+      var salvou = avals[eq] || {};
+      var completo = salvou.c1 && salvou.c2 && salvou.c3 && salvou.nota;
+      if(fltAval === 'avaliado' && !completo) return false;
+      if(fltAval === 'nao' && completo) return false;
     }
     // Desafio filter
     if(fltDesafio){
@@ -966,7 +962,10 @@ function renderDash(){
         abrirDashOverlay(eq, lp, le, lpi);
       });
     })(eq, linkProto, linkExtra, linkPitch);
-    var jaAvaliado = carregarAvaliacao(eq);
+    var jaAvaliado = (function(){
+      var s = carregarAvaliacao(eq);
+      return s && s.c1 && s.c2 && s.c3 && s.nota;
+    })();
     var dc = desafioEq === 'D1' ? '#00BFFF' : desafioEq === 'D2' ? '#25D366' : '#FFA500';
     card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div>'+(desafioEq?'<span class="dash-badge" style="background:'+dc+'15;color:'+dc+'">'+esc(desafioEq)+'</span>':'')+'</div>';
     card.innerHTML += '<div class="dash-card-body">';
