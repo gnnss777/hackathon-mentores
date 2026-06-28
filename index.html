@@ -876,10 +876,13 @@ function montarDashFiltros(){
   area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px">Entrega</div>';
   area.innerHTML += '<div class="tag-filter-area" id="dashFltEntrega">'+
     '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'entrega\',\'\',this)">Todas</span>'+
-    '<span class="filter-tag" data-val="ideia_ok" onclick="dashFiltroClick(\'entrega\',\'ideia_ok\',this)">💡 Ideação</span>'+
-    '<span class="filter-tag" data-val="proto_ok" onclick="dashFiltroClick(\'entrega\',\'proto_ok\',this)">🎬 Protótipo</span>'+
-    '<span class="filter-tag" data-val="pitch_ok" onclick="dashFiltroClick(\'entrega\',\'pitch_ok\',this)">🎤 Pitch</span>'+
-    '<span class="filter-tag" data-val="extra_ok" onclick="dashFiltroClick(\'entrega\',\'extra_ok\',this)">📎 Extra</span>'+
+    '<span class="filter-tag" data-val="ideia_ok" onclick="dashFiltroClick(\'entrega\',\'ideia_ok\',this)">💡 Ideação ✔</span>'+
+    '<span class="filter-tag" data-val="ideia_nao" onclick="dashFiltroClick(\'entrega\',\'ideia_nao\',this)">💡 Ideação ✘</span>'+
+    '<span class="filter-tag" data-val="proto_ok" onclick="dashFiltroClick(\'entrega\',\'proto_ok\',this)">🎬 Protótipo ✔</span>'+
+    '<span class="filter-tag" data-val="proto_nao" onclick="dashFiltroClick(\'entrega\',\'proto_nao\',this)">🎬 Protótipo ✘</span>'+
+    '<span class="filter-tag" data-val="pitch_ok" onclick="dashFiltroClick(\'entrega\',\'pitch_ok\',this)">🎤 Pitch ✔</span>'+
+    '<span class="filter-tag" data-val="pitch_nao" onclick="dashFiltroClick(\'entrega\',\'pitch_nao\',this)">🎤 Pitch ✘</span>'+
+    '<span class="filter-tag" data-val="extra_ok" onclick="dashFiltroClick(\'entrega\',\'extra_ok\',this)">📎 Extra ✔</span>'+
   '</div>';
 }
 function dashFiltroClick(grupo, val, el){
