@@ -100,6 +100,40 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .overlay-card .bio-linkedin{display:inline-block;margin-top:14px;color:#00BFFF;font-weight:700;font-size:.8rem;text-decoration:none}
 .overlay-card .bio-linkedin:hover{text-decoration:underline}
 
+/* OVERLAY DASH (julgamento) */
+.dash-overlay-card{max-width:900px;padding:0;overflow:hidden}
+.dash-overlay-header{padding:24px 28px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.dash-overlay-header h2{font-size:1.2rem;font-weight:900;color:#fff;margin:0}
+.dash-overlay-header .sub{font-size:.75rem;color:rgba(255,255,255,.25);margin-top:2px}
+.dash-overlay-section{padding:20px 28px}
+.dash-overlay-section+.dash-overlay-section{border-top:2px solid rgba(255,255,255,.04)}
+.dash-overlay-section h3{font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dash-overlay-section .hint{font-size:.72rem;color:rgba(255,255,255,.2);margin-bottom:12px}
+.dash-overlay-videos{display:flex;flex-direction:column;gap:16px}
+.dash-overlay-video{background:rgba(255,255,255,.02);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.04)}
+.dash-overlay-video .label{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:.78rem;font-weight:700;border-bottom:1px solid rgba(255,255,255,.04)}
+.dash-overlay-video .label a{color:#00BFFF;font-weight:600;font-size:.72rem;margin-left:auto;text-decoration:none}
+.dash-overlay-video .label a:hover{text-decoration:underline}
+.dash-overlay-placeholder{border:2px dashed rgba(255,255,255,.06);border-radius:10px;padding:24px;text-align:center;color:rgba(255,255,255,.15);font-size:.8rem}
+.dash-overlay-placeholder .icon{font-size:1.5rem;margin-bottom:6px}
+
+/* FORMULÁRIO DE AVALIAÇÃO */
+.dash-form label{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;margin-top:14px}
+.dash-form label:first-child{margin-top:0}
+.dash-form input[type=text],.dash-form textarea,.dash-form select{width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif;transition:border-color .2s}
+.dash-form input[type=text]:focus,.dash-form textarea:focus,.dash-form select:focus{border-color:#EC008C}
+.dash-form textarea{resize:vertical;min-height:60px}
+.dash-form select option{background:#1A1A2E;color:#fff}
+.dash-form .radio-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.dash-form .radio-group label{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06);cursor:pointer;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.5);margin-top:0;text-transform:none;letter-spacing:0;transition:all .15s}
+.dash-form .radio-group label:hover{border-color:rgba(236,0,140,.3);color:#EC008C}
+.dash-form .radio-group input{display:none}
+.dash-form .radio-group input:checked+span{color:#EC008C}
+.dash-form .radio-group input:checked~.radio-group label{background:rgba(236,0,140,.1);border-color:#EC008C;color:#EC008C}
+.dash-form .radio-group label.selected,.dash-form .radio-group label:has(input:checked){background:rgba(236,0,140,.1);border-color:#EC008C;color:#EC008C}
+.dash-form .btn-submit{display:block;width:100%;padding:12px;border:none;border-radius:8px;background:linear-gradient(135deg,#EC008C,#4A1FA8);color:#fff;font-size:.85rem;font-weight:800;cursor:pointer;font-family:'Nunito Sans',sans-serif;margin-top:18px;text-transform:uppercase;letter-spacing:.5px;transition:all .2s}
+.dash-form .btn-submit:hover{box-shadow:0 4px 20px rgba(236,0,140,.35);transform:translateY(-1px)}
+
 /* === CHAT === */
 .chat-container{display:none;flex-direction:column;height:calc(100vh - 140px);min-height:500px}
 .chat-container.active{display:flex}
@@ -295,8 +329,7 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 
 <div class="overlay" id="dashOverlay">
-<div class="overlay-card" style="max-width:800px">
-<button class="overlay-close" onclick="fecharDashOverlay()">&times;</button>
+<div class="overlay-card dash-overlay-card">
 <div id="dashOverlayContent"></div>
 </div>
 </div>
@@ -908,12 +941,51 @@ function youtubeEmbed(url){
 }
 function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   var c = document.getElementById('dashOverlayContent');
-  var html = '<h3 style="color:#fff;font-weight:800;margin-bottom:16px">Equipe '+esc(eq)+'</h3>';
-  if(linkProto) html += '<h4 style="color:#FF0000;font-weight:700;margin-bottom:8px;font-size:.85rem">🎬 Protótipo</h4>'+youtubeEmbed(linkProto);
-  if(linkExtra) html += '<h4 style="color:#FFA500;font-weight:700;margin-bottom:8px;font-size:.85rem">📎 Link Extra</h4><p style="margin-bottom:12px"><a href="'+esc(linkExtra)+'" target="_blank" style="color:#FFA500;font-weight:600">🔗 Abrir link</a></p>';
-  if(linkPitch) html += '<h4 style="color:#EC008C;font-weight:700;margin-bottom:8px;font-size:.85rem">🎤 Pitch</h4>'+youtubeEmbed(linkPitch);
-  if(!linkProto && !linkExtra && !linkPitch) html += '<p style="color:rgba(255,255,255,.3);font-size:.85rem">Nenhum link de entrega cadastrado para esta equipe.</p>';
+  var html = '<div class="dash-overlay-header"><button class="overlay-close" onclick="fecharDashOverlay()" style="position:absolute;top:14px;right:16px">&times;</button><h2>Equipe #'+esc(eq)+'</h2><div class="sub">Painel de avaliação — jurados</div></div>';
+  var temVideo = linkProto || linkPitch;
+  html += '<div class="dash-overlay-section"><h3>🎬 Entregas em Vídeo</h3>';
+  if(temVideo){
+    html += '<div class="dash-overlay-videos">';
+    if(linkProto){
+      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(linkProto)+'" target="_blank">abrir no YouTube ↗</a></div>'+youtubeEmbed(linkProto)+'</div>';
+    }
+    if(linkPitch){
+      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(linkPitch)+'" target="_blank">abrir no YouTube ↗</a></div>'+youtubeEmbed(linkPitch)+'</div>';
+    }
+    if(linkExtra){
+      html += '<div class="dash-overlay-video"><div class="label">📎 Link Extra <a href="'+esc(linkExtra)+'" target="_blank">abrir ↗</a></div><div style="padding:12px;text-align:center"><a href="'+esc(linkExtra)+'" target="_blank" style="color:#FFA500;font-weight:700;font-size:.85rem">🔗 Acessar link extra</a></div></div>';
+    }
+    html += '</div>';
+  } else {
+    html += '<div class="dash-overlay-placeholder"><div class="icon">🎬</div>Nenhum vídeo cadastrado para esta equipe.</div>';
+  }
+  html += '</div>';
+  html += '<div class="dash-overlay-section"><h3>📄 Documentos do Projeto</h3><div class="hint">PDFs, apresentações e materiais de apoio enviados pela equipe.</div><div class="dash-overlay-placeholder"><div class="icon">📄</div>Nenhum documento enviado ainda.<br><span style="font-size:.72rem;color:rgba(255,255,255,.08)">Placeholder — futura integração com upload de PDF/docs.</span></div></div>';
+  html += '<div class="dash-overlay-section"><h3>⭐ Formulário de Avaliação</h3><div class="hint">Preencha os critérios abaixo para avaliar a equipe. Este é um rascunho do formulário.</div><div class="dash-form">';
+  html += '<label>Critério 1 — Pertinência temática</label><select><option value="">Selecione...</option><option value="1">1 — Ruim</option><option value="2">2 — Fraco</option><option value="3">3 — Regular</option><option value="4">4 — Bom</option><option value="5">5 — Excelente</option></select>';
+  html += '<label>Critério 2 — Qualidade da Solução</label><div class="radio-group">';
+  for(var i=1;i<=5;i++){
+    html += '<label><input type="radio" name="q2" value="'+i+'"><span>'+i+'</span></label>';
+  }
+  html += '</div>';
+  html += '<label>Critério 3 — Clareza do Pitch</label><div class="radio-group">';
+  for(var i=1;i<=5;i++){
+    html += '<label><input type="radio" name="q3" value="'+i+'"><span>'+i+'</span></label>';
+  }
+  html += '</div>';
+  html += '<label>Observações do Jurado</label><textarea placeholder="Comentários, pontos fortes, sugestões..."></textarea>';
+  html += '<label>Nota Final (0-10)</label><input type="text" placeholder="Ex: 8.5">';
+  html += '<button class="btn-submit" onclick="alert(\'Formulário de demonstração — ainda não salva respostas.\')">💾 Salvar avaliação</button>';
+  html += '</div></div>';
   c.innerHTML = html;
+  c.querySelectorAll('.dash-form .radio-group label').forEach(function(l){
+    l.addEventListener('click', function(){
+      var input = this.querySelector('input');
+      if(input) input.checked = true;
+      this.parentNode.querySelectorAll('label').forEach(function(x){ x.classList.remove('selected'); });
+      this.classList.add('selected');
+    });
+  });
   document.getElementById('dashOverlay').classList.add('show');
 }
 function fecharDashOverlay(){
