@@ -272,6 +272,7 @@ else:
                 k = 8 if any(w in pergunta.lower() for w in ["mentor", "mentoria", "quem pode ajudar"]) else 5
                 resultados = buscar(pergunta, modelo, chunks, embeddings, k=k)
 
+                score_max = max((s for _, s in resultados), default=1)
                 partes = []
                 fontes = set()
                 props_mentor = 0
@@ -282,6 +283,9 @@ else:
                         continue
                     if is_mentor:
                         props_mentor += 1
+                    tipo = chunk.get("tipo", "media")
+                    if tipo == "baixa" and score < score_max * 0.6:
+                        continue
                     partes.append(chunk["texto"])
                     fontes.add(chunk["fonte"])
                 contexto = "\n\n".join(partes)
@@ -291,27 +295,8 @@ else:
                     papel = "Usuário" if msg["papel"] == "user" else "Assistente"
                     historico += f"{papel}: {msg['conteudo']}\n\n"
 
-                prompt = f"""Você é a Panic Lobster, a assistente do haCARthon. Seu estilo:
-- Tom direto e enxuto — responda em 2-3 parágrafos no máximo
-- Amigável, como no Discord, com emojis leves (😉, 🙂)
-- Vá direto ao ponto, sem introduções
-- NÃO repita a pergunta do usuário
-- Responda em português
-
-Classifique a dúvida:
-- ORGANIZAÇÃO (regras, prazos, entregas, inscrição, problemas com equipe, processo, edital, canais) → direcione para "Fale com a Organização" no Discord
-- TÉCNICO/PROJETO (implementação, código, mentoria, desafio) → direcione para !queromentoria no Discord
-
-REGRAS:
-1. Máximo 3 parágrafos. Seja direto.
-2. INCLUA O LINK da plataforma de entregas sempre que falar sobre entregas: https://hacarthon.paniclobster.com/entregas
-3. INCLUA LINKS de lives e tutoriais disponíveis nos documentos.
-4. RESPONDA SÓ COM BASE NOS DOCUMENTOS. Se não achar, não invente — sugira o canal.
-5. SEMPRE indique o canal ao final, se aplicável.
-6. NÃO repita a pergunta, NÃO use "Com base nos documentos".
-
-LINKS DISPONÍVEIS NOS DOCUMENTOS:
-- Plataforma de entregas: https://hacarthon.paniclobster.com/entregas
+                from api.system_prompt import SYSTEM_PROMPT
+                prompt = SYSTEM_PROMPT + f"""
 
 HISTÓRICO RECENTE:
 {historico}
