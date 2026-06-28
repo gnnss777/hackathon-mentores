@@ -496,6 +496,7 @@ function switchTab(tab){
   var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'dash': 'Entregas', 'gerenciamento': 'Gerenciar documentos'};
   document.getElementById('headerSub').textContent = subs[tab] || '';
   if(tab==='dash') carregarDash();
+  if(tab==='chat') setTimeout(function(){document.getElementById('chatInput').focus()},100);
 }
 
 // === CHAT ===
