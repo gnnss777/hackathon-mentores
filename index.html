@@ -1074,10 +1074,6 @@ function renderDash(){
     })(eq, linkProto, linkExtra, linkPitch);
     c.appendChild(card);
   });
-  // Async phase: fetch durations via YouTube IFrame API
-  setTimeout(function(){
-    initYouTubeDuration(filtrados);
-  }, 100);
 }
 function cleanLink(link){
   link = (link||'').trim();
@@ -1098,29 +1094,6 @@ function getYoutubeId(url){
   return m ? m[1] : null;
 }
 var CACHE_DURACAO = {};
-function obterDuracaoVideo(link, tipo){
-  return new Promise(function(resolve){
-    var key = link+'|'+tipo;
-    if(CACHE_DURACAO[key] !== undefined) return resolve(CACHE_DURACAO[key]);
-    var id = getYoutubeId(normalizeUrl(link));
-    if(!id) { CACHE_DURACAO[key] = null; return resolve(null); }
-    fetch('/api/ytduration?v='+encodeURIComponent(id))
-      .then(function(r){ return r.json() })
-      .then(function(dados){
-        if(!dados.ok || !dados.segundos) {
-          console.warn('API ytduration erro para', id, ':', dados.erro || 'sem erro');
-          CACHE_DURACAO[key] = { erro: dados.erro || 'not_found' };
-          return resolve(CACHE_DURACAO[key]);
-        }
-        var secs = dados.segundos;
-        var limite = tipo === 'prototipo' ? 120 : 180;
-        var excedeu = secs > limite;
-        CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
-        resolve(CACHE_DURACAO[key]);
-      })
-      .catch(function(){ CACHE_DURACAO[key] = null; resolve(null); });
-  });
-}
 function atualizarDuracaoCard(eq, tipo, dur){
   var span = document.getElementById('dash-'+eq+'-'+tipo);
   if(!span) return;
@@ -1140,22 +1113,20 @@ function salvarDuracaoEmbed(tipo, link, secs){
   if(CACHE_DURACAO[key] && CACHE_DURACAO[key].segundos) return;
   var limite = tipo === 'prototipo' ? 120 : 180;
   CACHE_DURACAO[key] = { segundos: secs, excedeu: secs>limite, limite: limite };
-  var eq = null;
   DASH.forEach(function(r){
     var lp = cleanLink(r['LINK PROTOTIPO']);
     var lpi = cleanLink(r['LINK PITCH']);
-    if(lp===link || lpi===link) eq = r['EQUIPE'];
+    var eq = r['EQUIPE'];
+    if(lp===link) atualizarDuracaoCard(eq, 'prototipo', CACHE_DURACAO[key]);
+    if(lpi===link) atualizarDuracaoCard(eq, 'pitch', CACHE_DURACAO[key]);
   });
-  if(eq) atualizarDuracaoCard(eq, tipo, CACHE_DURACAO[key]);
 }
 window.addEventListener('message', function(e){
   if(!e.data || typeof e.data !== 'string') return;
-  var info, durSecs;
-  try {
-    info = JSON.parse(e.data);
-  } catch(ex){ return; }
+  var info;
+  try { info = JSON.parse(e.data); } catch(ex){ return; }
   if(info.info && info.info.duration && info.info.videoId){
-    durSecs = info.info.duration;
+    var durSecs = info.info.duration;
     var vid = info.info.videoId;
     DASH.forEach(function(r){
       var lp = cleanLink(r['LINK PROTOTIPO']);
@@ -1165,16 +1136,6 @@ window.addEventListener('message', function(e){
     });
   }
 });
-function initYouTubeDuration(filtrados){
-  var promises = [];
-  filtrados.forEach(function(r){
-    var lp = cleanLink(r['LINK PROTOTIPO']);
-    var lpi = cleanLink(r['LINK PITCH']);
-    var eq = r['EQUIPE']||'?';
-    if(lp) promises.push(obterDuracaoVideo(lp, 'prototipo').then(function(d){ atualizarDuracaoCard(eq, 'prototipo', d); }));
-    if(lpi) promises.push(obterDuracaoVideo(lpi, 'pitch').then(function(d){ atualizarDuracaoCard(eq, 'pitch', d); }));
-  });
-}
 function youtubeEmbed(url){
   url = normalizeUrl(url);
   if(!url) return '';
