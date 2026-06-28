@@ -28,14 +28,14 @@ def merge_chunks(custom_chunks=None, hidden_fontes=None):
                 base.append(c)
     return base
 
-def buscar(query, k=12, custom_chunks=None, hidden_fontes=None):
+def buscar(query, k=20, custom_chunks=None, hidden_fontes=None):
     all_chunks = merge_chunks(custom_chunks, hidden_fontes)
     q_words = set(re.sub(r'[^a-z0-9\s]', '', query.lower()).split())
     scores = []
     for i, c in enumerate(all_chunks):
         c_words = set(re.sub(r'[^a-z0-9\s]', '', c["texto"].lower()).split())
         overlap = len(q_words & c_words)
-        if overlap > 0:
+        if overlap >= 2:
             scores.append((overlap, i))
     scores.sort(key=lambda x: (-x[0], -len(all_chunks[x[1]]["texto"])))
     indices = [i for _, i in scores[:k]]
@@ -93,7 +93,7 @@ Primeiro, identifique o tipo de dúvida do usuário:
 
 REGRAS:
 1. Responda de forma completa e útil — explique o contexto, dê os detalhes, mostre o caminho.
-2. Se encontrar a resposta nos documentos, responda com os fatos e detalhes disponíveis.
+2. RESPONDA APENAS COM BASE NOS DOCUMENTOS FORNECIDOS. Se os documentos não tiverem a informação, NÃO invente números, prazos ou limites. Diga que não encontrou essa informação específica nos documentos disponíveis e sugira o canal apropriado.
 3. SEMPRE indique qual canal procurar ao final, quando a dúvida não for totalmente resolvida pelos documentos.
 4. Use o histórico pra manter contexto e evitar repetições.
 5. Quando mencionar uma plataforma, URL, ferramenta, sistema, ambiente ou recurso, inclua o link completo se ele estiver disponível nos documentos. Ex: "plataforma de entregas: https://hacarthon.paniclobster.com/entregas" ou "site do CAR: https://car.gov.br".
