@@ -858,7 +858,7 @@ function uploadArquivo(file){
 }
 // === DASH ENTREGAS ===
 var DASH = [];
-var FLT_DASH = {aval:'', desafio:'', entrega:''};
+var FLT_DASH = {aval:[], desafio:[], entrega:[]};
 function montarDashFiltros(){
   var area = document.getElementById('dashFilterArea');
   if(!area) return;
@@ -889,10 +889,20 @@ function montarDashFiltros(){
 function dashFiltroClick(el){
   var grp = el.getAttribute('data-grp');
   var val = el.getAttribute('data-val')||'';
-  FLT_DASH[grp] = val;
+  if(!FLT_DASH[grp]) FLT_DASH[grp] = [];
+  if(val === ''){
+    FLT_DASH[grp] = [];
+  } else {
+    var idx = FLT_DASH[grp].indexOf(val);
+    if(idx >= 0) FLT_DASH[grp].splice(idx, 1); else FLT_DASH[grp].push(val);
+  }
   var parent = el.closest('.tag-filter-group');
-  if(parent) parent.querySelectorAll('.filter-tag').forEach(function(t){ t.classList.remove('active'); });
-  el.classList.add('active');
+  if(parent){
+    parent.querySelectorAll('.filter-tag').forEach(function(t){
+      var tv = t.getAttribute('data-val')||'';
+      t.classList.toggle('active', tv === '' ? FLT_DASH[grp].length === 0 : FLT_DASH[grp].includes(tv));
+    });
+  }
   renderDash();
 }
 function carregarDash(){
@@ -924,38 +934,41 @@ function recarregarDash(){
 var EQUIPES_CADASTRO = {};
 function renderDash(){
   var q = (document.getElementById('dashSearch').value||'').toLowerCase();
-  var fltAval = FLT_DASH.aval;
-  var fltDesafio = FLT_DASH.desafio;
-  var fltEntrega = FLT_DASH.entrega;
+  var fltAval = FLT_DASH.aval || [];
+  var fltDesafio = FLT_DASH.desafio || [];
+  var fltEntrega = FLT_DASH.entrega || [];
   var avals = carregarAvaliacoes();
   var filtrados = DASH.filter(function(r){
     var eq = r['EQUIPE']||'';
     if(q && !eq.toLowerCase().includes(q)) return false;
     // Aval filter
-    if(fltAval){
+    if(fltAval.length){
       var salvou = avals[eq] || {};
       var completo = salvou.c1 && salvou.c2 && salvou.c3 && salvou.nota;
-      if(fltAval === 'avaliado' && !completo) return false;
-      if(fltAval === 'nao' && completo) return false;
+      var isAval = completo;
+      var isNao = !completo;
+      var avalMatch = (fltAval.includes('avaliado') && isAval) || (fltAval.includes('nao') && isNao);
+      if(!avalMatch) return false;
     }
     // Desafio filter
-    if(fltDesafio){
+    if(fltDesafio.length){
       var sc = EQUIPES_CADASTRO[eq] || {};
-      if(sc.desafio !== fltDesafio) return false;
+      if(!fltDesafio.includes(sc.desafio)) return false;
     }
     // Entrega filter
-    if(fltEntrega){
+    if(fltEntrega.length){
       var ideiaOk = (r['IDEACAO']||'').toUpperCase() === 'SIM';
       var protoOk = (r['PROTOTIPO']||'').toUpperCase() === 'SIM';
       var pitchOk = (r['PITCH']||'').toUpperCase() === 'SIM';
       var extraOk = !!((r['LINK EXTRA']||'').trim());
-      if(fltEntrega === 'ideia_ok' && !ideiaOk) return false;
-      if(fltEntrega === 'ideia_nao' && ideiaOk) return false;
-      if(fltEntrega === 'proto_ok' && !protoOk) return false;
-      if(fltEntrega === 'proto_nao' && protoOk) return false;
-      if(fltEntrega === 'pitch_ok' && !pitchOk) return false;
-      if(fltEntrega === 'pitch_nao' && pitchOk) return false;
-      if(fltEntrega === 'extra_ok' && !extraOk) return false;
+      var hasIdeiaOk = fltEntrega.includes('ideia_ok') && ideiaOk;
+      var hasIdeiaNao = fltEntrega.includes('ideia_nao') && !ideiaOk;
+      var hasProtoOk = fltEntrega.includes('proto_ok') && protoOk;
+      var hasProtoNao = fltEntrega.includes('proto_nao') && !protoOk;
+      var hasPitchOk = fltEntrega.includes('pitch_ok') && pitchOk;
+      var hasPitchNao = fltEntrega.includes('pitch_nao') && !pitchOk;
+      var hasExtraOk = fltEntrega.includes('extra_ok') && extraOk;
+      if(!(hasIdeiaOk||hasIdeiaNao||hasProtoOk||hasProtoNao||hasPitchOk||hasPitchNao||hasExtraOk)) return false;
     }
     return true;
   });
