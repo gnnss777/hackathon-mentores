@@ -998,6 +998,18 @@ function renderDash(){
   if(!c) return;
   c.innerHTML = '';
   if(!filtrados.length) { c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Nenhum resultado</div>'; return; }
+  // Sort: teams with videos first
+  filtrados.sort(function(a, b){
+    var aProto = (a['LINK PROTOTIPO']||'').trim().toUpperCase();
+    var aPitch = (a['LINK PITCH']||'').trim().toUpperCase();
+    var bProto = (b['LINK PROTOTIPO']||'').trim().toUpperCase();
+    var bPitch = (b['LINK PITCH']||'').trim().toUpperCase();
+    var aHas = (aProto && aProto !== 'NÃO' && aProto !== 'NAO') || (aPitch && aPitch !== 'NÃO' && aPitch !== 'NAO');
+    var bHas = (bProto && bProto !== 'NÃO' && bProto !== 'NAO') || (bPitch && bPitch !== 'NÃO' && bPitch !== 'NAO');
+    if(aHas && !bHas) return -1;
+    if(!aHas && bHas) return 1;
+    return 0;
+  });
   var promises = filtrados.map(function(r){
     var eq = r['EQUIPE']||'?';
     var linkProto = (r['LINK PROTOTIPO']||'').trim();
@@ -1098,20 +1110,25 @@ function obterDuracaoVideo(link, tipo){
     if(CACHE_DURACAO[key] !== undefined) return resolve(CACHE_DURACAO[key]);
     var id = getYoutubeId(normalizeUrl(link));
     if(!id) { CACHE_DURACAO[key] = null; return resolve(null); }
-    fetch('/api/ytduration?v='+encodeURIComponent(id))
-      .then(function(r){ return r.json() })
-      .then(function(dados){
-        if(!dados.ok || !dados.segundos) {
-          CACHE_DURACAO[key] = { erro: dados.erro || 'not_found' };
+    // Try to get duration via fetch to YouTube page (works from browser)
+    fetch('https://www.youtube.com/watch?v='+id)
+      .then(function(r){ return r.text() })
+      .then(function(html){
+        var m = html.match(/"approxDurationMs":"(\d+)"/);
+        if(m && m[1]){
+          var secs = Math.round(parseInt(m[1])/1000);
+          var limite = tipo === 'prototipo' ? 120 : 180;
+          var excedeu = secs > limite;
+          CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
           return resolve(CACHE_DURACAO[key]);
         }
-        var secs = dados.segundos;
-        var limite = tipo === 'prototipo' ? 120 : 180;
-        var excedeu = secs > limite;
-        CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
+        CACHE_DURACAO[key] = { erro: 'not_found' };
         resolve(CACHE_DURACAO[key]);
       })
-      .catch(function(){ CACHE_DURACAO[key] = null; resolve(null); });
+      .catch(function(){
+        CACHE_DURACAO[key] = { erro: 'not_found' };
+        resolve(CACHE_DURACAO[key]);
+      });
   });
 }
 function youtubeEmbed(url){
