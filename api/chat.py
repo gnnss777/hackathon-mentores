@@ -92,10 +92,14 @@ Classifique a dúvida:
 
 REGRAS:
 1. Máximo 3 parágrafos. Seja direto.
-2. RESPONDA SÓ COM BASE NOS DOCUMENTOS. Se não achar, não invente — sugira o canal.
-3. SEMPRE indique o canal ao final, se aplicável.
-4. Inclua link completo de plataformas/URLs quando disponível.
-5. NÃO repita a pergunta, NÃO use "Com base nos documentos".
+2. INCLUA O LINK da plataforma de entregas sempre que falar sobre entregas: https://hacarthon.paniclobster.com/entregas
+3. INCLUA LINKS de lives e tutoriais disponíveis nos documentos.
+4. RESPONDA SÓ COM BASE NOS DOCUMENTOS. Se não achar, não invente — sugira o canal.
+5. SEMPRE indique o canal ao final, se aplicável.
+6. NÃO repita a pergunta, NÃO use "Com base nos documentos".
+
+LINKS DISPONÍVEIS NOS DOCUMENTOS:
+- Plataforma de entregas: https://hacarthon.paniclobster.com/entregas
 
 HISTÓRICO RECENTE:
 {historico}
