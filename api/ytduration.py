@@ -1,35 +1,36 @@
-import json, re, urllib.request, os, sys
+import json, re, urllib.request
 from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-}
+INVIDIOUS = "https://invidious.snopyta.org"
 
 def fetch_duration(video_id):
+    # Try Invidious API first (lightweight, no JS)
     req = urllib.request.Request(
-        f"https://www.youtube.com/watch?v={video_id}",
-        headers=HEADERS
+        f"{INVIDIOUS}/api/v1/videos/{video_id}",
+        headers={"User-Agent": "Mozilla/5.0"}
     )
-    resp = urllib.request.urlopen(req, timeout=20)
-    raw = resp.read()
-    html = raw.decode("utf-8", errors="replace")
+    try:
+        resp = urllib.request.urlopen(req, timeout=10)
+        data = json.loads(resp.read().decode("utf-8"))
+        if data.get("lengthSeconds"):
+            return int(data["lengthSeconds"]), None
+    except Exception:
+        pass
 
-    # try multiple patterns
-    patterns = [
-        r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)',
-        r'"approxDurationMs":"(\d+)"',
-        r'approxDurationMs[=:]\s*(\d+)',
-        r'length_seconds["\']?\s*[:=]\s*["\']?(\d+)',
-    ]
-    for p in patterns:
-        m = re.search(p, html)
-        if m:
-            return int(m.group(1)), None
-    return None, html[:2000]  # snippet for debug
+    # Fallback: try YouTube oembed (returns some data)
+    try:
+        req2 = urllib.request.Request(
+            f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json",
+            headers={"User-Agent": "Mozilla/5.0"}
+        )
+        resp2 = urllib.request.urlopen(req2, timeout=10)
+        data2 = json.loads(resp2.read().decode("utf-8"))
+        return None, None
+    except Exception:
+        pass
+
+    return None, None
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -51,16 +52,15 @@ class handler(BaseHTTPRequestHandler):
             self._respond(CACHE[cache_key])
             return
         try:
-            ms, snippet = fetch_duration(video_id)
-            if ms:
-                secs = round(ms / 1000)
+            secs, _ = fetch_duration(video_id)
+            if secs:
                 result = {"ok": True, "segundos": secs}
             else:
-                result = {"ok": False, "erro": "duration_not_found", "debug": f"html_len={len(snippet) if snippet else 0}", "snippet": (snippet[:500] if snippet else "")}
+                result = {"ok": False, "erro": "duration_not_found"}
             CACHE[cache_key] = result
             self._respond(result)
         except Exception as e:
-            self._respond({"ok": False, "erro": str(e), "debug": f"{type(e).__name__}: {e}"})
+            self._respond({"ok": False, "erro": str(e)})
 
     def _respond(self, data):
         self.send_response(200)
