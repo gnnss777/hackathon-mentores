@@ -1,17 +1,15 @@
 import json
 import re
-import urllib.request
-import urllib.error
+import os
 from http.server import BaseHTTPRequestHandler
 
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+
 def chunk_text(texto, fonte, chunk_size=500):
-    linhas = texto.split("\n")
+    linhas = [l.strip() for l in texto.replace(". ", ".\n").replace("? ", "?\n").replace("! ", "!\n").split("\n") if l.strip()]
     partes = []
     parte = []
     for linha in linhas:
-        linha = linha.strip()
-        if not linha:
-            continue
         parte.append(linha)
         if len(" ".join(parte)) >= chunk_size:
             partes.append(" ".join(parte))
@@ -34,19 +32,16 @@ def extract_video_id(url):
     return None
 
 def fetch_captions(video_id):
-    req = urllib.request.Request(
-        f"https://youtubetranscript.com/?server_vid2={video_id}",
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        body = resp.read().decode("utf-8", errors="replace")
-    texts = re.findall(r'<text[^>]*start="([^"]*)"[^>]*dur="([^"]*)"[^>]*>([^<]*)</text>', body)
-    if not texts:
-        raise ValueError("Nenhuma legenda encontrada para este vídeo")
+    from youtube_transcript_api import YouTubeTranscriptApi
+    import requests
+    session = requests.Session()
+    session.headers.update({"User-Agent": USER_AGENT})
+    api = YouTubeTranscriptApi(http_client=session)
+    transcript = api.fetch(video_id, languages=["pt", "pt-BR", "en"])
     parts = []
-    for _, _, t in texts:
-        t = t.replace("&#39;", "'").replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"')
-        parts.append(t)
+    for seg in transcript:
+        if seg.text.strip():
+            parts.append(seg.text)
     text = " ".join(parts)
     text = re.sub(r'\s+', ' ', text).strip()
     if not text or len(text) < 20:
@@ -67,15 +62,12 @@ class handler(BaseHTTPRequestHandler):
             body = self.rfile.read(length).decode("utf-8")
             data = json.loads(body)
             url = data.get("url", "")
-
             video_id = extract_video_id(url)
             if not video_id:
                 raise ValueError("URL do YouTube inválida")
-
             text = fetch_captions(video_id)
             fonte = f"yt_{video_id}"
             chunks = chunk_text(text, fonte)
-
             response = json.dumps({
                 "chunks": chunks,
                 "total_chunks": len(chunks),
@@ -83,13 +75,11 @@ class handler(BaseHTTPRequestHandler):
                 "fonte": fonte,
                 "video_id": video_id
             }, ensure_ascii=False).encode("utf-8")
-
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(response)
-
         except Exception as e:
             msg = str(e)
             self.send_response(500)
