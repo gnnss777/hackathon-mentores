@@ -1107,23 +1107,38 @@ function onYouTubeIframeAPIReady(){
     height: 3,
     events: {
       onReady: function(){ processarFilaYT(); },
-      onStateChange: onYTStateChange
+      onStateChange: onYTStateChange,
+      onError: function(e){
+        if(!YT_CURRENT) return;
+        var key = YT_CURRENT.vid + '|' + YT_CURRENT.tipo;
+        CACHE_DURACAO[key] = { erro: 'blocked_or_deleted' };
+        atualizarDuracaoCard(YT_CURRENT.eq, YT_CURRENT.tipo, null);
+        YT_CURRENT = null;
+        processarFilaYT();
+      }
     }
   });
 }
 function onYTStateChange(e){
   if(e.data === 5 && YT_CURRENT && YT_PLAYER){
-    var secs = Math.round(YT_PLAYER.getDuration());
-    var key = YT_CURRENT.vid + '|' + YT_CURRENT.tipo;
-    if(!isNaN(secs) && secs > 0){
-      var limite = YT_CURRENT.tipo === 'prototipo' ? 120 : 180;
-      var excedeu = secs > limite;
-      CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
-      atualizarDuracaoCard(YT_CURRENT.eq, YT_CURRENT.tipo, CACHE_DURACAO[key]);
-    } else {
-      CACHE_DURACAO[key] = { erro: 'bad_duration' };
-      atualizarDuracaoCard(YT_CURRENT.eq, YT_CURRENT.tipo, null);
-    }
+    tentarDuracao(YT_CURRENT, 0);
+  }
+}
+function tentarDuracao(item, tentativas){
+  var secs = Math.round(YT_PLAYER.getDuration());
+  var key = item.vid + '|' + item.tipo;
+  if(!isNaN(secs) && secs > 0){
+    var limite = item.tipo === 'prototipo' ? 120 : 180;
+    var excedeu = secs > limite;
+    CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
+    atualizarDuracaoCard(item.eq, item.tipo, CACHE_DURACAO[key]);
+    YT_CURRENT = null;
+    processarFilaYT();
+  } else if(tentativas < 10){
+    setTimeout(function(){ tentarDuracao(item, tentativas+1); }, 200);
+  } else {
+    CACHE_DURACAO[key] = { erro: 'duration_timeout' };
+    atualizarDuracaoCard(item.eq, item.tipo, null);
     YT_CURRENT = null;
     processarFilaYT();
   }
