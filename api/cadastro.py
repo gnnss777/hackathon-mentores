@@ -14,8 +14,17 @@ def fetch():
     for r in reader:
         team = (r.get("Qual o n\u00famero da sua equipe? (se n\u00e3o souber pergunte pra organiza\u00e7\u00e3o) *") or "").strip()
         completo = (r.get("Inscri\u00e7\u00e3o Completa?") or "").strip()
+        desafio = (r.get("1. Selecione qual desafio a sua equipe ir\u00e1 resolver no HaCARthon. *") or "").strip()
         if team:
-            result[team] = completo
+            # Normalize desafio
+            d = ""
+            if "1" in desafio or "Simplificar" in desafio:
+                d = "D1"
+            elif "2" in desafio or "geoespaciais" in desafio or "dados" in desafio.lower():
+                d = "D2"
+            elif "3" in desafio or "Legisla" in desafio or "entendimento" in desafio.lower():
+                d = "D3"
+            result[team] = {"completo": completo, "desafio": d}
     return result
 
 CACHE = None

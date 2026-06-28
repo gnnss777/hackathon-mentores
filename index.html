@@ -288,8 +288,13 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 </div>
 <div class="stats" id="dashStats"></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="dashFilters">
+  <select id="fltAval" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Avaliação: Todas</option><option value="avaliado">✅ Avaliado</option><option value="medio">⏳ Médio</option><option value="nao">❌ Não avaliado</option></select>
+  <select id="fltDesafio" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Desafio: Todos</option><option value="D1">D1 - Simplificar CAR</option><option value="D2">D2 - Dados geoespaciais</option><option value="D3">D3 - Legislação</option></select>
+  <select id="fltEntrega" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Entrega: Todas</option><option value="ideia_ok">💡 Ideação feita</option><option value="ideia_nao">💡 Ideação pendente</option><option value="proto_ok">🎬 Protótipo feito</option><option value="proto_nao">🎬 Protótipo pendente</option><option value="pitch_ok">🎤 Pitch feito</option><option value="pitch_nao">🎤 Pitch pendente</option><option value="extra_ok">📎 Extra enviado</option></select>
+</div>
 <div style="margin-bottom:16px">
-<input type="text" id="dashSearch" placeholder="Buscar por equipe, status ou email..." oninput="renderDash()" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
+<input type="text" id="dashSearch" placeholder="Buscar por equipe..." oninput="renderDash()" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
 </div>
 <div class="grid-cards" id="dashContainer"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div></div>
 </div>
@@ -882,10 +887,44 @@ function recarregarDash(){
 var EQUIPES_CADASTRO = {};
 function renderDash(){
   var q = (document.getElementById('dashSearch').value||'').toLowerCase();
+  var fltAval = document.getElementById('fltAval').value;
+  var fltDesafio = document.getElementById('fltDesafio').value;
+  var fltEntrega = document.getElementById('fltEntrega').value;
+  var avals = carregarAvaliacoes();
   var filtrados = DASH.filter(function(r){
-    var eq = (r['EQUIPE']||'').toLowerCase();
-    var em = (r['EMAIL LIDER']||'').toLowerCase();
-    return !q || eq.includes(q) || em.includes(q);
+    var eq = r['EQUIPE']||'';
+    if(q && !eq.toLowerCase().includes(q)) return false;
+    // Aval filter
+    if(fltAval){
+      var salvou = avals[eq];
+      var temC1 = salvou && salvou.c1;
+      var temC2 = salvou && salvou.c2;
+      var temC3 = salvou && salvou.c3;
+      var temNota = salvou && salvou.nota;
+      if(fltAval === 'avaliado' && !(salvou && (temC1 || temC2 || temC3 || temNota))) return false;
+      if(fltAval === 'medio' && !(salvou && (temC1 || temC2 || temC3) && !temNota)) return false;
+      if(fltAval === 'nao' && (salvou && (temC1 || temC2 || temC3 || temNota))) return false;
+    }
+    // Desafio filter
+    if(fltDesafio){
+      var sc = EQUIPES_CADASTRO[eq] || {};
+      if(sc.desafio !== fltDesafio) return false;
+    }
+    // Entrega filter
+    if(fltEntrega){
+      var ideiaOk = (r['IDEACAO']||'').toUpperCase() === 'SIM';
+      var protoOk = (r['PROTOTIPO']||'').toUpperCase() === 'SIM';
+      var pitchOk = (r['PITCH']||'').toUpperCase() === 'SIM';
+      var extraOk = !!((r['LINK EXTRA']||'').trim());
+      if(fltEntrega === 'ideia_ok' && !ideiaOk) return false;
+      if(fltEntrega === 'ideia_nao' && ideiaOk) return false;
+      if(fltEntrega === 'proto_ok' && !protoOk) return false;
+      if(fltEntrega === 'proto_nao' && protoOk) return false;
+      if(fltEntrega === 'pitch_ok' && !pitchOk) return false;
+      if(fltEntrega === 'pitch_nao' && pitchOk) return false;
+      if(fltEntrega === 'extra_ok' && !extraOk) return false;
+    }
+    return true;
   });
   var stats = document.getElementById('dashStats');
   if(!stats) return;
@@ -911,11 +950,13 @@ function renderDash(){
     var statusPanic = (r['STATUS PELA PANIC']||'').trim();
     var email = (r['EMAIL LIDER']||'').trim();
     var temVideo = linkProto || linkPitch;
-    var statusCadastro = EQUIPES_CADASTRO[eq];
-    var cadastroOk = statusCadastro && statusCadastro.toUpperCase() === 'SIM';
+    var statusCadastro = EQUIPES_CADASTRO[eq] || {};
+    var cadastroOk = statusCadastro.completo && statusCadastro.completo.toUpperCase() === 'SIM';
+    var desafioEq = statusCadastro.desafio || '';
     var ideiaOk = (r['IDEACAO']||'').toUpperCase() === 'SIM';
     var protoOk = (r['PROTOTIPO']||'').toUpperCase() === 'SIM';
     var pitchOk = (r['PITCH']||'').toUpperCase() === 'SIM';
+    var extraOk = !!linkExtra;
     var qualCor = qual.toUpperCase() === 'ALTA' ? '#25D366' : qual.toUpperCase() === 'MAIS OU MENOS' ? '#FFA500' : qual ? '#ff4444' : '';
     var statusBg = cadastroOk ? 'rgba(37,211,102,.12)' : 'rgba(255,165,0,.12)';
     var statusCor = cadastroOk ? '#25D366' : '#FFA500';
@@ -926,12 +967,12 @@ function renderDash(){
       });
     })(eq, linkProto, linkExtra, linkPitch);
     var jaAvaliado = carregarAvaliacao(eq);
-    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div></div>';
+    var dc = desafioEq === 'D1' ? '#00BFFF' : desafioEq === 'D2' ? '#25D366' : '#FFA500';
+    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div>'+(desafioEq?'<span class="dash-badge" style="background:'+dc+'15;color:'+dc+'">'+esc(desafioEq)+'</span>':'')+'</div>';
     card.innerHTML += '<div class="dash-card-body">';
     card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
     card.innerHTML += '<div class="dash-delivery-line">';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">💡</span><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>Ideação</span>';
-    var extraOk = !!linkExtra;
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎬</span><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>Protótipo</span>';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎤</span><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>Pitch</span>';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">📎</span><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>Extra</span>';

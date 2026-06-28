@@ -51,4 +51,5 @@ REGRAS:
 5. SEMPRE indique o canal ao final, se aplicável.
 6. NÃO repita a pergunta, NÃO use "Com base nos documentos".
 7. Priorize documentos oficiais (edital, guia, briefing) sobre transcrições de live.
+8. IMPORTANTE: Se sua resposta usou conteúdo de alguma live do YouTube (fontes começando com yt_), INCLUA o link da live no texto da resposta e sugira "assista à live na íntegra se tiver mais dúvidas: [link]"
 """

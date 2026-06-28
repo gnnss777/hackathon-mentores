@@ -296,12 +296,20 @@ else:
                     historico += f"{papel}: {msg['conteudo']}\n\n"
 
                 from api.system_prompt import SYSTEM_PROMPT, LIVES_YOUTUBE
+
+                fontes_lives = {f for f in fontes if f.startswith("yt_") and f in LIVES_YOUTUBE}
+                lives_contexto = ""
+                if fontes_lives:
+                    lives_contexto = "\nLINKS DAS LIVES USADAS:\n" + "\n".join(
+                        f"- {f}: {LIVES_YOUTUBE[f]}" for f in fontes_lives
+                    ) + "\nSe você usou conteúdo de alguma dessas lives na resposta, INCLUA O LINK no texto e sugira que o usuário assista para mais detalhes."
                 prompt = SYSTEM_PROMPT + f"""
 
 HISTÓRICO RECENTE:
 {historico}
 DOCUMENTOS RELEVANTES:
 {contexto}
+{lives_contexto}
 
 PERGUNTA: {pergunta}
 
@@ -318,10 +326,16 @@ RESPOSTA:"""
                 except Exception as e:
                     texto_resposta = f"Erro ao consultar DeepSeek: {e}"
 
+                fontes_formatadas = []
+                for f in sorted(set(fontes)):
+                    if f in LIVES_YOUTUBE:
+                        fontes_formatadas.append(f"[{f}]({LIVES_YOUTUBE[f]})")
+                    else:
+                        fontes_formatadas.append(f)
                 resposta = f"""{texto_resposta}
 
 ---
-*Fontes: {", ".join(sorted(set(fontes)))}*"""
+*Fontes: {", ".join(fontes_formatadas)}*"""
 
             st.markdown(resposta)
 
