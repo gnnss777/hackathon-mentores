@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>haCARthon - Mentores & Chat</title>
+<link rel="icon" href="logo_white-de8638da8e90456792c38c13ccc01d73.svg" type="image/svg+xml">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -1111,7 +1112,7 @@ function obterDuracaoYT(videoId, tipo, cb){
   if(CACHE_DURACAO[key]) return cb(CACHE_DURACAO[key]);
   function criarPlayer(){
     var container = document.createElement('div');
-    container.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;';
+    container.style.cssText = 'position:absolute;left:0;bottom:0;width:2px;height:2px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;';
     document.body.appendChild(container);
     var done = false;
     var t = setTimeout(function(){
