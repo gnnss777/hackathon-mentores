@@ -108,6 +108,20 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .chat-msg.user{background:#EC008C;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .chat-msg.assistant{background:#1A1A2E;color:#e0e0f0;align-self:flex-start;border:1px solid rgba(255,255,255,.06);border-bottom-left-radius:4px}
 .chat-msg .msg-fontes{font-size:.7rem;color:rgba(255,255,255,.25);margin-top:8px}
+.chat-msg .msg-copy{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.06);border:none;color:rgba(255,255,255,.25);font-size:.6rem;padding:2px 8px;border-radius:4px;cursor:pointer;font-family:'Nunito Sans',sans-serif;opacity:0;transition:opacity .2s}
+.chat-msg:hover .msg-copy{opacity:1}
+.chat-msg .msg-copy:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+.chat-msg.assistant{background:#1A1A2E;color:#e0e0f0;align-self:flex-start;border:1px solid rgba(255,255,255,.06);border-bottom-left-radius:4px;position:relative}
+.chat-msg strong{color:#fff;font-weight:800}
+.chat-msg em{color:rgba(255,255,255,.7)}
+.chat-msg code{background:rgba(0,0,0,.3);padding:1px 6px;border-radius:4px;font-size:.82rem;color:#00BFFF}
+.chat-msg pre{background:rgba(0,0,0,.3);padding:10px 14px;border-radius:8px;overflow-x:auto;margin:6px 0;border:1px solid rgba(255,255,255,.05)}
+.chat-msg pre code{background:none;padding:0;color:#e0e0f0}
+.chat-msg ul,.chat-msg ol{padding-left:20px;margin:6px 0}
+.chat-msg li{margin:3px 0}
+.chat-msg hr{border:none;border-top:1px solid rgba(255,255,255,.08);margin:12px 0}
+.chat-msg a{color:#00BFFF;text-decoration:none}
+.chat-msg a:hover{text-decoration:underline}
 .chat-input-area{display:flex;gap:10px;padding:12px 16px;background:#1A1A2E;border:1px solid rgba(255,255,255,.06);border-radius:12px}
 .chat-input-area textarea{flex:1;background:transparent;border:none;outline:none;color:#fff;font-family:'Nunito Sans',sans-serif;font-size:.88rem;resize:none;padding:4px 0;min-height:24px;max-height:120px}
 .chat-input-area textarea::placeholder{color:rgba(255,255,255,.2)}
@@ -377,13 +391,47 @@ function switchTab(tab){
 }
 
 // === CHAT ===
+function mdToHtml(t){
+  t = t.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t = t.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+  t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+  t = t.replace(/### (.+)/g, '<h4>$1</h4>');
+  t = t.replace(/## (.+)/g, '<h3>$1</h3>');
+  t = t.replace(/# (.+)/g, '<h2>$1</h2>');
+  t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  t = t.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  t = t.replace(/^---$/gm, '<hr>');
+  var lines = t.split('\n');
+  var inList = false, listType = '';
+  for(var i = 0; i < lines.length; i++){
+    var li = lines[i];
+    if(li.match(/^[\s]*[-*]\s(.+)/)){
+      if(!inList || listType !== 'ul'){ lines[i] = '<ul>\n<li>'+RegExp.$1+'</li>'; inList = true; listType = 'ul'; }
+      else { lines[i] = '<li>'+RegExp.$1+'</li>'; }
+    } else if(li.match(/^[\s]*\d+[.)]\s(.+)/)){
+      if(!inList || listType !== 'ol'){ lines[i] = '<ol>\n<li>'+RegExp.$1+'</li>'; inList = true; listType = 'ol'; }
+      else { lines[i] = '<li>'+RegExp.$1+'</li>'; }
+    } else {
+      if(inList){ lines[i-1] += '\n</'+(listType==='ul'?'ul':'ol')+'>'; inList = false; }
+    }
+  }
+  if(inList) lines[lines.length-1] += '\n</'+(listType==='ul'?'ul':'ol')+'>';
+  t = lines.join('\n');
+  t = t.replace(/\n/g, '<br>');
+  return t;
+}
 function adicionarMensagem(papel, conteudo, fontes){
   var container = document.getElementById('chatMensagens');
   var welcome = document.getElementById('chatWelcome');
   if(welcome) welcome.style.display = 'none';
   var div = document.createElement('div');
   div.className = 'chat-msg ' + papel;
-  div.innerHTML = conteudo.replace(/\n/g, '<br>');
+  if(papel === 'assistant'){
+    div.innerHTML = '<button class="msg-copy" onclick="copiarMsg(this)">Copiar</button>' + mdToHtml(conteudo);
+  } else {
+    div.innerHTML = conteudo.replace(/\n/g, '<br>');
+  }
   if(fontes){
     var f = document.createElement('div');
     f.className = 'msg-fontes';
@@ -392,6 +440,14 @@ function adicionarMensagem(papel, conteudo, fontes){
   }
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
+}
+function copiarMsg(btn){
+  var msg = btn.parentNode;
+  var txt = msg.textContent.replace(/^Copiar/,'').replace(/Fontes:.*/,'').trim();
+  navigator.clipboard.writeText(txt).then(function(){
+    btn.textContent = 'Copiado!';
+    setTimeout(function(){ btn.textContent = 'Copiar'; }, 1200);
+  });
 }
 
 function enviarMensagem(){
