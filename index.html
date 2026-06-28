@@ -989,57 +989,79 @@ function renderDash(){
   var c = document.getElementById('dashContainer');
   if(!c) return;
   c.innerHTML = '';
-  filtrados.forEach(function(r){
-    var card = document.createElement('div');
-    card.className = 'dash-card';
+  if(!filtrados.length) { c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Nenhum resultado</div>'; return; }
+  var promises = filtrados.map(function(r){
     var eq = r['EQUIPE']||'?';
     var linkProto = (r['LINK PROTOTIPO']||'').trim();
     linkProto = (linkProto.toUpperCase() === 'NÃO' || linkProto.toUpperCase() === 'NAO') ? '' : linkProto;
-    var linkExtra = (r['LINK EXTRA']||'').trim();
-    linkExtra = (linkExtra.toUpperCase() === 'NÃO' || linkExtra.toUpperCase() === 'NAO') ? '' : linkExtra;
     var linkPitch = (r['LINK PITCH']||'').trim();
     linkPitch = (linkPitch.toUpperCase() === 'NÃO' || linkPitch.toUpperCase() === 'NAO') ? '' : linkPitch;
-    var qual = (r['QUALIDADE DA SOLUÇÃO']||r['QUALIDADE DA SOLU' + String.fromCharCode(199) + 'O']||'').trim();
-    var statusPanic = (r['STATUS PELA PANIC']||'').trim();
-    var email = (r['EMAIL LIDER']||'').trim();
-    var temVideo = linkProto || linkPitch;
-    var statusCadastro = EQUIPES_CADASTRO[eq] || {};
-    var cadastroOk = statusCadastro.completo && statusCadastro.completo.toUpperCase() === 'SIM';
-    var desafioEq = statusCadastro.desafio || '';
-    var ideiaOk = (r['IDEACAO']||'').toUpperCase() === 'SIM';
-    var protoOk = (r['PROTOTIPO']||'').toUpperCase() === 'SIM';
-    var pitchOk = (r['PITCH']||'').toUpperCase() === 'SIM';
-    var extraOk = !!linkExtra;
-    var qualCor = qual.toUpperCase() === 'ALTA' ? '#25D366' : qual.toUpperCase() === 'MAIS OU MENOS' ? '#FFA500' : qual ? '#ff4444' : '';
-    var statusBg = cadastroOk ? 'rgba(37,211,102,.12)' : 'rgba(255,165,0,.12)';
-    var statusCor = cadastroOk ? '#25D366' : '#FFA500';
-    var statusTxt = cadastroOk ? '✅ Cadastro OK' : '⏳ Pendente';
-    (function(eq, lp, le, lpi){
-      card.addEventListener('click', function(){
-        abrirDashOverlay(eq, lp, le, lpi);
-      });
-    })(eq, linkProto, linkExtra, linkPitch);
-    var jaAvaliado = (function(){
-      var s = carregarAvaliacao(eq);
-      return s && s.c1 && s.c2 && s.c3 && s.nota;
-    })();
-    var dc = desafioEq === 'D1' ? '#00BFFF' : desafioEq === 'D2' ? '#25D366' : '#FFA500';
-    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div>'+(desafioEq?'<span class="dash-badge" style="background:'+dc+'15;color:'+dc+'">'+esc(desafioEq)+'</span>':'')+'</div>';
-    card.innerHTML += '<div class="dash-card-body">';
-    card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
-    card.innerHTML += '<div class="dash-delivery-line">';
-    card.innerHTML += '<span class="dash-del-item"><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>💡Ideação</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>📎Extra</span>';
-    card.innerHTML += '</div>';
-    if(qual) card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
-    card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2);font-size:.62rem">🎬 Vídeos</span>':'<span style="color:rgba(255,255,255,.1);font-size:.62rem">Sem vídeos</span>')+'</div>';
-    card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Detalhes')+'</div>';
-    card.innerHTML += '</div>';
-    c.appendChild(card);
+    return Promise.all([
+      linkProto ? obterDuracaoVideo(linkProto, 'prototipo') : Promise.resolve(null),
+      linkPitch ? obterDuracaoVideo(linkPitch, 'pitch') : Promise.resolve(null)
+    ]).then(function(dur){
+      var card = document.createElement('div');
+      card.className = 'dash-card';
+      var eq = r['EQUIPE']||'?';
+      var linkProto = (r['LINK PROTOTIPO']||'').trim();
+      linkProto = (linkProto.toUpperCase() === 'NÃO' || linkProto.toUpperCase() === 'NAO') ? '' : linkProto;
+      var linkExtra = (r['LINK EXTRA']||'').trim();
+      linkExtra = (linkExtra.toUpperCase() === 'NÃO' || linkExtra.toUpperCase() === 'NAO') ? '' : linkExtra;
+      var linkPitch = (r['LINK PITCH']||'').trim();
+      linkPitch = (linkPitch.toUpperCase() === 'NÃO' || linkPitch.toUpperCase() === 'NAO') ? '' : linkPitch;
+      var qual = (r['QUALIDADE DA SOLUÇÃO']||r['QUALIDADE DA SOLU' + String.fromCharCode(199) + 'O']||'').trim();
+      var statusPanic = (r['STATUS PELA PANIC']||'').trim();
+      var email = (r['EMAIL LIDER']||'').trim();
+      var temVideo = linkProto || linkPitch;
+      var statusCadastro = EQUIPES_CADASTRO[eq] || {};
+      var cadastroOk = statusCadastro.completo && statusCadastro.completo.toUpperCase() === 'SIM';
+      var desafioEq = statusCadastro.desafio || '';
+      var ideiaOk = (r['IDEACAO']||'').toUpperCase() === 'SIM';
+      var protoOk = (r['PROTOTIPO']||'').toUpperCase() === 'SIM';
+      var pitchOk = (r['PITCH']||'').toUpperCase() === 'SIM';
+      var extraOk = !!linkExtra;
+      var qualCor = qual.toUpperCase() === 'ALTA' ? '#25D366' : qual.toUpperCase() === 'MAIS OU MENOS' ? '#FFA500' : qual ? '#ff4444' : '';
+      var statusBg = cadastroOk ? 'rgba(37,211,102,.12)' : 'rgba(255,165,0,.12)';
+      var statusCor = cadastroOk ? '#25D366' : '#FFA500';
+      var statusTxt = cadastroOk ? '✅ Cadastro OK' : '⏳ Pendente';
+      var durProto = dur[0];
+      var durPitch = dur[1];
+      var excedeuProto = durProto && durProto.excedeu;
+      var excedeuPitch = durPitch && durPitch.excedeu;
+      var avisoTempo = excedeuProto || excedeuPitch;
+      (function(eq, lp, le, lpi, dP, dPi){
+        card.addEventListener('click', function(){
+          abrirDashOverlay(eq, lp, le, lpi, dP, dPi);
+        });
+      })(eq, linkProto, linkExtra, linkPitch, durProto, durPitch);
+      var jaAvaliado = (function(){
+        var s = carregarAvaliacao(eq);
+        return s && s.c1 && s.c2 && s.c3 && s.nota;
+      })();
+      var dc = desafioEq === 'D1' ? '#00BFFF' : desafioEq === 'D2' ? '#25D366' : '#FFA500';
+      card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div>'+(desafioEq?'<span class="dash-badge" style="background:'+dc+'15;color:'+dc+'">'+esc(desafioEq)+'</span>':'')+'</div>';
+      card.innerHTML += '<div class="dash-card-body">';
+      card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
+      card.innerHTML += '<div class="dash-delivery-line">';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>💡Ideação</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>📎Extra</span>';
+      card.innerHTML += '</div>';
+      if(qual) card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
+      if(avisoTempo){
+        var avisos = [];
+        if(excedeuProto) avisos.push('🎬 Protótipo >2min ('+Math.round(durProto.segundos/60*10)/10+'min)');
+        if(excedeuPitch) avisos.push('🎤 Pitch >3min ('+Math.round(durPitch.segundos/60*10)/10+'min)');
+        card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:rgba(255,68,68,.15);color:#ff4444">⚠️ '+esc(avisos.join(' | '))+'</span></div>';
+      }
+      card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2);font-size:.62rem">🎬 Vídeos</span>':'<span style="color:rgba(255,255,255,.1);font-size:.62rem">Sem vídeos</span>')+'</div>';
+      card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Detalhes')+'</div>';
+      card.innerHTML += '</div>';
+      c.appendChild(card);
+    });
   });
-  if(!filtrados.length) c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Nenhum resultado</div>';
+  Promise.all(promises).catch(function(){});
 }
 function normalizeUrl(url){
   if(!url || url.toUpperCase() === 'NÃO' || url.toUpperCase() === 'NAO') return '';
@@ -1053,6 +1075,34 @@ function getYoutubeId(url){
   if(!url) return null;
   var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
   return m ? m[1] : null;
+}
+var CACHE_DURACAO = {};
+function obterDuracaoVideo(link, tipo){
+  return new Promise(function(resolve){
+    var key = link+'|'+tipo;
+    if(CACHE_DURACAO[key] !== undefined) return resolve(CACHE_DURACAO[key]);
+    var id = getYoutubeId(normalizeUrl(link));
+    if(!id) { CACHE_DURACAO[key] = null; return resolve(null); }
+    fetch('https://noembed.com/embed?url=https://www.youtube.com/watch?v='+id)
+      .then(function(r){ return r.json() })
+      .then(function(dados){
+        var dur = dados && dados.duration ? dados.duration : null;
+        if(!dur) { CACHE_DURACAO[key] = null; return resolve(null); }
+        var secs = 0;
+        var m2 = dur.match(/(\d+):(\d+):(\d+)/);
+        if(m2){ secs = parseInt(m2[1])*3600 + parseInt(m2[2])*60 + parseInt(m2[3]); }
+        else {
+          var m3 = dur.match(/(\d+):(\d+)/);
+          if(m3) secs = parseInt(m3[1])*60 + parseInt(m3[2]);
+          else secs = parseInt(dur) || 0;
+        }
+        var limite = tipo === 'prototipo' ? 120 : 180;
+        var excedeu = secs > limite;
+        CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
+        resolve(CACHE_DURACAO[key]);
+      })
+      .catch(function(){ CACHE_DURACAO[key] = null; resolve(null); });
+  });
 }
 function youtubeEmbed(url){
   url = normalizeUrl(url);
@@ -1068,7 +1118,7 @@ function linkOrEmbed(url, label){
   if(id) return youtubeEmbed(url);
   return '<div style="padding:12px;text-align:center;background:rgba(255,255,255,.02);border-radius:8px;margin-bottom:8px"><a href="'+esc(url)+'" target="_blank" style="color:#FFA500;font-weight:600;font-size:.82rem">🔗 '+(label||'Abrir link')+' ↗</a></div>';
 }
-function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
+function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch, durProto, durPitch){
   var c = document.getElementById('dashOverlayContent');
   var html = '<div class="dash-overlay-header"><button class="overlay-close" onclick="fecharDashOverlay()" style="position:absolute;top:14px;right:16px">&times;</button><h2>Equipe #'+esc(eq)+'</h2><div class="sub">Painel de avaliação — jurados</div></div>';
   var temVideo = linkProto || linkPitch;
@@ -1076,10 +1126,10 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   if(temVideo){
     html += '<div class="dash-overlay-videos">';
     if(linkProto){
-      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(normalizeUrl(linkProto))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkProto, 'Abrir protótipo')+'</div>';
+      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(normalizeUrl(linkProto))+'" target="_blank">abrir ↗</a>'+(durProto&&durProto.excedeu?' <span style="color:#ff4444;font-size:.65rem;font-weight:700">⚠️ Excede 2min ('+Math.round(durProto.segundos/60*10)/10+'min)</span>':'')+'</div>'+linkOrEmbed(linkProto, 'Abrir protótipo')+'</div>';
     }
     if(linkPitch){
-      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(normalizeUrl(linkPitch))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkPitch, 'Abrir pitch')+'</div>';
+      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(normalizeUrl(linkPitch))+'" target="_blank">abrir ↗</a>'+(durPitch&&durPitch.excedeu?' <span style="color:#ff4444;font-size:.65rem;font-weight:700">⚠️ Excede 3min ('+Math.round(durPitch.segundos/60*10)/10+'min)</span>':'')+'</div>'+linkOrEmbed(linkPitch, 'Abrir pitch')+'</div>';
     }
     if(linkExtra){
       html += '<div class="dash-overlay-video"><div class="label">📎 Link Extra <a href="'+esc(normalizeUrl(linkExtra))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkExtra, 'Abrir link extra')+'</div>';
