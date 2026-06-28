@@ -122,9 +122,22 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
   .header .sub{display:none}
   .chat-container{height:calc(100vh - 120px);min-height:400px}
 }
+
+/* TOAST CONFIRM */
+.toast-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding-top:80px;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast-overlay.show{opacity:1;pointer-events:all}
+.toast-box{background:#1A1A2E;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 32px;max-width:440px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.toast-box .msg{font-size:.95rem;color:rgba(255,255,255,.8);margin-bottom:24px;line-height:1.5;font-weight:600}
+.toast-box .bts{display:flex;gap:10px;justify-content:center}
+.toast-box .bts button{padding:10px 28px;border-radius:10px;border:none;cursor:pointer;font-size:.85rem;font-weight:700;font-family:'Nunito Sans',sans-serif;transition:all .2s}
+.toast-box .bts .btn-sim{background:#EC008C;color:#fff}
+.toast-box .bts .btn-sim:hover{background:#d0007a;transform:scale(1.02)}
+.toast-box .bts .btn-nao{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6)}
+.toast-box .bts .btn-nao:hover{background:rgba(255,255,255,.1)}
 </style>
 </head>
 <body>
+<div class="toast-overlay" id="toastOverlay"><div class="toast-box"><div class="msg" id="toastMsg"></div><div class="bts"><button class="btn-sim" id="toastSim">Sim</button><button class="btn-nao" id="toastNao">Não</button></div></div></div>
 <div class="container">
 <div class="header">
 <img src="logo_white-de8638da8e90456792c38c13ccc01d73.svg" alt="Panic Lobster" class="logo">
@@ -444,7 +457,6 @@ function toggleDoc(fonte){
 }
 function restaurarTodos(){
   saveHiddenFontes([]);
-  saveDeletedFontes([]);
   carregarDocsBase();
 }
 function getCustomDocs(){
@@ -457,20 +469,21 @@ function saveDeletedFontes(arr){
   localStorage.setItem('deletedFontes', JSON.stringify(arr));
 }
 function apagarDocumento(fonte, nome){
-  if(!confirm('Tem certeza que deseja apagar "' + nome + '"?')) return;
-  var docs = getCustomDocs();
-  var achou = docs.some(function(c){ return c.fonte === fonte; });
-  if(achou){
-    var filtrados = docs.filter(function(c){ return c.fonte !== fonte; });
-    localStorage.setItem('customChunks', JSON.stringify(filtrados));
-  }
-  var h = getHiddenFontes();
-  if(h.indexOf(fonte) === -1) h.push(fonte);
-  saveHiddenFontes(h);
-  var d = getDeletedFontes();
-  if(d.indexOf(fonte) === -1) d.push(fonte);
-  saveDeletedFontes(d);
-  carregarDocsBase();
+  showToastConfirm('Tem certeza que deseja apagar "' + nome + '"?', function(){
+    var docs = getCustomDocs();
+    var achou = docs.some(function(c){ return c.fonte === fonte; });
+    if(achou){
+      var filtrados = docs.filter(function(c){ return c.fonte !== fonte; });
+      localStorage.setItem('customChunks', JSON.stringify(filtrados));
+    }
+    var h = getHiddenFontes();
+    if(h.indexOf(fonte) === -1) h.push(fonte);
+    saveHiddenFontes(h);
+    var d = getDeletedFontes();
+    if(d.indexOf(fonte) === -1) d.push(fonte);
+    saveDeletedFontes(d);
+    carregarDocsBase();
+  });
 }
 function btnDesativar(fonte, oculto){
   var label = oculto ? 'Ativar' : 'Desativar';
@@ -481,6 +494,15 @@ function btnDesativar(fonte, oculto){
 }
 function btnApagar(fonte, nome){
   return '<button onclick="apagarDocumento(\'' + esc(fonte) + '\',\'' + esc(nome) + '\')" style="background:rgba(236,0,140,.08);border:1px solid rgba(236,0,140,.15);color:#EC008C;padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif;text-transform:uppercase;letter-spacing:.5px">Apagar</button>';
+}
+function showToastConfirm(msg, onConfirm){
+  var overlay = document.getElementById('toastOverlay');
+  document.getElementById('toastMsg').textContent = msg;
+  overlay.classList.add('show');
+  var sim = document.getElementById('toastSim');
+  var nao = document.getElementById('toastNao');
+  sim.onclick = function(){ overlay.classList.remove('show'); onConfirm(); };
+  nao.onclick = function(){ overlay.classList.remove('show'); };
 }
 function carregarDocsBase(){
   var container = document.getElementById('baseDocsContainer');
@@ -523,8 +545,8 @@ function carregarDocsBase(){
       h += btnApagar(fonte, g.label);
       h += '</div></div>';
     }
-    if(hidden.length > 0 || deleted.length > 0){
-      h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Ativar/restaurar todos</button>';
+    if(hidden.length > 0){
+      h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Ativar todos</button>';
     }
     var baseCount = data.documentos.filter(function(d){ return deleted.indexOf(d.fonte) === -1; }).length;
     var customCount = Object.keys(agrup).length;
