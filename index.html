@@ -226,6 +226,7 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 <div id="docsList">
 <h4 style="color:rgba(255,255,255,.4);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:10px">Documentos <span id="baseCount" style="color:rgba(255,255,255,.15)">(carregando...)</span></h4>
 <div id="baseDocsContainer" style="margin-bottom:20px"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Carregando...</div></div>
+<button onclick="resetarTudo()" style="margin-top:0;background:rgba(255,0,0,.06);border:1px solid rgba(255,0,0,.12);color:rgba(255,80,80,.5);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.7rem;font-weight:700;font-family:'Nunito Sans',sans-serif">Resetar dados (limpar localStorage)</button>
 </div>
 </div>
 </div>
@@ -528,6 +529,14 @@ function toggleDoc(fonte){
 function restaurarTodos(){
   saveHiddenFontes([]);
   carregarDocsBase();
+}
+function resetarTudo(){
+  showToastConfirm('Limpar todos os dados locais (deletados, ocultos, uploads) e recarregar?', function(){
+    localStorage.removeItem('deletedFontes');
+    localStorage.removeItem('hiddenFontes');
+    localStorage.removeItem('customChunks');
+    carregarDocsBase();
+  });
 }
 function getCustomDocs(){
   try { var s = localStorage.getItem('customChunks'); return s ? JSON.parse(s) : []; } catch(e){ return []; }

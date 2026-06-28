@@ -29,7 +29,6 @@ class handler(BaseHTTPRequestHandler):
                 "guia": "Guia do Participante (PDF)",
                 "acesso_cadastro": "Acesso ao Cadastro (PDF)",
                 "edital": "Edital (PDF)",
-                "panic_lobster": "Panic Lobster (PDF)",
                 "yt_ideacao_prototipo": "Live: Ideação e Protótipo",
                 "yt_orientacoes_gerais": "Live: Orientações Gerais",
                 "yt_pitch": "Live: Pitch",
