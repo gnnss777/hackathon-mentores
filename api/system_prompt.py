@@ -4,12 +4,12 @@ Ela contém: personalidade, visão geral, canais, links fixos e regras.
 """
 
 LIVES_YOUTUBE = {
-    "live_orientacoes_gerais": "https://youtube.com/live/LA-07Y0GISQ",
-    "live_ideacao_prototipo": "https://youtube.com/live/buWt9JgEjBs",
-    "live_pitch": "https://youtube.com/live/FOmTqfB0ROQ",
-    "live_tira_duvidas_1": "https://youtube.com/live/7ef-j3iwwh8",
-    "live_tira_duvidas_2": "https://youtube.com/live/TgTNkVu7FgE",
-    "live_orientacao_prototipo": "https://youtube.com/live/LaDuUSNdo1s",
+    "yt_orientacoes_gerais": "https://youtube.com/live/LA-07Y0GISQ",
+    "yt_ideacao_prototipo": "https://youtube.com/live/buWt9JgEjBs",
+    "yt_pitch": "https://youtube.com/live/FOmTqfB0ROQ",
+    "yt_tira_duvidas1": "https://youtube.com/live/7ef-j3iwwh8",
+    "yt_tira_duvidas2": "https://youtube.com/live/TgTNkVu7FgE",
+    "yt_entrega_prototipo": "https://youtube.com/live/LaDuUSNdo1s",
 }
 
 SYSTEM_PROMPT = """

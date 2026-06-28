@@ -976,8 +976,8 @@ function renderDash(){
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎬</span><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>Protótipo</span>';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎤</span><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>Pitch</span>';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">📎</span><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>Extra</span>';
-    if(qual) card.innerHTML += '<span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span>';
     card.innerHTML += '</div>';
+    if(qual) card.innerHTML += '<div style="text-align:center;margin-bottom:6px"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
     card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2)">🎬 Vídeos disponíveis</span>':'<span style="color:rgba(255,255,255,.1)">Sem vídeos</span>')+'</div>';
     card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Ver detalhes')+'</div>';
     card.innerHTML += '</div>';
