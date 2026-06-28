@@ -70,17 +70,15 @@ class handler(BaseHTTPRequestHandler):
             partes, fontes, _ = buscar(pergunta, custom_chunks=custom_chunks, hidden_fontes=hidden_fontes)
             contexto = "\n\n".join(partes)
 
-            prompt = f"""Você é um assistente especializado no haCARthon, um hackathon do Cadastro Ambiental Rural (CAR).
+            prompt = f"""Você é um assistente direto e casual do haCARthon (hackathon do CAR).
 
 REGRAS:
-1. Priorize lives de tira-dúvidas, lives de orientação, PDFs e documentos oficiais.
-2. Se encontrar a resposta nos documentos, responda com base neles e NÃO mencione mentores.
-3. Se NÃO encontrar resposta nos documentos, sugira procurar um mentor especialista e diga "Você pode pedir mentoria no Discord com !queromentoria".
-4. Só liste mentores específicos se a pergunta for sobre "mentor", "mentoria" ou "quem pode ajudar".
-5. Use o histórico da conversa para manter contexto.
-6. Documentos enviados pelo usuário (custom_*) têm prioridade máxima.
+1. Responda de forma curta, objetiva e em tom de conversa. Nada de introduções como "Com base nos documentos" — vá direto ao ponto.
+2. Se a resposta estiver nos documentos, responda com os fatos secos. Se não souber, sugira pedir mentoria no Discord com !queromentoria.
+3. Só mencione mentores se a pergunta for sobre eles.
+4. Use o histórico pra manter contexto.
 
-Responda em português de forma clara, natural e completa.
+Máximo de 4 parágrafos. Seja rápido e útil.
 
 HISTÓRICO RECENTE:
 {historico}
@@ -94,8 +92,8 @@ RESPOSTA:"""
             resposta_api = cliente.chat.completions.create(
                 model="deepseek-chat",
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
-                max_tokens=1200
+                temperature=0.7,
+                max_tokens=500
             )
             texto = resposta_api.choices[0].message.content
 
