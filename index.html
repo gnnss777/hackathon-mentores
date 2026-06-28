@@ -1110,25 +1110,20 @@ function obterDuracaoVideo(link, tipo){
     if(CACHE_DURACAO[key] !== undefined) return resolve(CACHE_DURACAO[key]);
     var id = getYoutubeId(normalizeUrl(link));
     if(!id) { CACHE_DURACAO[key] = null; return resolve(null); }
-    // Try to get duration via fetch to YouTube page (works from browser)
-    fetch('https://www.youtube.com/watch?v='+id)
-      .then(function(r){ return r.text() })
-      .then(function(html){
-        var m = html.match(/"approxDurationMs":"(\d+)"/);
-        if(m && m[1]){
-          var secs = Math.round(parseInt(m[1])/1000);
-          var limite = tipo === 'prototipo' ? 120 : 180;
-          var excedeu = secs > limite;
-          CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
+    fetch('/api/ytduration?v='+encodeURIComponent(id))
+      .then(function(r){ return r.json() })
+      .then(function(dados){
+        if(!dados.ok || !dados.segundos) {
+          CACHE_DURACAO[key] = { erro: dados.erro || 'not_found' };
           return resolve(CACHE_DURACAO[key]);
         }
-        CACHE_DURACAO[key] = { erro: 'not_found' };
+        var secs = dados.segundos;
+        var limite = tipo === 'prototipo' ? 120 : 180;
+        var excedeu = secs > limite;
+        CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
         resolve(CACHE_DURACAO[key]);
       })
-      .catch(function(){
-        CACHE_DURACAO[key] = { erro: 'not_found' };
-        resolve(CACHE_DURACAO[key]);
-      });
+      .catch(function(){ CACHE_DURACAO[key] = null; resolve(null); });
   });
 }
 function youtubeEmbed(url){
