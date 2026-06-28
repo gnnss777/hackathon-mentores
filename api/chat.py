@@ -22,6 +22,7 @@ As soluções devem ser pensadas em modelo de código aberto, mas não é obriga
 software funcional — protótipos, wireframes, fluxogramas, vídeos são aceitos.
 São 3 entregas obrigatórias: Ideação (formulário), Protótipo (vídeo de até 2 min) e Pitch (vídeo de até 3 min).
 Todas as entregas têm prazo até domingo 28/06 às 23h59.
+ENTREGA DE PROTÓTIPO E PITCH: Ambos são vídeos postados no YouTube (Público ou Não listado). O link do YouTube é colado na plataforma de entregas. NÃO existe gravador integrado na plataforma — o pitch também é gravado fora e postado no YouTube.
 
 CANAL CORRETO PARA CADA DÚVIDA:
 - ORGANIZAÇÃO (regras, prazos, entregas, inscrição, problemas com equipe, mudanças de última hora, processo, edital, canais do Discord) → direcione para o canal de voz "Fale com a Organização" no Discord
