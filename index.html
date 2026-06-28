@@ -884,6 +884,12 @@ function montarDashFiltros(){
   h += '<span class="filter-tag" data-val="pitch_nao" data-grp="entrega" onclick="dashFiltroClick(this)">🎤✘ Pitch</span>';
   h += '<span class="filter-tag" data-val="extra_ok" data-grp="entrega" onclick="dashFiltroClick(this)">📎✔ Extra</span>';
   h += '</div></div>';
+  h += '<div class="tag-filter-group"><div class="label" style="color:rgba(255,255,255,.3)">Tempo dos Vídeos</div><div class="tags">';
+  h += '<span class="filter-tag active" data-val="" data-grp="tempo" onclick="dashFiltroClick(this)">Todos</span>';
+  h += '<span class="filter-tag" data-val="tempo_ok" data-grp="tempo" onclick="dashFiltroClick(this)">✅ Dentro do limite</span>';
+  h += '<span class="filter-tag" data-val="tempo_excedeu" data-grp="tempo" onclick="dashFiltroClick(this)">⚠️ Excedeu limite</span>';
+  h += '<span class="filter-tag" data-val="tempo_sem" data-grp="tempo" onclick="dashFiltroClick(this)">⏳ Verificando</span>';
+  h += '</div></div>';
   area.innerHTML = h;
 }
 function dashFiltroClick(el){
@@ -937,6 +943,7 @@ function renderDash(){
   var fltAval = FLT_DASH.aval || [];
   var fltDesafio = FLT_DASH.desafio || [];
   var fltEntrega = FLT_DASH.entrega || [];
+  var fltTempo = FLT_DASH.tempo || [];
   var avals = carregarAvaliacoes();
   var filtrados = DASH.filter(function(r){
     var eq = r['EQUIPE']||'';
@@ -1029,6 +1036,18 @@ function renderDash(){
       var excedeuProto = durProto && durProto.excedeu;
       var excedeuPitch = durPitch && durPitch.excedeu;
       var avisoTempo = excedeuProto || excedeuPitch;
+      var videoProtoOk = linkProto && durProto && !durProto.excedeu;
+      var videoPitchOk = linkPitch && durPitch && !durPitch.excedeu;
+      var videoProtoNao = linkProto && (!durProto || durProto.excedeu);
+      var videoPitchNao = linkPitch && (!durPitch || durPitch.excedeu);
+      // Tempo filter
+      if(fltTempo.length){
+        var tempoSemVerif = !((linkProto||linkPitch) && durProto !== null && durPitch !== null) && !(!linkProto && !linkPitch);
+        var tempoOk = (linkProto||linkPitch) && !excedeuProto && !excedeuPitch;
+        var tempoExcedeu = excedeuProto || excedeuPitch;
+        var passTempo = (fltTempo.includes('tempo_ok') && tempoOk) || (fltTempo.includes('tempo_excedeu') && tempoExcedeu) || (fltTempo.includes('tempo_sem') && (!(linkProto||linkPitch) || tempoSemVerif));
+        if(!passTempo) { c.appendChild(card); return; }
+      }
       (function(eq, lp, le, lpi, dP, dPi){
         card.addEventListener('click', function(){
           abrirDashOverlay(eq, lp, le, lpi, dP, dPi);
@@ -1044,17 +1063,11 @@ function renderDash(){
       card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
       card.innerHTML += '<div class="dash-delivery-line">';
       card.innerHTML += '<span class="dash-del-item"><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>💡Ideação</span>';
-      card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.</span>';
-      card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.'+(linkProto?(durProto?' <span style="font-size:.55rem">'+(excedeuProto?'⚠️'+Math.round(durProto.segundos/60*10)/10:'✔')+'min</span>':' <span style="font-size:.55rem;color:rgba(255,255,255,.2)">⌛</span>'):'')+'</span>';
+      card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch'+(linkPitch?(durPitch?' <span style="font-size:.55rem">'+(excedeuPitch?'⚠️'+Math.round(durPitch.segundos/60*10)/10:'✔')+'min</span>':' <span style="font-size:.55rem;color:rgba(255,255,255,.2)">⌛</span>'):'')+'</span>';
       card.innerHTML += '<span class="dash-del-item"><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>📎Extra</span>';
       card.innerHTML += '</div>';
       if(qual) card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
-      if(avisoTempo){
-        var avisos = [];
-        if(excedeuProto) avisos.push('🎬 Protótipo >2min ('+Math.round(durProto.segundos/60*10)/10+'min)');
-        if(excedeuPitch) avisos.push('🎤 Pitch >3min ('+Math.round(durPitch.segundos/60*10)/10+'min)');
-        card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:rgba(255,68,68,.15);color:#ff4444">⚠️ '+esc(avisos.join(' | '))+'</span></div>';
-      }
       card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2);font-size:.62rem">🎬 Vídeos</span>':'<span style="color:rgba(255,255,255,.1);font-size:.62rem">Sem vídeos</span>')+'</div>';
       card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Detalhes')+'</div>';
       card.innerHTML += '</div>';
