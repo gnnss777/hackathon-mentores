@@ -108,9 +108,13 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .chat-msg.user{background:#EC008C;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .chat-msg.assistant{background:#1A1A2E;color:#e0e0f0;align-self:flex-start;border:1px solid rgba(255,255,255,.06);border-bottom-left-radius:4px}
 .chat-msg .msg-fontes{font-size:.7rem;color:rgba(255,255,255,.25);margin-top:8px}
-.chat-msg .msg-copy{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.06);border:none;color:rgba(255,255,255,.25);font-size:.6rem;padding:2px 8px;border-radius:4px;cursor:pointer;font-family:'Nunito Sans',sans-serif;opacity:0;transition:opacity .2s}
-.chat-msg:hover .msg-copy{opacity:1}
-.chat-msg .msg-copy:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+.chat-msg .msg-copy{position:absolute;top:6px;right:6px;background:linear-gradient(135deg,#EC008C,#4A1FA8);border:none;color:#fff;font-size:.72rem;font-weight:800;padding:5px 16px;border-radius:6px;cursor:pointer;font-family:'Nunito Sans',sans-serif;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 2px 12px rgba(236,0,140,.25);transition:all .2s}
+.chat-msg .msg-copy:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(236,0,140,.4)}
+.chat-msg .msg-copy.copiado{background:linear-gradient(135deg,#25D366,#128C7E)}
+.chat-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.chat-toolbar h3{margin:0}
+.download-chat-btn{padding:8px 18px;border:none;border-radius:8px;background:linear-gradient(135deg,#EC008C,#4A1FA8);color:#fff;font-size:.75rem;font-weight:800;cursor:pointer;font-family:'Nunito Sans',sans-serif;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 2px 12px rgba(236,0,140,.25);transition:all .2s;white-space:nowrap}
+.download-chat-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(236,0,140,.4)}
 .chat-msg.assistant{background:#1A1A2E;color:#e0e0f0;align-self:flex-start;border:1px solid rgba(255,255,255,.06);border-bottom-left-radius:4px;position:relative}
 .chat-msg strong{color:#fff;font-weight:800}
 .chat-msg em{color:rgba(255,255,255,.7)}
@@ -189,7 +193,10 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 <div class="chat-container" id="chatView">
 <div class="chat-mensagens" id="chatMensagens">
 <div class="chat-welcome" id="chatWelcome">
+<div class="chat-toolbar">
 <h3>🤖 Chat de Dúvidas haCARthon</h3>
+<button class="download-chat-btn" onclick="downloadChat()" title="Baixar conversa">📥 Salvar conversa</button>
+</div>
 <p>Pergunte sobre os desafios, entregas, prazos, lives e regras do hackathon.<br>
 Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 <em>Ex: "Qual o prazo da entrega de protótipo?"<br>
@@ -455,10 +462,32 @@ function copiarMsg(btn){
   var txt = md ? md.getAttribute('data-md') : msg.textContent.replace(/^Copiar/,'').replace(/Fontes:.*/,'').trim();
   navigator.clipboard.writeText(txt).then(function(){
     btn.textContent = 'Copiado!';
-    setTimeout(function(){ btn.textContent = 'Copiar'; }, 1200);
+    btn.classList.add('copiado');
+    setTimeout(function(){ btn.textContent = 'Copiar'; btn.classList.remove('copiado'); }, 1200);
   });
 }
 
+function downloadChat(){
+  var msgs = document.querySelectorAll('#chatMensagens .chat-msg');
+  if(!msgs.length) return;
+  var txt = '=== haCARthon Chat ===\n\n';
+  msgs.forEach(function(m){
+    var papel = m.classList.contains('user') ? 'Você' : 'IA';
+    var md = m.querySelector('[data-md]');
+    var conteudo = md ? md.getAttribute('data-md') : m.textContent;
+    var fontes = m.querySelector('.msg-fontes');
+    txt += papel + ': ' + conteudo.trim() + '\n';
+    if(fontes) txt += fontes.textContent + '\n';
+    txt += '\n';
+  });
+  txt += '---\nGerado em ' + new Date().toLocaleString('pt-BR');
+  var blob = new Blob([txt], {type: 'text/plain;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'hacarthon-chat-' + new Date().toISOString().slice(0,10) + '.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
 function enviarMensagem(){
   var input = document.getElementById('chatInput');
   var btn = document.getElementById('chatBtn');

@@ -1,1135 +1,133 @@
- GUIA  DO  PARTICIPANTE  
- O  Ministério  da  Gestão  e  Inovação  em  Serviços  Públicos  (MGI),  a  Fundação  Brasileira  
-para
- 
-o
- 
-Desenvolvimento
- 
-Sustentável
- 
-(FBDS),
- 
-a
- 
-Escola
- 
-Nacional
- 
-de
- 
-Administração
- 
-Pública
- 
-(ENAP)
- 
-e
- 
-o
- 
-Impact
- 
-Hub
- 
-Brasil
- 
-apresentam
- 
-o
- haCARthon,  uma  maratona  de  
-inovação
- 
-aberta
- 
-voltada
- 
-ao
- 
-desenvolvimento
- 
-de
- 
-soluções
- 
-open
- 
-source
- 
-que
- 
-ampliem
- 
-a
- 
-eﬁciência
- 
-e
- 
-acessibilidade
- 
-para
- 
-o
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR).
-  Esse  é  o  Guia  do  Participante  do  haCARthon.  Nele  você  vai  encontrar  as  
-informações
- 
-necessárias
- 
-ao
- 
-correto
- 
-desenvolvimento
- 
-da
- 
-solução,
- 
-além
- 
-de
- 
-orientações
- 
-sobre
- 
-o
- 
-funcionamento
- 
-e
- 
-a
- 
-dinâmica
- 
-do
- 
-evento.
- 
-  Leia  com  atenção  e  programe-se  para  dispor  de  todos  os  recursos  necessários  para  o  
-desenvolvimento
- 
-do
- 
-desaﬁo.
- 
-Durante
- 
-o
- 
-evento,
- 
-teremos
- 
-uma
- 
-programação
- 
-com
- 
-palestras,
- 
-sessões
- 
-de
- 
-mentoria
- 
-e
- 
-momentos
- 
-dedicados,
- 
-exclusivamente,
- 
-ao
- 
-desenvolvimento
- 
-da
- 
-solução.
-  Também  é  fundamental  que  você  leia  com  muita  atenção  o  edital  do  HaCARthon,  
-disponível
- 
-na
- 
-plataforma
- 
-desaﬁos.enap.gov.br.
-       
- 
+GUIA DO PARTICIPANTE
+O Ministério da Gestão e Inovação em Serviços Públicos (MGI), a Fundação Brasileira
+para o Desenvolvimento Sustentável (FBDS), a Escola Nacional de Administração
+Pública (ENAP) e o Impact Hub Brasil apresentam o haCARthon, uma maratona de
+inovação aberta voltada ao desenvolvimento de soluções open source que ampliem a
+eficiência e acessibilidade para o Cadastro Ambiental Rural (CAR).
+Esse é o Guia do Participante do haCARthon. Nele você vai encontrar as
+informações necessárias ao correto desenvolvimento da solução, além de orientações
+sobre o funcionamento e a dinâmica do evento.
+Leia com atenção e programe-se para dispor de todos os recursos necessários para o
+desenvolvimento do desafio. Durante o evento, teremos uma programação com
+palestras, sessões de mentoria e momentos dedicados, exclusivamente, ao
+desenvolvimento da solução.
+Também é fundamental que você leia com muita atenção o edital do HaCARthon,
+disponível na plataforma desafios.enap.gov.br.
 
-
- INSCRIÇÕES  O  haCARthon é  um  evento  gratuito  e  aberto  aberto  ao  público  em  geral,  pessoas  
-físicas
- 
-e
- 
-jurídicas,
- 
-brasileiras
- 
-e
- 
-estrangeiras,
- 
-a
- 
-partir
- 
-de
- 
-18
- 
-anos
- 
-de
- 
-idade,
- 
-que
- 
-se
- 
-interessam
- 
-em
- 
-contribuir
- 
-com
- 
-a
- 
-resolução
- 
-dos
- 
-desaﬁos
- 
-propostos,
- 
-sendo
- 
-bem-vinda
- 
-a
- 
-participação
- 
-de
- 
-pessoas
- 
-com
- 
-diferentes
- 
-expertises.
- 
-  Para  se  inscrever  no  programa,  é  necessário  preencher  o  formulário  eletrônico  de  
-inscrição
- 
-disponível
- 
-na
- 
-Plataforma
- 
-Desaﬁos
- 
-(www.gov.br/desaﬁos).
-  Você  não  precisa  ter  uma  equipe  formada  para  se  inscrever.  A  inscrição  pode  ser  feita  
-individualmente.
- 
-Mas,
- 
-para
- 
-participar
- 
-do
- 
-Hackathon,
- 
-é
- 
-obrigatório
- 
-fazer
- 
-parte
- 
-de
- 
-uma
- 
+INSCRIÇÕES
+O haCARthon é um evento gratuito e aberto aberto ao público em geral, pessoas
+físicas e jurídicas, brasileiras e estrangeiras, a partir de 18 anos de idade, que se
+interessam em contribuir com a resolução dos desafios propostos, sendo bem-vinda a
+participação de pessoas com diferentes expertises.
+Para se inscrever no programa, é necessário preencher o formulário eletrônico de
+inscrição disponível na Plataforma Desafios (www.gov.br/desafios).
+Você não precisa ter uma equipe formada para se inscrever. A inscrição pode ser feita
+individualmente. Mas, para participar do Hackathon, é obrigatório fazer parte de uma
 equipe.
- 
-FORMAÇÃO  DE  EQUIPES  As  equipes  deverão  ser  constituídas  por  no  mínimo  2  e  no  máximo  6  integrantes.   Todos  os  integrantes  deverão  estar  inscritos  de  forma  individual  e,  no  momento  
-indicado
- 
-pela
- 
-organização,
- 
-fazer
- 
-o
- 
-registro
- 
-da
- 
-equipe.
- 
-  Durante  o  período  de  inscrições,  a  organização  vai  criar  espaços  de  conversa  e  
-conexão
- 
-para
- 
-que
- 
-participantes
- 
-inscritos
- 
-possam
- 
-conhecer
- 
-outras
- 
-pessoas
- 
-e
- 
-formar
- 
-suas
- 
-equipes.
-      
- 
+FORMAÇÃO DE EQUIPES
+As equipes deverão ser constituídas por no mínimo 2 e no máximo 6 integrantes.
+Todos os integrantes deverão estar inscritos de forma individual e, no momento
+indicado pela organização, fazer o registro da equipe.
+Durante o período de inscrições, a organização vai criar espaços de conversa e
+conexão para que participantes inscritos possam conhecer outras pessoas e formar
+suas equipes.
 
-
- DESAFIOS  No  ato  da  inscrição  o  participante  deve  escolher  qual  dos  três  desaﬁos  quer  propor  
+DESAFIOS
+No ato da inscrição o participante deve escolher qual dos três desafios quer propor
 soluções.
-  DESAFIO  1  Como  podemos  simpliﬁcar  a  declaração  e  retiﬁcação  do  Cadastro  Ambiental  
-Rural
- 
-(CAR)
- 
-para
- 
-o
- 
-produtor
- 
-rural,
- 
-aproveitando
- 
-as
- 
-informações
- 
-de
- 
-bases
- 
-de
- 
-dados
- 
-abertas
- 
-disponíveis
- 
-para
- 
-garantir
- 
-o
- 
-cumprimento
- 
-do
- 
-Código
- 
-Florestal
- 
-gerando
- 
-benefícios
- 
-individuais
- 
-e
- 
-coletivos?
-  DESAFIO  2  Como  podemos  atualizar  anualmente  com  rapidez  e  acurácia  o  mapeamento  de  
-uso
- 
-e
- 
-cobertura
- 
-do
- 
-solo
- 
-de
- 
-todos
- 
-os
- 
-estados
- 
-brasileiros,
- 
-melhorando
- 
-a
- 
-atualização
- 
-dos
- 
-cadastros
- 
-e
- 
-propiciando
- 
-o
- 
-aumento
- 
-na
- 
-quantidade
- 
-e
- 
-qualidade
- 
-das
- 
-análises
- 
-do
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)?
-  DESAFIO  3  Como  podemos  aumentar  o  conhecimento  e  entendimento  da  legislação  
-ambiental
- 
-associada
- 
-ao
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)
- 
-pelos
- 
-pequenos
- 
-e
- 
-médios
- 
-proprietários
- 
-rurais,
- 
-para
- 
-promover
- 
-a
- 
-preservação
- 
-e
- 
-recuperação
- 
-ﬂorestal?
-     
- 
+DESAFIO 1
+Como podemos simplificar a declaração e retificação do Cadastro Ambiental
+Rural (CAR) para o produtor rural, aproveitando as informações de bases de
+dados abertas disponíveis para garantir o cumprimento do Código Florestal
+gerando benefícios individuais e coletivos?
+DESAFIO 2
+Como podemos atualizar anualmente com rapidez e acurácia o mapeamento de
+uso e cobertura do solo de todos os estados brasileiros, melhorando a
+atualização dos cadastros e propiciando o aumento na quantidade e qualidade
+das análises do Cadastro Ambiental Rural (CAR)?
+DESAFIO 3
+Como podemos aumentar o conhecimento e entendimento da legislação
+ambiental associada ao Cadastro Ambiental Rural (CAR) pelos pequenos e
+médios proprietários rurais, para promover a preservação e recuperação
+florestal?
 
-
- LIVES  DE  PREPARAÇÃO  E  ENTREGAS  Durante  o  período  de  inscrição,  serão  realizadas  lives  abertas  aos  participantes  com  o  
-objetivo
- 
-de
- 
-preparar
- 
-e
- 
-impulsionar
- 
-o
- 
-desenvolvimento
- 
-das
- 
-propostas.
- 
- Nesses  encontros,  serão  abordados  temas  como:  Detalhamento  dos  desaﬁos  
-propostos,
- 
-processo
- 
-de
- 
-ideação
- 
-e
- 
-prototipagem
- 
-e
- 
-construção
- 
-de
- 
-pitch.
- As  lives  também  trarão  orientações  práticas  sobre  o  funcionamento  do  hackathon,  
-para
- 
-que
- 
-as
- 
-equipes
- 
-possam
- 
-dar
- 
-os
- 
-primeiros
- 
-passos
- 
-na
- 
-construção
- 
-de
- 
-suas
- 
-soluções.
-  Durante  os  dias  do  evento  serão  realizadas  lives  sobre  as  entregas  obrigatórias,  com  
-orientações
- 
-sobre
- 
-o
- 
-que
- 
-cada
- 
-equipe
- 
-deverá
- 
-submeter
- 
-para
- 
-estar
- 
-apta
- 
-a
- 
-concorrer
- 
-à
- 
-premiação
- 
-ﬁnal.
- A  participação  de  pelo  menos  um  integrante  da  equipe  em  cada  
-live
- 
-é
- 
-obrigatória.
- Os  links  de  acesso  às  lives  e  os  links  para  submissão  das  entregas  serão  
-disponibilizados
- 
-a
- 
-partir
- 
-do
- 
-primeiro
- 
-dia
- 
-de
- 
-competição,
- 
-dentro
- 
-da
- 
-plataforma
- 
-Discord.
- 
-MENTORIAS  Durante  a  jornada,  as  equipes  poderão  solicitar  mentorias  para  auxiliar  no  
-desenvolvimento
- 
-das
- 
-soluções.
- 
-A
- 
-organização
- 
-fornecerá
- 
-mentores
- 
-especialistas
- 
-nas
- 
-áreas
- 
-de
- 
-inovação,
- 
-tecnologia,
- 
-marketing,
- 
-empreendedorismo
- 
-e
- 
-negócios.
- Haverá  momentos  de  mentoria  coletiva,  onde  um  mentor  orienta  vários  grupos,  
-e
- 
-também
- 
-mentorias
- 
-individuais
- 
-para
- 
-cada
- 
-grupo,
- 
-conforme
- 
-necessidade
- 
+LIVES DE PREPARAÇÃO E ENTREGAS
+Durante o período de inscrição, serão realizadas lives abertas aos participantes com o
+objetivo de preparar e impulsionar o desenvolvimento das propostas.
+Nesses encontros, serão abordados temas como: Detalhamento dos desafios
+propostos, processo de ideação e prototipagem e construção de pitch.
+As lives também trarão orientações práticas sobre o funcionamento do hackathon,
+para que as equipes possam dar os primeiros passos na construção de suas soluções.
+Durante os dias do evento serão realizadas lives sobre as entregas obrigatórias, com
+orientações sobre o que cada equipe deverá submeter para estar apta a concorrer à
+premiação final. A participação de pelo menos um integrante da equipe em cada
+live é obrigatória.
+Os links de acesso às lives e os links para submissão das entregas serão
+disponibilizados a partir do primeiro dia de competição, dentro da plataforma Discord.
+MENTORIAS
+Durante a jornada, as equipes poderão solicitar mentorias para auxiliar no
+desenvolvimento das soluções. A organização fornecerá mentores especialistas nas
+áreas de inovação, tecnologia, marketing, empreendedorismo e negócios.
+Haverá momentos de mentoria coletiva, onde um mentor orienta vários grupos,
+e também mentorias individuais para cada grupo, conforme necessidade
 solicitada.
- A  conexão  com  os  mentores  será  intermediada  pela  organização  do  hackathon  e  
-acontecerá
- 
-em
- 
-horários
- 
-especíﬁcos
- 
-a
- 
-serem
- 
-divulgados
- 
-nos
- 
-dias
- 
-do
- 
-evento.
- 
-As
- 
-mentorias
- 
-acontecerão
- 
-de
- 
-forma
- 
-online,
- 
-dentro
- 
-do
- 
-Discord
- 
-e
- 
-ferramentas
- 
-como
- 
-WhatsApp
- 
-ou
- 
-Google
- 
-Meet.
- 
- 
+A conexão com os mentores será intermediada pela organização do hackathon e
+acontecerá em horários específicos a serem divulgados nos dias do evento. As
+mentorias acontecerão de forma online, dentro do Discord e ferramentas como
+WhatsApp ou Google Meet.
 
+ENTREGAS DO HACKATHON
+Para completar a jornada as equipes deverão cumprir três entregas obrigatórias:
+1. IDEAÇÃO
+Na entrega de ideação, a equipe deverá responder perguntas sobre a criação da ideia, como
+problema, solução, público alvo, impacto, viabilidade, tempo de implementação e benefícios. As
+perguntas serão disponibilizadas dentro da plataforma de entrega.
+2.PROTÓTIPO
+A entrega do protótipo deverá ser um vídeo de até 2 minutos.
+● Se você montar algo físico (maquete, desenho), mostre como isso funciona.
+● Se você desenvolver um aplicativo, site, independentemente da plataforma, grave um
+vídeo capturando as telas, navegando para mostrar como funciona.
+É importante que no vídeo você grave um áudio explicando o que está sendo mostrado, a
+narração ajuda a fazer os jurados entenderem a sua solução.
+O vídeo deverá ser postado no YouTube como ‘Público’ ou ‘Não listado’. Após a postagem no
+Youtube, o link deverá ser colocado na plataforma de entrega.
+Atenção: Os vídeos com mais de 2 minutos não serão aceitos e causarão a
+desclassificação da equipe.
+3. PITCH
+A entrega do pitch da sua solução, deverá ser realizada com slides em PDF e vídeo postado
+no YouTube. Crie os slides em PDF, grave um vídeo apresentando o projeto (máximo 3 minutos),
+publique no YouTube como 'Público' ou 'Não listado', e cole o link na plataforma de entregas.
+O pitch deverá trazer o nome da solução, o público alvo, o problema, o que é a solução criada, como
+ela funciona, modelo de negócios e o diferencial competitivo.
 
- ENTREGAS  DO  HACKATHON  Para  completar  a  jornada  as  equipes  deverão  cumprir  três  entregas  obrigatórias:   
- 1.  IDEAÇÃO  Na  entrega  de  ideação,  a  equipe  deverá  responder  perguntas  sobre  a  criação  da  ideia,  como  
-problema,
- 
-solução,
- 
-público
- 
-alvo,
- 
-impacto,
- 
-viabilidade,
- 
-tempo
- 
-de
- 
-implementação
- 
-e
- 
-benefícios.
- 
-As
- 
-perguntas
- 
-serão
- 
-disponibilizadas
- 
-dentro
- 
-da
- 
-plataforma
- 
-de
- 
-entrega.
-  2.PROTÓTIPO  A  entrega  do  protótipo  deverá  ser  um  vídeo  de  até  2  minutos.  ●  Se  você  montar  algo  físico  (maquete,  desenho),  mostre  como  isso  funciona.   ●  Se  você  desenvolver  um  aplicativo,  site,  independentemente  da  plataforma,   grave  um  
-vídeo
- 
-capturando
- 
-as
- 
-telas,
- 
-navegando
- 
-para
- 
-mostrar
- 
-como
- 
-funciona.
- 
- É  importante  que  no  vídeo  você  grave  um  áudio  explicando o  que  está  sendo  mostrado,  a  
-narração
- 
-ajuda
- 
-a
- 
-fazer
- 
-os
- 
-jurados
- 
-entenderem
- 
-a
- 
-sua
- 
-solução.
- 
- O  vídeo  deverá  ser  postado  no  YouTube  como  ‘Público’  ou  ‘Não  listado’.  Após  a  postagem  no  
-Youtube,
- 
-o
- 
-link
- 
-deverá
- 
-ser
- 
-colocado
- 
-na
- 
-plataforma
- 
-de
- 
-entrega.
- 
- Atenção:  Os  vídeos  com  mais  de  2  minutos  não  serão  aceitos  e  causarão  a  
-desclassiﬁcação
- 
-da
- 
-equipe.
-  3.  PITCH  A  entrega  do  pitch  da  sua  solução,  deverá  ser  realizada  com  slides  em  PDF  e  vídeo  
-postado
-
-no
-
-YouTube.
-
-O
-
-link
-
-do
-
-vídeo
-
-deverá
-
-ser
-
-enviado
-
-na
-
-plataforma
-
-de
-
-entregas.
-
-Você
-
-deve
-
-criar
-
-os
-
-slides
-
-em
-
-PDF
-
-e
-
-gravar
-
-um
-
-vídeo
-
-apresentando
-
-o
-
-projeto,
-
-depois
-
-postar
-
-no
-
-YouTube
-
-e
-
-enviar
-
-o
-
-link.
- 
-O
- 
-pitch
- 
-deverá
- 
-trazer
- 
-o
- 
-nome
- 
-da
- 
-solução,
- 
-o
- 
-público
- 
-alvo,
- 
-o
- 
-problema,
- 
-o
- 
-que
- 
-é
- 
-a
- 
-solução
- 
-criada,
- 
-como
- 
-ela
- 
-funciona,
- 
-modelo
- 
-de
- 
-negócios
- 
-e
- 
-o
- 
-diferencial
- 
-competitivo.
- 
- 
-
-
- SELEÇÃO  DAS  SOLUÇÕES  A  Comissão  Julgadora  irá  analisar  as  soluções  validadas  pela  organização  do  
-hackathon.
- Serão  consideradas  válidas  as  soluções  que  realizarem  todas  as  
-entregas
- 
-previstas
- 
-dentro
- 
-dos
- 
-prazos
- 
-estabelecidos.
-  As  equipes  não  selecionadas  para  a  fase  de  avaliação  ﬁnal  não  terão  qualquer  
-classiﬁcação
- 
-na
- 
-competição.
-  As  soluções  serão  avaliadas  pela  Comissão  Julgadora,  adotando  escala  numérica  de  1  
-(um)
- 
-a
- 
-10
- 
-(dez),
- 
-conforme
- 
-critérios
- 
-abaixo:
- ●  Pertinência  temática  ao  desaﬁo.  ●  Relevância  do  problema  resolvido;  ●  Usabilidade  e  design  que  priorizem  o  acesso  simpliﬁcado  e  fácil  compreensão  do  usuário;  ●  Inovação  e  criatividade  da  solução.   Em  caso  de  empate,  prevalecerá  a  maior  nota  no  critério  “inovação  e  criatividade  da  
+SELEÇÃO DAS SOLUÇÕES
+A Comissão Julgadora irá analisar as soluções validadas pela organização do
+hackathon. Serão consideradas válidas as soluções que realizarem todas as
+entregas previstas dentro dos prazos estabelecidos.
+As equipes não selecionadas para a fase de avaliação final não terão qualquer
+classificação na competição.
+As soluções serão avaliadas pela Comissão Julgadora, adotando escala numérica de 1
+(um) a 10 (dez), conforme critérios abaixo:
+● Pertinência temática ao desafio.
+● Relevância do problema resolvido;
+● Usabilidade e design que priorizem o acesso simplificado e fácil compreensão
+do usuário;
+● Inovação e criatividade da solução.
+Em caso de empate, prevalecerá a maior nota no critério “inovação e criatividade da
 solução”.
-          
- 
 
-
- PREMIAÇÃO  O  pagamento  dos  prêmios  será  mediante  depósito  em  instituição  bancária  brasileira  
-para
- 
-a
- 
-conta
- 
-corrente
- 
-de
- 
-titularidade
- 
-do
- 
-representante
- 
-da
- 
-equipe
- 
-ou
- 
-para
- 
-alguém
- 
-por
- 
-ele
- 
-indicado
- 
-  O  valor  total  bruto  de  premiação  (sem  tributos)  é  de  R$75.000,00  (setenta  e  
-cinco
- 
-mil
- 
-reais),
- 
-distribuídos
- 
-igualmente
- 
-aos
- 
-5
- 
-primeiros
- 
-colocados,
- 
-de
- 
-modo
- 
-que
- 
-cada
- 
-equipe
- 
-vencedora
- 
-receberá
- 
-R$15.000,00
- 
-(quinze
- 
-mil
- 
-reais).
- 
-Comunicação  com  a  organização  Toda  comunicação  durante  o  haCARthon  será  realizada  de  forma  remota  a  partir  de  
-canais
- 
-de
- 
-comunicação
- 
-como
- 
-e-mail,
- 
-WhatsApp
- 
-e
- 
-Discord.
-  A  equipe  de  organização  estará  à  disposição  durante  todo  o  período  de  inscrições  para  
-tirar
- 
-dúvidas
- 
-e
- 
-orientar
- 
-os
- 
-participantes,
- 
-inclusive
- 
-na
- 
-formação
- 
-de
- 
-equipes.
-  Caso  você  ou  sua  equipe  tenham  alguma  dúvida,  mande  um  e-mail  que  nossa  
-equipe
- 
-irá
- 
-responder:
- 
-desaﬁos.car@enap.gov.br
-   
-BOA  SORTE!  
- 
- 
+PREMIAÇÃO
+O pagamento dos prêmios será mediante depósito em instituição bancária brasileira
+para a conta corrente de titularidade do representante da equipe ou para alguém por
+ele indicado
+O valor total bruto de premiação (sem tributos) é de R$75.000,00 (setenta e
+cinco mil reais), distribuídos igualmente aos 5 primeiros colocados, de modo que
+cada equipe vencedora receberá R$15.000,00 (quinze mil reais).
+Comunicação com a organização
+Toda comunicação durante o haCARthon será realizada de forma remota a partir de
+canais de comunicação como e-mail, WhatsApp e Discord.
+A equipe de organização estará à disposição durante todo o período de inscrições para
+tirar dúvidas e orientar os participantes, inclusive na formação de equipes.
+Caso você ou sua equipe tenham alguma dúvida, mande um e-mail que nossa
+equipe irá responder: desafios.car@enap.gov.br
+BOA SORTE!
