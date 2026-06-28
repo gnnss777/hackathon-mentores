@@ -34,6 +34,7 @@ class handler(BaseHTTPRequestHandler):
                 "yt_pitch": "Live: Pitch",
                 "yt_tira_duvidas1": "Live: Tira-dúvidas 1",
                 "yt_tira_duvidas2": "Live: Tira-dúvidas 2",
+                "yt_entrega_prototipo": "Live 7: Entrega do Protótipo",
                 "avisos-programacao": "Avisos e Programação (Markdown)",
                 "mentores": "Mentores (88 fichas)",
                 "duvidas-discord": "Dúvidas do Discord (FAQ)"
