@@ -894,8 +894,11 @@ function renderDash(){
     card.className = 'dash-card';
     var eq = r['EQUIPE']||'?';
     var linkProto = (r['LINK PROTOTIPO']||'').trim();
+    linkProto = (linkProto.toUpperCase() === 'NÃO' || linkProto.toUpperCase() === 'NAO') ? '' : linkProto;
     var linkExtra = (r['LINK EXTRA']||'').trim();
+    linkExtra = (linkExtra.toUpperCase() === 'NÃO' || linkExtra.toUpperCase() === 'NAO') ? '' : linkExtra;
     var linkPitch = (r['LINK PITCH']||'').trim();
+    linkPitch = (linkPitch.toUpperCase() === 'NÃO' || linkPitch.toUpperCase() === 'NAO') ? '' : linkPitch;
     var qual = (r['QUALIDADE DA SOLUÇÃO']||r['QUALIDADE DA SOLU' + String.fromCharCode(199) + 'O']||'').trim();
     var statusPanic = (r['STATUS PELA PANIC']||'').trim();
     var email = (r['EMAIL LIDER']||'').trim();
@@ -931,13 +934,32 @@ function renderDash(){
   });
   if(!filtrados.length) c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Nenhum resultado</div>';
 }
-function youtubeEmbed(url){
-  if(!url) return '';
-  var id = '';
+function normalizeUrl(url){
+  if(!url || url.toUpperCase() === 'NÃO' || url.toUpperCase() === 'NAO') return '';
+  url = url.trim();
+  if(url.startsWith('http://') || url.startsWith('https://')) return url;
+  if(url.includes('.')) return 'https://' + url;
+  return '';
+}
+function getYoutubeId(url){
+  url = normalizeUrl(url);
+  if(!url) return null;
   var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-  if(m) id = m[1];
-  if(!id) return '<p style="color:rgba(255,255,255,.3);font-size:.8rem">Link inválido: <a href="'+esc(url)+'" target="_blank" style="color:#00BFFF">abrir no YouTube</a></p>';
+  return m ? m[1] : null;
+}
+function youtubeEmbed(url){
+  url = normalizeUrl(url);
+  if(!url) return '';
+  var id = getYoutubeId(url);
+  if(!id) return '';
   return '<div style="position:relative;padding-bottom:56.25%;height:0;margin-bottom:12px"><iframe src="https://www.youtube.com/embed/'+id+'" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:8px" frameborder="0" allowfullscreen></iframe></div>';
+}
+function linkOrEmbed(url, label){
+  url = normalizeUrl(url);
+  if(!url) return '';
+  var id = getYoutubeId(url);
+  if(id) return youtubeEmbed(url);
+  return '<div style="padding:12px;text-align:center;background:rgba(255,255,255,.02);border-radius:8px;margin-bottom:8px"><a href="'+esc(url)+'" target="_blank" style="color:#FFA500;font-weight:600;font-size:.82rem">🔗 '+(label||'Abrir link')+' ↗</a></div>';
 }
 function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   var c = document.getElementById('dashOverlayContent');
@@ -947,13 +969,13 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   if(temVideo){
     html += '<div class="dash-overlay-videos">';
     if(linkProto){
-      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(linkProto)+'" target="_blank">abrir no YouTube ↗</a></div>'+youtubeEmbed(linkProto)+'</div>';
+      html += '<div class="dash-overlay-video"><div class="label">🎬 Protótipo <a href="'+esc(normalizeUrl(linkProto))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkProto, 'Abrir protótipo')+'</div>';
     }
     if(linkPitch){
-      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(linkPitch)+'" target="_blank">abrir no YouTube ↗</a></div>'+youtubeEmbed(linkPitch)+'</div>';
+      html += '<div class="dash-overlay-video"><div class="label">🎤 Pitch <a href="'+esc(normalizeUrl(linkPitch))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkPitch, 'Abrir pitch')+'</div>';
     }
     if(linkExtra){
-      html += '<div class="dash-overlay-video"><div class="label">📎 Link Extra <a href="'+esc(linkExtra)+'" target="_blank">abrir ↗</a></div><div style="padding:12px;text-align:center"><a href="'+esc(linkExtra)+'" target="_blank" style="color:#FFA500;font-weight:700;font-size:.85rem">🔗 Acessar link extra</a></div></div>';
+      html += '<div class="dash-overlay-video"><div class="label">📎 Link Extra <a href="'+esc(normalizeUrl(linkExtra))+'" target="_blank">abrir ↗</a></div>'+linkOrEmbed(linkExtra, 'Abrir link extra')+'</div>';
     }
     html += '</div>';
   } else {
