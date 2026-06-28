@@ -4,25 +4,20 @@ import pickle
 import numpy as np
 from http.server import BaseHTTPRequestHandler
 from openai import OpenAI
-from sentence_transformers import SentenceTransformer
 from system_prompt import SYSTEM_PROMPT
 
 cliente = OpenAI(api_key=os.environ.get("DEEPSEEK_KEY", ""), base_url="https://api.deepseek.com")
 
-with open("api/chunks.json", encoding="utf-8") as f:
-    CHUNKS = json.load(f)
+with open("chroma_db_simples/chunks.pkl", "rb") as f:
+    CHUNKS = pickle.load(f)
 
-modelo = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-CHUNK_EMBEDS = modelo.encode([c["texto"] for c in CHUNKS], show_progress_bar=False)
+CHUNK_EMBEDS = np.load("chroma_db_simples/embeddings.npy")
 
 CUSTOM_CHUNKS = []
 custom_path = "api/custom_chunks.json"
 if os.path.exists(custom_path):
     with open(custom_path, encoding="utf-8") as f:
         CUSTOM_CHUNKS = json.load(f)
-CUSTOM_EMBEDS = None
-if CUSTOM_CHUNKS:
-    CUSTOM_EMBEDS = modelo.encode([c["texto"] for c in CUSTOM_CHUNKS], show_progress_bar=False)
 
 def merge_chunks(custom_chunks=None, hidden_fontes=None):
     base = list(CHUNKS)
@@ -39,50 +34,21 @@ def merge_chunks(custom_chunks=None, hidden_fontes=None):
 
 def buscar(query, k=15, custom_chunks=None, hidden_fontes=None):
     all_chunks = merge_chunks(custom_chunks, hidden_fontes)
-    query_emb = modelo.encode([query], show_progress_bar=False)[0]
 
-    base_emb = CHUNK_EMBEDS
-    if CUSTOM_EMBEDS is not None:
-        base_emb = np.vstack([base_emb, CUSTOM_EMBEDS])
-
-    if custom_chunks:
-        extra_texts = [c["texto"] for c in custom_chunks if "texto" in c]
-        if extra_texts:
-            extra_emb = modelo.encode(extra_texts, show_progress_bar=False)
-            base_emb = np.vstack([base_emb, extra_emb])
-
-    if hidden_fontes:
-        mask = np.ones(len(all_chunks), dtype=bool)
-        for i, c in enumerate(all_chunks):
-            if c.get("fonte") in hidden_fontes:
-                mask[i] = False
-        all_chunks = [c for i, c in enumerate(all_chunks) if mask[i]]
-        base_emb = base_emb[mask]
-
-    query_norm = query_emb / (np.linalg.norm(query_emb) + 1e-10)
-    emb_norm = base_emb / (np.linalg.norm(base_emb, axis=1, keepdims=True) + 1e-10)
-    scores = np.dot(emb_norm, query_norm)
+    query_words = set(query.lower().split())
+    scores = []
+    for c in all_chunks:
+        txt = c["texto"].lower()
+        score = sum(1 for w in query_words if w in txt)
+        scores.append(score)
 
     ordem = np.argsort(scores)[::-1][:k]
-    indices = []
-    pesos = []
-    for i in ordem:
-        indices.append(i)
-        peso = scores[i]
-        c = all_chunks[i]
-        if c.get("tipo") == "alta":
-            peso *= 1.3
-        elif c.get("tipo") == "baixa":
-            peso *= 0.7
-        pesos.append(peso)
-    ordem_pesos = np.argsort(pesos)[::-1]
-    indices = [indices[i] for i in ordem_pesos]
 
     temas_mentor = any(w in query.lower() for w in ["mentor", "mentoria", "quem pode ajudar"])
     partes = []
     fontes = set()
     props_mentor = 0
-    for i in indices:
+    for i in ordem:
         c = all_chunks[i]
         is_mentor = c.get("fonte") == "mentores"
         if is_mentor and not temas_mentor and props_mentor >= 1:
