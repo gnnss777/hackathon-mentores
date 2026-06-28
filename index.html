@@ -240,7 +240,7 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 <div class="stats" id="dashStats"></div>
 <div style="margin-bottom:16px">
-<input type="text" id="dashSearch" placeholder="Buscar por nome, email, nick..." oninput="renderDash()" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
+<input type="text" id="dashSearch" placeholder="Buscar por equipe, status ou email..." oninput="renderDash()" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
 </div>
 <div class="grid-cards" id="dashContainer"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div></div>
 </div>
@@ -821,46 +821,48 @@ function recarregarDash(){
 function renderDash(){
   var q = (document.getElementById('dashSearch').value||'').toLowerCase();
   var filtrados = DASH.filter(function(r){
-    var nome = (r['Nome Completo *']||'').toLowerCase();
-    var email = (r['E-mail *']||'').toLowerCase();
-    var nick = (r['NICK DISCORD']||'').toLowerCase();
-    return !q || nome.includes(q) || email.includes(q) || nick.includes(q);
+    var eq = (r['EQUIPE']||'').toLowerCase();
+    var st = (r['STATUS ']||r['STATUS']||'').toLowerCase();
+    var em = (r['EMAIL LIDER']||'').toLowerCase();
+    return !q || eq.includes(q) || st.includes(q) || em.includes(q);
   });
   var stats = document.getElementById('dashStats');
   if(!stats) return;
-  var totalBio = DASH.filter(function(r){ return (r['Preencheu mini bio?']||'').toUpperCase() === 'SIM' }).length;
-  var totalDisc = DASH.filter(function(r){ return (r['TA NO DISCORD?']||'').toUpperCase() === 'SIM' }).length;
-  var totalApto = DASH.filter(function(r){ return (r['APTO?']||'').toLowerCase() === 'sim' }).length;
-  stats.innerHTML = DASH.length+' inscrições · '+totalBio+' bio · '+totalDisc+' Discord · '+totalApto+' aptos · exibindo '+filtrados.length;
+  var total = DASH.length;
+  var totalCad = DASH.filter(function(r){ return (r['CADASTRO TIME']||'').toUpperCase() === 'SIM' }).length;
+  var totalIdeia = DASH.filter(function(r){ return (r['IDEACAO']||'').toUpperCase() === 'SIM' }).length;
+  var totalProto = DASH.filter(function(r){ return (r['PROTOTIPO']||'').toUpperCase() === 'SIM' }).length;
+  var totalPitch = DASH.filter(function(r){ return (r['PITCH']||'').toUpperCase() === 'SIM' }).length;
+  stats.innerHTML = total+' equipes · 🏁 '+totalCad+' cadastro · 💡 '+totalIdeia+' ideação · 🎬 '+totalProto+' protótipo · 🎤 '+totalPitch+' pitch · exibindo '+filtrados.length;
   var c = document.getElementById('dashContainer');
   if(!c) return;
   c.innerHTML = '';
   filtrados.forEach(function(r){
     var card = document.createElement('div');
     card.className = 'dash-card';
-    var iniciais = (r['Nome Completo *']||'').split(' ').map(function(s){ return s[0] }).filter(Boolean).slice(0,2).join('').toUpperCase();
-    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">'+esc(iniciais)+'</div><div class="dash-card-nome">'+esc(r['Nome Completo *']||'')+'</div></div>';
+    var eq = r['EQUIPE']||'?';
+    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar" style="background:linear-gradient(135deg,#EC008C,#4A1FA8)">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div></div>';
     card.innerHTML += '<div class="dash-card-body">';
-    card.innerHTML += dashLinha('Mini bio', r['Preencheu mini bio?'], '#00BFFF');
-    card.innerHTML += dashLinha('Discord', r['TA NO DISCORD?'], '#5865F2');
-    card.innerHTML += dashLinha('Part.', r['PARTIICPANTE?'], '#FFA500');
-    card.innerHTML += dashLinha('Apto', r['APTO?'], '#25D366');
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Nick</span><span class="dash-campo-valor">'+esc(r['NICK DISCORD']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Email</span><span class="dash-campo-valor">'+esc(r['E-mail *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Tel</span><span class="dash-campo-valor">'+esc(r['Telefone (WhatsApp) *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Estado</span><span class="dash-campo-valor">'+esc(r['Estado *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Cidade</span><span class="dash-campo-valor">'+esc(r['Cidade *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Área</span><span class="dash-campo-valor">'+esc(r['Área de atuação/conhecimento/especialidade (escolha até 3 opções) *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Cargo</span><span class="dash-campo-valor">'+esc(r['Cargo que ocupa']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">LinkedIn</span><span class="dash-campo-valor">'+(r['Link do currículo ou linkedin *']?'<a href="'+esc(r['Link do currículo ou linkedin *'])+'" target="_blank" style="color:#00BFFF">🔗 Link</a>':'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Inscrição</span><span class="dash-campo-valor">'+esc(r['Início Inscrição']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Faixa</span><span class="dash-campo-valor">'+esc(r['Qual sua Faixa Etária? *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Gênero</span><span class="dash-campo-valor">'+esc(r['Qual gênero você se identifica? *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Raça</span><span class="dash-campo-valor">'+esc(r['Qual raça você se identifica? *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Formação</span><span class="dash-campo-valor">'+esc(r['Formação Acadêmica *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Atua</span><span class="dash-campo-valor">'+esc(r['Atualmente, você atua onde? *']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">1º hack?</span><span class="dash-campo-valor">'+esc(r['É seu 1º hackathon como mentor?']||'-')+'</span></div>';
-    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Desafios</span><span class="dash-campo-valor dash-desafios">'+esc(r['Qual dos desafios você acredita que pode colaborar com as equipes? Selecione em ordem de prioridade e fique à vontade para selecionar quantos desejar. *']||'-')+'</span></div>';
+    card.innerHTML += dashLinha('Time', r['CADASTRO TIME'], '#5865F2');
+    card.innerHTML += dashLinha('Ideação', r['IDEACAO'], '#00BFFF');
+    card.innerHTML += dashLinha('Protótipo', r['PROTOTIPO'], '#25D366');
+    card.innerHTML += dashLinha('Pitch', r['PITCH'], '#EC008C');
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Status</span><span class="dash-campo-valor">'+esc(r['STATUS ']||r['STATUS']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Email</span><span class="dash-campo-valor" style="font-size:.72rem">'+esc(r['EMAIL LIDER']||'-')+'</span></div>';
+    if(r['LINK PROTOTIPO']){
+      card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">🎬 Proto</span><span class="dash-campo-valor"><a href="'+esc(r['LINK PROTOTIPO'])+'" target="_blank" style="color:#FF0000;font-weight:600;font-size:.75rem">▶ Assistir</a></span></div>';
+    }
+    if(r['LINK EXTRA']){
+      card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">📎 Extra</span><span class="dash-campo-valor"><a href="'+esc(r['LINK EXTRA'])+'" target="_blank" style="color:#FFA500;font-weight:600;font-size:.75rem">🔗 Abrir</a></span></div>';
+    }
+    if(r['LINK PITCH']){
+      card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">🎤 Pitch</span><span class="dash-campo-valor"><a href="'+esc(r['LINK PITCH'])+'" target="_blank" style="color:#EC008C;font-weight:600;font-size:.75rem">▶ Assistir</a></span></div>';
+    }
+    var qual = (r['QUALIDADE DA SOLUÇÃO']||r['QUALIDADE DA SOLU' + String.fromCharCode(199) + 'O']||'').trim();
+    if(qual){
+      var corQual = qual.toUpperCase() === 'ALTA' ? '#25D366' : qual.toUpperCase() === 'MAIS OU MENOS' ? '#FFA500' : '#ff4444';
+      card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">⭐ Qual.</span><span class="dash-campo-valor" style="color:'+corQual+';font-weight:700">'+esc(qual)+'</span></div>';
+    }
     card.innerHTML += '</div>';
     c.appendChild(card);
   });

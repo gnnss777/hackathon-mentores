@@ -4,7 +4,7 @@ import urllib.request
 import io
 from http.server import BaseHTTPRequestHandler
 
-SHEET_URL = "https://docs.google.com/spreadsheets/d/1Crxg12HWMXegI2lLJIevkfu4SllnRV86yFDrFRS35SU/export?format=csv"
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1Crxg12HWMXegI2lLJIevkfu4SllnRV86yFDrFRS35SU/export?format=csv&gid=1305793090"
 
 def fetch_sheet():
     resp = urllib.request.urlopen(SHEET_URL)
