@@ -1102,6 +1102,7 @@ function obterDuracaoVideo(link, tipo){
       .then(function(r){ return r.json() })
       .then(function(dados){
         if(!dados.ok || !dados.segundos) {
+          console.warn('ytduration API falhou para', id, ':', dados.erro || 'sem erro');
           CACHE_DURACAO[key] = { erro: dados.erro || 'unknown' };
           return resolve(CACHE_DURACAO[key]);
         }
@@ -1111,7 +1112,7 @@ function obterDuracaoVideo(link, tipo){
         CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
         resolve(CACHE_DURACAO[key]);
       })
-      .catch(function(){ CACHE_DURACAO[key] = null; resolve(null); });
+      .catch(function(err){ console.error('ytduration fetch error:', err); CACHE_DURACAO[key] = null; resolve(null); });
   });
 }
 function youtubeEmbed(url){

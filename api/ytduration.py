@@ -1,4 +1,4 @@
-import json, re, urllib.request, os
+import json, re, urllib.request, os, sys
 from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
@@ -7,7 +7,6 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Accept-Encoding": "gzip, deflate, br",
 }
 
 def fetch_duration(video_id):
@@ -15,12 +14,8 @@ def fetch_duration(video_id):
         f"https://www.youtube.com/watch?v={video_id}",
         headers=HEADERS
     )
-    resp = urllib.request.urlopen(req, timeout=15)
+    resp = urllib.request.urlopen(req, timeout=20)
     raw = resp.read()
-    # handle gzip
-    if resp.info().get("Content-Encoding") == "gzip":
-        import gzip
-        raw = gzip.decompress(raw)
     html = raw.decode("utf-8", errors="replace")
 
     # try multiple patterns
@@ -28,12 +23,13 @@ def fetch_duration(video_id):
         r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)',
         r'"approxDurationMs":"(\d+)"',
         r'approxDurationMs[=:]\s*(\d+)',
+        r'length_seconds["\']?\s*[:=]\s*["\']?(\d+)',
     ]
     for p in patterns:
         m = re.search(p, html)
         if m:
-            return int(m.group(1))
-    return None
+            return int(m.group(1)), None
+    return None, html[:2000]  # snippet for debug
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -55,33 +51,16 @@ class handler(BaseHTTPRequestHandler):
             self._respond(CACHE[cache_key])
             return
         try:
-            ms = fetch_duration(video_id)
+            ms, snippet = fetch_duration(video_id)
             if ms:
                 secs = round(ms / 1000)
                 result = {"ok": True, "segundos": secs}
             else:
-                # fallback: try yt-dlp if installed
-                try:
-                    import subprocess
-                    proc = subprocess.run(
-                        ["yt-dlp", "--dump-json", f"https://www.youtube.com/watch?v={video_id}"],
-                        capture_output=True, text=True, timeout=20
-                    )
-                    if proc.returncode == 0:
-                        data = json.loads(proc.stdout)
-                        if data.get("duration"):
-                            secs = int(data["duration"])
-                            result = {"ok": True, "segundos": secs}
-                        else:
-                            result = {"ok": False, "erro": "yt_dlp_no_duration"}
-                    else:
-                        result = {"ok": False, "erro": "yt_dlp_failed"}
-                except Exception as e2:
-                    result = {"ok": False, "erro": "duration_not_found"}
+                result = {"ok": False, "erro": "duration_not_found", "debug": f"html_len={len(snippet) if snippet else 0}", "snippet": (snippet[:500] if snippet else "")}
             CACHE[cache_key] = result
             self._respond(result)
         except Exception as e:
-            self._respond({"ok": False, "erro": str(e)})
+            self._respond({"ok": False, "erro": str(e), "debug": f"{type(e).__name__}: {e}"})
 
     def _respond(self, data):
         self.send_response(200)
