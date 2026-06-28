@@ -1,4 +1,4 @@
-import json, re, requests
+import json, re, requests, sys
 from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
@@ -18,10 +18,11 @@ def get_session():
             pass
     return SESSION
 
-def _parse_json(html, pos):
+def try_parse(html, pos, label):
     depth = 0
     in_string = False
     escape = False
+    last_safe = pos
     for i in range(pos, len(html)):
         c = html[i]
         if escape:
@@ -42,67 +43,48 @@ def _parse_json(html, pos):
             if depth == 0:
                 json_str = html[pos:i+1]
                 try:
-                    return json.loads(json_str)
-                except Exception:
-                    return None
-    return None
-
-def extract_json(html, var_name):
-    m = re.search(r'var\s+' + re.escape(var_name) + r'\s*=\s*{', html)
-    if m:
-        pos = m.end() - 1
-        return _parse_json(html, pos)
-
-    for trial in [
-        "var " + var_name + " = {",
-        var_name + " = {",
-    ]:
-        pos = html.find(trial)
-        if pos >= 0:
-            brace_pos = pos + len(trial) - 1
-            return _parse_json(html, brace_pos)
-
-    return None
+                    return json.loads(json_str), label + "_ok"
+                except json.JSONDecodeError as e:
+                    return None, f"{label}_json_err:{e}"
+    return None, f"{label}_no_end"
 
 def fetch_duration(video_id):
     session = get_session()
     try:
         resp = session.get(
             f"https://www.youtube.com/watch?v={video_id}",
-            timeout=12
+            timeout=15
         )
         html = resp.text
     except Exception as e:
-        return None, f"http: {e}"
+        return None, f"http:{e}"
 
-    data = extract_json(html, "ytInitialPlayerResponse")
-    if data:
-        vd = data.get("videoDetails", {})
-        secs = str(vd.get("lengthSeconds", "0"))
-        if secs and secs != "0":
-            return int(secs), None
+    # Try regex match for ytInitialPlayerResponse
+    m = re.search(r'var\s+ytInitialPlayerResponse\s*=\s*{', html)
+    if m:
+        data, status = try_parse(html, m.end() - 1, "ipr")
+        if data:
+            vd = data.get("videoDetails", {})
+            secs = str(vd.get("lengthSeconds", ""))
+            if secs and secs != "0":
+                return int(secs), None
+            return None, f"ipr_secs={secs}"
+        return None, status
 
-    data2 = extract_json(html, "ytInitialData")
-    if data2:
-        try:
-            contents = data2.get("contents", {})
-            two_col = contents.get("twoColumnWatchNextResults", {})
-            results = two_col.get("results", {}).get("results", {})
-            for item in results.get("contents", []):
-                vp = item.get("videoPrimaryInfoRenderer", {})
-                dur = vp.get("length", 0)
-                if dur and str(dur) != "0":
-                    return int(dur), None
-        except Exception:
-            pass
+    # Check if string exists at all
+    idx = html.find("ytInitialPlayerResponse")
+    if idx >= 0:
+        snippet = html[idx:idx+100]
+        return None, f"ytipr_exists_but_no_match:{snippet[:80]}"
 
+    # Fallback: direct regex for lengthSeconds
     for p in [r'"approxDurationMs"\s*:\s*"?(\d+)"?', r'"lengthSeconds"\s*:\s*"?(\d+)"?']:
-        m = re.search(p, html)
-        if m:
-            val = int(m.group(1))
+        m2 = re.search(p, html)
+        if m2:
+            val = int(m2.group(1))
             return round(val / 1000) if val > 1000 else val, None
 
-    return None, f"parsed_ok_false len={len(html)}"
+    return None, f"no_ytipr len={len(html)}"
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -127,11 +109,11 @@ class handler(BaseHTTPRequestHandler):
             if secs:
                 result = {"ok": True, "segundos": secs}
             else:
-                result = {"ok": False, "erro": dbg or "duration_not_found"}
+                result = {"ok": False, "erro": dbg or "?"}
             CACHE[video_id] = result
             self._respond(result)
         except Exception as e:
-            self._respond({"ok": False, "erro": f"{type(e).__name__}: {str(e)[:200]}"})
+            self._respond({"ok": False, "erro": f"{type(e).__name__}:{e}"})
 
     def _respond(self, data):
         self.send_response(200)
