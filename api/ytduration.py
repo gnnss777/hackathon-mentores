@@ -18,6 +18,42 @@ def get_session():
             pass
     return SESSION
 
+def extract_json(html, key):
+    start_marker = f'var {key} = '
+    pos = html.find(start_marker)
+    if pos == -1:
+        return None
+    pos += len(start_marker)
+    if pos >= len(html) or html[pos] != '{':
+        return None
+    depth = 0
+    in_string = False
+    escape = False
+    for i in range(pos, len(html)):
+        c = html[i]
+        if escape:
+            escape = False
+            continue
+        if c == '\\' and in_string:
+            escape = True
+            continue
+        if c == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                json_str = html[pos:i+1]
+                try:
+                    return json.loads(json_str)
+                except Exception:
+                    return None
+    return None
+
 def fetch_duration(video_id):
     session = get_session()
     try:
@@ -29,32 +65,32 @@ def fetch_duration(video_id):
     except Exception as e:
         return None, f"http: {e}"
 
-    # Pattern 1: ytInitialPlayerResponse JSON
-    m = re.search(r'ytInitialPlayerResponse\s*=\s*({.*?});\s*var\s+', html)
-    if m:
+    data = extract_json(html, "ytInitialPlayerResponse")
+    if data:
+        vd = data.get("videoDetails", {})
+        secs = vd.get("lengthSeconds")
+        if secs:
+            return int(secs), None
+
+    data2 = extract_json(html, "ytInitialData")
+    if data2:
         try:
-            data = json.loads(m.group(1))
-            vd = data.get("videoDetails", {})
-            secs = vd.get("lengthSeconds")
-            if secs:
-                return int(secs), None
+            contents = data2.get("contents", {})
+            two_col = contents.get("twoColumnWatchNextResults", {})
+            results = two_col.get("results", {}).get("results", {})
+            for item in results.get("contents", []):
+                vp = item.get("videoPrimaryInfoRenderer", {})
+                dur = vp.get("length", 0)
+                if dur:
+                    return int(dur), None
         except Exception:
             pass
 
-    # Pattern 2: legacy approxDurationMs
-    for p in [
-        r'"approxDurationMs":"(\d+)"',
-        r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)',
-    ]:
-        m2 = re.search(p, html)
-        if m2:
-            val = int(m2.group(1))
+    for p in [r'"approxDurationMs":"(\d+)"', r'"lengthSeconds"\s*:\s*"?(\d+)"?']:
+        m = re.search(p, html)
+        if m:
+            val = int(m.group(1))
             return round(val / 1000) if val > 1000 else val, None
-
-    # Pattern 3: lengthSeconds in any JSON context
-    m3 = re.search(r'"lengthSeconds"\s*:\s*"?(\d+)"?', html)
-    if m3:
-        return int(m3.group(1)), None
 
     return None, f"no_match len={len(html)}"
 
