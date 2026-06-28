@@ -895,13 +895,6 @@ function dashFiltroClick(el){
   el.classList.add('active');
   renderDash();
 }
-function dashFiltroClick(grupo, val, el){
-  FLT_DASH[grupo] = val;
-  var parent = el.parentNode;
-  parent.querySelectorAll('.filter-tag').forEach(function(t){ t.classList.remove('active'); });
-  el.classList.add('active');
-  renderDash();
-}
 function carregarDash(){
   var c = document.getElementById('dashContainer');
   if(!c) return;
