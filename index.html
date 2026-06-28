@@ -187,7 +187,7 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .dash-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4A1FA8,#EC008C);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0}
 .dash-card-nome{font-size:.82rem;font-weight:800;color:#fff;flex:1}
 .dash-card-body{padding:8px 10px 10px}
-.dash-status-row{display:flex;gap:6px;margin-bottom:6px}
+.dash-status-row{display:flex;gap:6px;margin-bottom:6px;align-items:center}
 .dash-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:5px;text-transform:uppercase;letter-spacing:.3px}
 .dash-delivery-line{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
 .dash-del-item{display:flex;align-items:center;justify-content:center;gap:4px;font-weight:600;padding:5px 4px;border-radius:6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);font-size:.72rem}
@@ -925,9 +925,10 @@ function renderDash(){
         abrirDashOverlay(eq, lp, le, lpi);
       });
     })(eq, linkProto, linkExtra, linkPitch);
+    var jaAvaliado = carregarAvaliacao(eq);
     card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div></div>';
     card.innerHTML += '<div class="dash-card-body">';
-    card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+'</div>';
+    card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
     card.innerHTML += '<div class="dash-delivery-line">';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">💡</span><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>Ideação</span>';
     var extraOk = !!linkExtra;
@@ -1001,12 +1002,33 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   formHtml += '<label>Critério 3 — Clareza do Pitch</label><div class="radio-group">';
   for(var i=1;i<=5;i++){ formHtml += '<label><input type="radio" name="q3" value="'+i+'"><span>'+i+'</span></label>'; }
   formHtml += '</div>';
-  formHtml += '<label>Observações do Jurado</label><textarea placeholder="Comentários, pontos fortes, sugestões..." style="min-height:80px"></textarea>';
-  formHtml += '<label>Nota Final (0-10)</label><input type="text" placeholder="Ex: 8.5">';
-  formHtml += '<button class="btn-submit" onclick="alert(\'Formulário de demonstração.\')">💾 Salvar avaliação</button>';
+  formHtml += '<label>Observações do Jurado</label><textarea id="dashFormObs" placeholder="Comentários, pontos fortes, sugestões..." style="min-height:80px"></textarea>';
+  formHtml += '<label>Nota Final (0-10)</label><input type="text" id="dashFormNota" placeholder="Ex: 8.5">';
+  formHtml += '<button class="btn-submit" id="dashFormBtn" onclick="salvarAvaliacao(\''+esc(eq)+'\')">💾 Salvar avaliação</button>';
+  formHtml += '<div id="dashFormStatus" style="text-align:center;font-size:.75rem;margin-top:8px;font-weight:700"></div>';
   formHtml += '</div></div>';
   c.innerHTML = '<div class="dash-overlay-split"><div class="dash-overlay-left">'+contentHtml+'</div><div class="dash-overlay-right">'+formHtml+'</div></div>';
-  c.querySelectorAll('.dash-overlay-right .radio-group label').forEach(function(l){
+  // Pre-fill saved values
+  var saved = carregarAvaliacao(eq);
+  if(saved){
+    var sel = c.querySelector('#dashOverlayContent select');
+    if(sel && saved.c1) sel.value = saved.c1;
+    c.querySelectorAll('#dashOverlayContent .radio-group').forEach(function(g, idx){
+      var radios = g.querySelectorAll('input');
+      var key = idx === 0 ? 'c2' : 'c3';
+      radios.forEach(function(r){
+        if(r.value === saved[key]){
+          r.checked = true;
+          r.parentNode.classList.add('selected');
+        }
+      });
+    });
+    var obs = document.getElementById('dashFormObs');
+    if(obs && saved.obs) obs.value = saved.obs;
+    var nota = document.getElementById('dashFormNota');
+    if(nota && saved.nota) nota.value = saved.nota;
+  }
+  c.querySelectorAll('#dashOverlayContent .radio-group label').forEach(function(l){
     l.addEventListener('click', function(){
       var input = this.querySelector('input');
       if(input) input.checked = true;
@@ -1016,6 +1038,33 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   });
   document.getElementById('dashOverlay').classList.add('show');
   document.addEventListener('keydown', dashEscClose);
+}
+function carregarAvaliacoes(){
+  try { return JSON.parse(localStorage.getItem('avaliacoes')||'{}'); } catch(e){ return {}; }
+}
+function salvarAvaliacao(eq){
+  var avals = carregarAvaliacoes();
+  var c = document.getElementById('dashOverlayContent');
+  var sel = c ? c.querySelector('select') : null;
+  var radios2 = c ? c.querySelectorAll('.radio-group') : [];
+  var obs = document.getElementById('dashFormObs');
+  var nota = document.getElementById('dashFormNota');
+  avals[eq] = {
+    c1: sel ? sel.value : '',
+    c2: radios2[0] ? (radios2[0].querySelector('input:checked')||{}).value||'' : '',
+    c3: radios2[1] ? (radios2[1].querySelector('input:checked')||{}).value||'' : '',
+    obs: obs ? obs.value : '',
+    nota: nota ? nota.value : ''
+  };
+  localStorage.setItem('avaliacoes', JSON.stringify(avals));
+  var st = document.getElementById('dashFormStatus');
+  if(st){ st.textContent = '✅ Salvo!'; st.style.color = '#25D366'; }
+  // Update card indicator
+  renderDash();
+}
+function carregarAvaliacao(eq){
+  var avals = carregarAvaliacoes();
+  return avals[eq] || null;
 }
 function dashEscClose(e){
   if(e.key === 'Escape') fecharDashOverlay();
