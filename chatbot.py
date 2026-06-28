@@ -142,6 +142,13 @@ def limpar_cache():
     for f in PASTA_DB.glob("*"):
         f.unlink()
     st.cache_resource.clear()
+    st.session_state.base_pronta = False
+    if "modelo" in st.session_state:
+        del st.session_state.modelo
+    if "chunks" in st.session_state:
+        del st.session_state.chunks
+    if "embeddings" in st.session_state:
+        del st.session_state.embeddings
 
 def buscar(pergunta, modelo, chunks, embeddings, k=5):
     emb_pergunta = modelo.encode([pergunta])
@@ -250,17 +257,29 @@ else:
     st.title("haCARthon - Chatbot de Dúvidas")
     st.caption("Pergunte sobre o hackathon, desafios, mentores, programação e documentos")
 
-    with st.spinner("Carregando base de conhecimento..."):
-        modelo, chunks, embeddings = carregar_base()
-
     if "mensagens" not in st.session_state:
         st.session_state.mensagens = []
+
+    if "base_pronta" not in st.session_state:
+        st.session_state.base_pronta = False
+
+    if not st.session_state.base_pronta:
+        with st.spinner("Carregando base de conhecimento..."):
+            modelo, chunks, embeddings = carregar_base()
+            st.session_state.modelo = modelo
+            st.session_state.chunks = chunks
+            st.session_state.embeddings = embeddings
+            st.session_state.base_pronta = True
+    else:
+        modelo = st.session_state.modelo
+        chunks = st.session_state.chunks
+        embeddings = st.session_state.embeddings
 
     for msg in st.session_state.mensagens:
         with st.chat_message(msg["papel"]):
             st.markdown(msg["conteudo"])
 
-    pergunta = st.chat_input("Cole sua dúvida aqui...")
+    pergunta = st.chat_input("Cole sua dúvida aqui...", disabled=not st.session_state.base_pronta)
 
     if pergunta:
         st.session_state.mensagens.append({"papel": "user", "conteudo": pergunta})
