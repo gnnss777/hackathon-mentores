@@ -449,14 +449,18 @@ function restaurarTodos(){
 function getCustomDocs(){
   try { var s = localStorage.getItem('customChunks'); return s ? JSON.parse(s) : []; } catch(e){ return []; }
 }
-function apagarCustomDoc(fonte, nome){
-  if(!confirm('Tem certeza que deseja apagar "' + nome + '" permanentemente?')) return;
-  try {
-    var docs = getCustomDocs();
+function apagarDocumento(fonte, nome){
+  if(!confirm('Tem certeza que deseja apagar "' + nome + '"?')) return;
+  var docs = getCustomDocs();
+  var achou = docs.some(function(c){ return c.fonte === fonte; });
+  if(achou){
     var filtrados = docs.filter(function(c){ return c.fonte !== fonte; });
     localStorage.setItem('customChunks', JSON.stringify(filtrados));
-    carregarDocsBase();
-  } catch(e){}
+  }
+  var h = getHiddenFontes();
+  if(h.indexOf(fonte) === -1) h.push(fonte);
+  saveHiddenFontes(h);
+  carregarDocsBase();
 }
 function btnDesativar(fonte, oculto){
   var label = oculto ? 'Ativar' : 'Desativar';
@@ -465,9 +469,8 @@ function btnDesativar(fonte, oculto){
   var bd = oculto ? 'rgba(0,191,255,.2)' : 'rgba(255,255,255,.08)';
   return '<button onclick="toggleDoc(\'' + fonte + '\')" style="background:' + bg + ';border:1px solid ' + bd + ';color:' + cor + ';padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif;text-transform:uppercase;letter-spacing:.5px">' + label + '</button>';
 }
-function btnApagar(fonte, nome, isCustom){
-  if(!isCustom) return '';
-  return '<button onclick="apagarCustomDoc(\'' + esc(fonte) + '\',\'' + esc(nome) + '\')" style="background:rgba(236,0,140,.08);border:1px solid rgba(236,0,140,.15);color:#EC008C;padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif;text-transform:uppercase;letter-spacing:.5px">Apagar</button>';
+function btnApagar(fonte, nome){
+  return '<button onclick="apagarDocumento(\'' + esc(fonte) + '\',\'' + esc(nome) + '\')" style="background:rgba(236,0,140,.08);border:1px solid rgba(236,0,140,.15);color:#EC008C;padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif;text-transform:uppercase;letter-spacing:.5px">Apagar</button>';
 }
 function carregarDocsBase(){
   var container = document.getElementById('baseDocsContainer');
@@ -487,7 +490,7 @@ function carregarDocsBase(){
       h += '<span style="flex:1;color:rgba(255,255,255,.6);min-width:0">' + esc(d.nome) + ' <span style="color:rgba(255,255,255,.2);font-size:.7rem">' + d.total + ' chunks</span></span>';
       h += '<div style="display:flex;gap:4px;flex-shrink:0">';
       h += btnDesativar(d.fonte, oculto);
-      h += btnApagar(d.fonte, d.nome, false);
+      h += btnApagar(d.fonte, d.nome);
       h += '</div></div>';
     });
     // custom docs
@@ -505,7 +508,7 @@ function carregarDocsBase(){
       h += '<span style="flex:1;color:rgba(255,255,255,.6);min-width:0">' + esc(g.label) + ' <span style="color:rgba(255,255,255,.2);font-size:.7rem">' + g.count + ' chunks</span></span>';
       h += '<div style="display:flex;gap:4px;flex-shrink:0">';
       h += btnDesativar(fonte, oculto);
-      h += btnApagar(fonte, g.label, true);
+      h += btnApagar(fonte, g.label);
       h += '</div></div>';
     }
     if(hidden.length > 0){
