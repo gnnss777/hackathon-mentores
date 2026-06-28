@@ -131,9 +131,50 @@
   * Programas de formação de multiplicadores (lideranças locais);  
   * Iniciativas que tornem acessíveis informações sobre os benefícios do CAR para públicos diferenciados (pequenos e grandes proprietários, entre outros).  
 * Baixe o documento abaixo e confira mais detalhes sobre o contexto e soluções esperadas sobre os desafios ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ ⬇️ [https://repositorio.enap.gov.br/bitstream/1/9909/5/haCARthon%20-%20Briefing%20dos%20desafios%20-%20versão%202.pdf](https://repositorio.enap.gov.br/bitstream/1/9909/5/haCARthon%20-%20Briefing%20dos%20desafios%20-%20vers%C3%A3o%202.pdf)  
-*   
+* 
+
 *   
 * 
+
+\*\*LINKS ÚTEIS SOBRE O HACARTHON: \*\*  
+▫️\[Site do haCARthon\](https://appdesafios.enap.gov.br/desafio/view/hacarthon-maratona-de-solucoes-para-o-car-(cadastro-ambiental-rural))  
+▫️\[Edital do Hacarthon\](https://repositorio.enap.gov.br/bitstream/1/9909/1/Edital%20haCARthon%20-%20Assinado%20-%20SEI\_0993344\_Edital\_158.pdf)  
+▫️\[Guia do participante\](https://repositorio.enap.gov.br/bitstream/1/9909/3/haCARthon%20-%20Guia%20do%20Participante.pdf)  
+▫️\[Briefing dos desafios\](https://repositorio.enap.gov.br/bitstream/1/9909/5/haCARthon%20-%20Briefing%20dos%20desafios%20-%20versão%202.pdf)
+
+\*\*Sistemas, Plataformas e Repositórios do CAR\*\*  
+Abaixo estão links dos sistemas, plataformas e repositórios já existentes relacionados ao Cadastro Ambiental Rural (CAR) de forma que seja possível se familiarizar com o ecossistema de soluções disponíveis, e que a participação no haCARthon seja mais proveitosa e com uma melhor compreensão do contexto e das oportunidades de inovação.
+
+Bases de Dados e referências sugeridas para pesquisa:  
+▫️\[Site do CAR\](https://car.gov.br/\#/)  
+▫️\[Código Florestal Brasileiro LEI No 12.651, DE 25 DE MAIO DE 2012\](https://www.planalto.gov.br/ccivil\_03/\_ato2011-2014/2012/lei/l12651.htm)  
+▫️\[Decreto no 7.830/2012, que regulamenta o CAR\](https://www.planalto.gov.br/ccivil\_03/\_ato2011-2014/2012/decreto/d7830.htm)  
+▫️\[Manuais do Cadastro Ambiental Rural\](https://car.gov.br/\#/centralConteudo/manuaisUsuario)  
+▫️\[Novo Consulta Pública de dados do CAR  \](https://consulta.car.gov.br/)  
+▫️\[Painel da Regularização Ambiental\](https://app.powerbi.com/view?r=eyJrIjoiZmRiM2QwZDQtYjUxZi00YWI0LWFjNGEtZTIxNjg1YWFkNmZlIiwidCI6ImViMjJjMjU4LWQ0ZWQtNGZmMC04Y2Y2LTI4NmQ2Mjc3OTQ5ZSJ9)  
+▫️\[Onde Estamos na Implementação do Código Florestal?\](https://www.climatepolicyinitiative.org/pt-br/publication/onde-estamos-na-implementacao-do-codigo-florestal-radiografia-do-car-e-do-pra-nos-estados-brasileiros-edicao-2025/)  
+▫️\[Meu imóvel rural\](https://meuimovelrural.sistema.gov.br/\#/)  
+▫️\[Painel de dados do CAR\](https://painel.car.gov.br)  
+▫️\[Rural Environmental Registry \- RER\](http://rer.dataprev.gov.br/)  
+▫️\[Github do RER\](https://github.com/Rural-Environmental-Registry/core)  
+▫️\[Conjunto de Bases de Referência do Sistema Nacional de Informações Florestais \- SNIF\](https://snif.florestal.gov.br/pt-br/conjuntos-de-dados?tema=regularizacao-ambiental)
+
+\*\*AMBIENTE DE TESTE DO CAR\*\*  
+Para navegar no CAR e conhecer a plataforma, siga as orientações descritas no documento abaixo\!
+
+\[CLIQUE AQUI E CONFIRA UM VÍDEO TUTORIAL MOSTRANDO O PASSO A PASSO\](https://www.youtube.com/watch?v=D0lF7nKlCr0\&feature=youtu.be)
+
+\*\*\*Atenção\*\*: É imprescindível que os participantes realizem o envio exclusivamente pelo ambiente de testes informado no documento, utilizando o cpf de teste indicado. Solicitamos atenção redobrada a esse procedimento para evitar o envio de cadastros no ambiente de produção do Sicar, o que poderá gerar registros indevidos no sistema oficial.\*
+
+Slides da apresentação da Live 2: Como identificar oportunidades no CAR
+
+* Attachment file type: acrobat  
+* [Identificacao\_oportunidades.pdf](https://cdn.discordapp.com/attachments/1511455690160603341/1519034227566579894/Identificacao_oportunidades.pdf?ex=6a42051e&is=6a40b39e&hm=56a30506eb39386f63fe919b539d46a29e06c891a906dd4e862cf283325306dc&)  
+* 7.94 MB  
+* Slides da apresentação da Live 3: Ideação e Prototipação  
+* Attachment file type: acrobat  
+* [ideacao\_prototipacao.pdf](https://cdn.discordapp.com/attachments/1511455690160603341/1519034365542137876/ideacao_prototipacao.pdf?ex=6a42053f&is=6a40b3bf&hm=157a26bc82e4a9f2e64c39b14783557665eaef58a3c6c3013416188767244770&)  
+* 35.11 MB
 
 [image1]: <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAFBklEQVR4Xl2V10IiWRRF6+NmWrvbNrS22krOUFABiozkYAAUIyKS7fnMPftWlejMw3rAl7XOuXWv0sk/f+Hkz984FbxtwLHahGPxDc75FlzTbbhf9+B52Yf3+RC+p9/wP54ieO9C6M6D8MCH6E0AsesQ5OsIEv0olH4Mal+G1o9DJ0mSuk7AIGnBjUXGRjplgCknDjvAyQDXfwIOzAA/AwLvAbceRD4FxPsfARoD1nJi9D8C3sXrAIcQm3yBkwHO5SZcDHDPtuCZ7sDDAC8D/AwIMCD44ECIAREGRAd+xG6CiDMgwQCFAWovBr0nI9mjvCfkcaQZIMgwIPvOjYXkotzk7Qtcqw24l1/hWXyHZ/YD3skOfK8/4WdA4PkIQQaEGRC5cyF666XcT3mQ8hDlEWi9KOUxymVLTtIkQ7IMEOQE13HkbSQPJzfh9B6u37v8Bh8DfLNt+Ce7CIx/Ijj6hdDwCOHHE0QYELtzQx54EWeAwgC1H6Y8Ar0bRaobg9GVke5STLIk10sgb1PoC+JrJN+fDZi8bcK/+gr/8jsCPP8gA4KTPYTG+wiPDhEZHiPK85fvnYhz/Qmev3Id4HmHOHUYSVuevpKRuaKY5Ej+isKuRZGUBL0PpMCfTQTfvlqsviO02EJovo3wdBcRrj/K9Ue5fpnrj3P6BNevcP0qp9f7Qa47RHEExlWUYhnZSxm5S4ovKSVFUhIw5IyU3+laSOG3bzChPLzcQmSxjchsB9HpHmKvB5BfDhF/Pkbi6RTKgxMqr5/G6XVOn+L0BuVpIb+MWeILrvaCYlK6UHBGyjaVS4vqGgZE37YQXf0wiS23EVvsQp7tQZ7sIz4+RGJ0DGV4AvXRCe3eDZ3TJ28seZqrz1BuTk1x/pzicwUlctZRUSYVwbmKKqnZ1AUMEkjyagcmy13EF3uIz38iMT1AYnIIZXwMdXQC7ckB/cGN5J0XKV49gx+eKee55yg3p6a02KGcwrO2hjKpkCqpkbqgo6HxP6TEag+JFaVLstiHMvsFZXoI9fUY2ssJ9Gcn9CfKHyi/9fMVCyHDK5flB5e7EvKELbfFLR0VUm0lUSN1mwZpmugmLUFbh6QsDyBQF7+gzimeUTz5DW18Cn3kRHLoRurRC+M+gPQt5Xxysz0hFx+aQrlKuUZ5kvIkKs0UqqTWMFAnDZtmI4WWoGnRtpHU5REE2oLiOcVTTj1xIDl2ITnyIDX0wXig/I7yAeXXPG9+vab8QqNcR6mdwlnLoNxAtZFGrZ5GvZ4xaZAmafFvgvZnGCZpC54x0eeceMaznnLqV678hfJnyp8of+B53/JLv5HNlyzfVXnFdH5wScoNytMoNzOoNLKo1rOo1bKo13JokCZp8begvSaDjo2kLygVzHnWM049ofyV5/3Cj+05yIAw0veU38rmG57rqXxcdE6f4vQGSq0MzppZlBs5ynOU51GvWjRIk7Rs2tWcSecTDHBRLqB45mEA5WM/Aygf8qo98p7f83UbiH8iKgN0rj/FszdQbFPesuSVeh7VWgG1aoHyIhoViyZpVQpo23RM8msYQPHcY8mnvOMTyse85yM+MkPKH2PI3PFpHSgM0Hj+SQZQfp7h+rOcPseAPAMKDCgyoIh6pUR5Cc2yRatcRNumY/IeUoBkys0Ayqc+pMwATj8Kfwrg9ANO3+f0XU6/DsgxIM+AAiqUV6sl1Cg2A2y5FVCiXPAe8MG/g2duY3kAAaQAAAAASUVORK5CYII=>
 

@@ -19,7 +19,7 @@ def merge_chunks(custom_chunks=None, hidden_fontes=None):
                 base.append(c)
     return base
 
-def buscar(query, k=8, custom_chunks=None, hidden_fontes=None):
+def buscar(query, k=12, custom_chunks=None, hidden_fontes=None):
     all_chunks = merge_chunks(custom_chunks, hidden_fontes)
     q_words = set(re.sub(r'[^a-z0-9\s]', '', query.lower()).split())
     scores = []
@@ -77,6 +77,7 @@ REGRAS:
 2. Se a resposta estiver nos documentos, responda com os fatos secos. Se não souber, sugira pedir mentoria no Discord com !queromentoria.
 3. Só mencione mentores se a pergunta for sobre eles.
 4. Use o histórico pra manter contexto.
+5. Quando mencionar uma plataforma, URL, ferramenta, sistema, ambiente ou recurso, inclua o link completo se ele estiver disponível nos documentos. Ex: "plataforma de entregas: https://hacarthon.paniclobster.com/entregas" ou "site do CAR: https://car.gov.br".
 
 Máximo de 4 parágrafos. Seja rápido e útil.
 

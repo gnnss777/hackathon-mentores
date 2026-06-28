@@ -20,3 +20,6 @@ original_index.*
 mentores_data.json
 build_index.py
 .vercel
+
+.vercel
+.env*

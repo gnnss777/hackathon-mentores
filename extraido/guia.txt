@@ -1,37 +1,5 @@
- 
-GUIA
- 
-DO
- 
-PARTICIPANTE
- 
- 
-O
- 
-Ministério
- 
-da
- 
-Gestão
- 
-e
- 
-Inovação
- 
-em
- 
-Serviços
- 
-Públicos
- 
-(MGI),
- 
-a
- 
-Fundação
- 
-Brasileira
- 
+ GUIA  DO  PARTICIPANTE  
+ O  Ministério  da  Gestão  e  Inovação  em  Serviços  Públicos  (MGI),  a  Fundação  Brasileira  
 para
  
 o
@@ -69,16 +37,7 @@ Brasil
 apresentam
  
 o
- 
-haCARthon
-,
- 
-uma
- 
-maratona
- 
-de
- 
+ haCARthon,  uma  maratona  de  
 inovação
  
 aberta
@@ -120,35 +79,7 @@ Ambiental
 Rural
  
 (CAR).
- 
- 
-Esse
- 
-é
- 
-o
- 
-Guia
- 
-do
- 
-Participante
- 
-do
- 
-haCARthon
-.
- 
-Nele
- 
-você
- 
-vai
- 
-encontrar
- 
-as
- 
+  Esse  é  o  Guia  do  Participante  do  haCARthon.  Nele  você  vai  encontrar  as  
 informações
  
 necessárias
@@ -185,36 +116,7 @@ do
  
 evento.
  
- 
- 
-Leia
- 
-com
- 
-atenção
- 
-e
- 
-programe-se
- 
-para
- 
-dispor
- 
-de
- 
-todos
- 
-os
- 
-recursos
- 
-necessários
- 
-para
- 
-o
- 
+  Leia  com  atenção  e  programe-se  para  dispor  de  todos  os  recursos  necessários  para  o  
 desenvolvimento
  
 do
@@ -258,34 +160,7 @@ desenvolvimento
 da
  
 solução.
- 
- 
-Também
- 
-é
- 
-fundamental
- 
-que
- 
-você
- 
-leia
- 
-com
- 
-muita
- 
-atenção
- 
-o
- 
-edital
- 
-do
- 
-HaCARthon,
- 
+  Também  é  fundamental  que  você  leia  com  muita  atenção  o  edital  do  HaCARthon,  
 disponível
  
 na
@@ -293,46 +168,11 @@ na
 plataforma
  
 desaﬁos.enap.gov.br.
- 
- 
- 
- 
- 
- 
- 
+       
  
 
- 
-INSCRIÇÕES
- 
-O
- 
-haCARthon
- 
-é
- 
-um
- 
-evento
- 
-gratuito
- 
-e
- 
-aberto
- 
-aberto
- 
-ao
- 
-público
- 
-em
- 
-geral,
- 
-pessoas
- 
+
+ INSCRIÇÕES  O  haCARthon é  um  evento  gratuito  e  aberto  aberto  ao  público  em  geral,  pessoas  
 físicas
  
 e
@@ -399,32 +239,7 @@ diferentes
  
 expertises.
  
- 
- 
-Para
- 
-se
- 
-inscrever
- 
-no
- 
-programa,
- 
-é
- 
-necessário
- 
-preencher
- 
-o
- 
-formulário
- 
-eletrônico
- 
-de
- 
+  Para  se  inscrever  no  programa,  é  necessário  preencher  o  formulário  eletrônico  de  
 inscrição
  
 disponível
@@ -436,38 +251,7 @@ Plataforma
 Desaﬁos
  
 (www.gov.br/desaﬁos).
- 
- 
-Você
- 
-não
- 
-precisa
- 
-ter
- 
-uma
- 
-equipe
- 
-formada
- 
-para
- 
-se
- 
-inscrever.
- 
-A
- 
-inscrição
- 
-pode
- 
-ser
- 
-feita
- 
+  Você  não  precisa  ter  uma  equipe  formada  para  se  inscrever.  A  inscrição  pode  ser  feita  
 individualmente.
  
 Mas,
@@ -494,65 +278,7 @@ uma
  
 equipe.
  
-FORMAÇÃO
- 
-DE
- 
-EQUIPES
- 
-As
- 
-equipes
- 
-deverão
- 
-ser
- 
-constituídas
- 
-por
- 
-no
- 
-mínimo
- 
-2
- 
-e
- 
-no
- 
-máximo
- 
-6
- 
-integrantes.
- 
- 
-Todos
- 
-os
- 
-integrantes
- 
-deverão
- 
-estar
- 
-inscritos
- 
-de
- 
-forma
- 
-individual
- 
-e,
- 
-no
- 
-momento
- 
+FORMAÇÃO  DE  EQUIPES  As  equipes  deverão  ser  constituídas  por  no  mínimo  2  e  no  máximo  6  integrantes.   Todos  os  integrantes  deverão  estar  inscritos  de  forma  individual  e,  no  momento  
 indicado
  
 pela
@@ -569,34 +295,7 @@ da
  
 equipe.
  
- 
- 
-Durante
- 
-o
- 
-período
- 
-de
- 
-inscrições,
- 
-a
- 
-organização
- 
-vai
- 
-criar
- 
-espaços
- 
-de
- 
-conversa
- 
-e
- 
+  Durante  o  período  de  inscrições,  a  organização  vai  criar  espaços  de  conversa  e  
 conexão
  
 para
@@ -622,72 +321,13 @@ formar
 suas
  
 equipes.
- 
- 
- 
- 
- 
- 
+      
  
 
- 
-DESAFIOS
- 
-No
- 
-ato
- 
-da
- 
-inscrição
- 
-o
- 
-participante
- 
-deve
- 
-escolher
- 
-qual
- 
-dos
- 
-três
- 
-desaﬁos
- 
-quer
- 
-propor
- 
+
+ DESAFIOS  No  ato  da  inscrição  o  participante  deve  escolher  qual  dos  três  desaﬁos  quer  propor  
 soluções.
- 
- 
-DESAFIO
- 
-1
- 
-Como
- 
-podemos
- 
-simpliﬁcar
- 
-a
- 
-declaração
- 
-e
- 
-retiﬁcação
- 
-do
- 
-Cadastro
- 
-Ambiental
- 
+  DESAFIO  1  Como  podemos  simpliﬁcar  a  declaração  e  retiﬁcação  do  Cadastro  Ambiental  
 Rural
  
 (CAR)
@@ -741,34 +381,7 @@ individuais
 e
  
 coletivos?
- 
- 
-DESAFIO
- 
-2
- 
-Como
- 
-podemos
- 
-atualizar
- 
-anualmente
- 
-com
- 
-rapidez
- 
-e
- 
-acurácia
- 
-o
- 
-mapeamento
- 
-de
- 
+  DESAFIO  2  Como  podemos  atualizar  anualmente  com  rapidez  e  acurácia  o  mapeamento  de  
 uso
  
 e
@@ -828,30 +441,7 @@ Ambiental
 Rural
  
 (CAR)?
- 
- 
-DESAFIO
- 
-3
- 
-Como
- 
-podemos
- 
-aumentar
- 
-o
- 
-conhecimento
- 
-e
- 
-entendimento
- 
-da
- 
-legislação
- 
+  DESAFIO  3  Como  podemos  aumentar  o  conhecimento  e  entendimento  da  legislação  
 ambiental
  
 associada
@@ -891,50 +481,11 @@ e
 recuperação
  
 ﬂorestal?
- 
- 
- 
- 
- 
+     
  
 
- 
-LIVES
- 
-DE
- 
-PREPARAÇÃO
- 
-E
- 
-ENTREGAS
- 
-Durante
- 
-o
- 
-período
- 
-de
- 
-inscrição,
- 
-serão
- 
-realizadas
- 
-lives
- 
-abertas
- 
-aos
- 
-participantes
- 
-com
- 
-o
- 
+
+ LIVES  DE  PREPARAÇÃO  E  ENTREGAS  Durante  o  período  de  inscrição,  serão  realizadas  lives  abertas  aos  participantes  com  o  
 objetivo
  
 de
@@ -953,25 +504,7 @@ das
  
 propostas.
  
- 
-Nesses
- 
-encontros,
- 
-serão
- 
-abordados
- 
-temas
- 
-como:
- 
-Detalhamento
- 
-dos
- 
-desaﬁos
- 
+ Nesses  encontros,  serão  abordados  temas  como:  Detalhamento  dos  desaﬁos  
 propostos,
  
 processo
@@ -991,29 +524,7 @@ construção
 de
  
 pitch.
- 
-As
- 
-lives
- 
-também
- 
-trarão
- 
-orientações
- 
-práticas
- 
-sobre
- 
-o
- 
-funcionamento
- 
-do
- 
-hackathon,
- 
+ As  lives  também  trarão  orientações  práticas  sobre  o  funcionamento  do  hackathon,  
 para
  
 que
@@ -1041,34 +552,7 @@ de
 suas
  
 soluções.
- 
- 
-Durante
- 
-os
- 
-dias
- 
-do
- 
-evento
- 
-serão
- 
-realizadas
- 
-lives
- 
-sobre
- 
-as
- 
-entregas
- 
-obrigatórias,
- 
-com
- 
+  Durante  os  dias  do  evento  serão  realizadas  lives  sobre  as  entregas  obrigatórias,  com  
 orientações
  
 sobre
@@ -1100,63 +584,13 @@ concorrer
 premiação
  
 ﬁnal.
- 
-A
- 
-participação
- 
-de
- 
-pelo
- 
-menos
- 
-um
- 
-integrante
- 
-da
- 
-equipe
- 
-em
- 
-cada
- 
+ A  participação  de  pelo  menos  um  integrante  da  equipe  em  cada  
 live
  
 é
  
 obrigatória.
- 
-Os
- 
-links
- 
-de
- 
-acesso
- 
-às
- 
-lives
- 
-e
- 
-os
- 
-links
- 
-para
- 
-submissão
- 
-das
- 
-entregas
- 
-serão
- 
+ Os  links  de  acesso  às  lives  e  os  links  para  submissão  das  entregas  serão  
 disponibilizados
  
 a
@@ -1181,30 +615,7 @@ plataforma
  
 Discord.
  
-MENTORIAS
- 
-Durante
- 
-a
- 
-jornada,
- 
-as
- 
-equipes
- 
-poderão
- 
-solicitar
- 
-mentorias
- 
-para
- 
-auxiliar
- 
-no
- 
+MENTORIAS  Durante  a  jornada,  as  equipes  poderão  solicitar  mentorias  para  auxiliar  no  
 desenvolvimento
  
 das
@@ -1238,29 +649,7 @@ empreendedorismo
 e
  
 negócios.
- 
-Haverá
- 
-momentos
- 
-de
- 
-mentoria
- 
-coletiva,
- 
-onde
- 
-um
- 
-mentor
- 
-orienta
- 
-vários
- 
-grupos,
- 
+ Haverá  momentos  de  mentoria  coletiva,  onde  um  mentor  orienta  vários  grupos,  
 e
  
 também
@@ -1280,31 +669,7 @@ conforme
 necessidade
  
 solicitada.
- 
-A
- 
-conexão
- 
-com
- 
-os
- 
-mentores
- 
-será
- 
-intermediada
- 
-pela
- 
-organização
- 
-do
- 
-hackathon
- 
-e
- 
+ A  conexão  com  os  mentores  será  intermediada  pela  organização  do  hackathon  e  
 acontecerá
  
 em
@@ -1361,72 +726,9 @@ Meet.
  
  
 
- 
-ENTREGAS
- 
-DO
- 
-HACKATHON
- 
-Para
- 
-completar
- 
-a
- 
-jornada
- 
-as
- 
-equipes
- 
-deverão
- 
-cumprir
- 
-três
- 
-entregas
- 
-obrigatórias:
- 
- 
- 
-1.
- 
-IDEAÇÃO
- 
-Na
- 
-entrega
- 
-de
- 
-ideação,
- 
-a
- 
-equipe
- 
-deverá
- 
-responder
- 
-perguntas
- 
-sobre
- 
-a
- 
-criação
- 
-da
- 
-ideia
-,
- 
-como
- 
+
+ ENTREGAS  DO  HACKATHON  Para  completar  a  jornada  as  equipes  deverão  cumprir  três  entregas  obrigatórias:   
+ 1.  IDEAÇÃO  Na  entrega  de  ideação,  a  equipe  deverá  responder  perguntas  sobre  a  criação  da  ideia,  como  
 problema,
  
 solução,
@@ -1466,84 +768,7 @@ plataforma
 de
  
 entrega.
- 
- 
-2.PROTÓTIPO
- 
-A
- 
-entrega
- 
-do
- 
-protótipo
- 
-deverá
- 
-ser
- 
-um
- 
-vídeo
- 
-de
- 
-até
- 
-2
- 
-minutos
-.
- 
-●
- 
-Se
- 
-você
- 
-montar
- 
-algo
- 
-físico
- 
-(maquete,
- 
-desenho),
- 
-mostre
- 
-como
- 
-isso
- 
-funciona.
- 
- 
-●
- 
-Se
- 
-você
- 
-desenvolver
- 
-um
- 
-aplicativo,
- 
-site,
- 
-independentemente
- 
-da
- 
-plataforma,
-  
-grave
- 
-um
- 
+  2.PROTÓTIPO  A  entrega  do  protótipo  deverá  ser  um  vídeo  de  até  2  minutos.  ●  Se  você  montar  algo  físico  (maquete,  desenho),  mostre  como  isso  funciona.   ●  Se  você  desenvolver  um  aplicativo,  site,  independentemente  da  plataforma,   grave  um  
 vídeo
  
 capturando
@@ -1562,39 +787,7 @@ como
  
 funciona.
  
- 
-É
- 
-importante
- 
-que
- 
-no
- 
-vídeo
- 
-você
- 
-grave
- 
-um
- 
-áudio
- 
-explicando
- 
-o
- 
-que
- 
-está
- 
-sendo
- 
-mostrado,
- 
-a
- 
+ É  importante  que  no  vídeo  você  grave  um  áudio  explicando o  que  está  sendo  mostrado,  a  
 narração
  
 ajuda
@@ -1615,39 +808,7 @@ sua
  
 solução.
  
- 
-O
- 
-vídeo
- 
-deverá
- 
-ser
- 
-postado
- 
-no
- 
-YouTube
- 
-como
- 
-‘Público’
- 
-ou
- 
-‘Não
- 
-listado’.
- 
-Após
- 
-a
- 
-postagem
- 
-no
- 
+ O  vídeo  deverá  ser  postado  no  YouTube  como  ‘Público’  ou  ‘Não  listado’.  Após  a  postagem  no  
 Youtube,
  
 o
@@ -1668,72 +829,13 @@ de
  
 entrega.
  
- 
-Atenção:
- 
-Os
- 
-vídeos
- 
-com
- 
-mais
- 
-de
- 
-2
- 
-minutos
- 
-não
- 
-serão
- 
-aceitos
- 
-e
- 
-causarão
- 
-a
- 
+ Atenção:  Os  vídeos  com  mais  de  2  minutos  não  serão  aceitos  e  causarão  a  
 desclassiﬁcação
  
 da
  
 equipe.
- 
- 
-3.
- 
-PITCH
- 
-A
- 
-entrega
- 
-do
- 
-pitch
- 
-da
- 
-sua
- 
-solução,
- 
-deverá
- 
-ser
- 
-realizada
- 
-exclusivamente
- 
-dentro
- 
-da
- 
+  3.  PITCH  A  entrega  do  pitch  da  sua  solução,  deverá  ser  realizada  exclusivamente  dentro  da  
 plataforma
  
 de
@@ -1747,19 +849,7 @@ slides
 e
  
 áudio.
- 
-Na
- 
-plataforma
- 
-você
- 
-deverá
- 
-inserir
- 
-um
- 
+ Na  plataforma  você  deverá  inserir  um  
 pdf
  
 com
@@ -1848,55 +938,10 @@ competitivo.
  
  
 
- 
-SELEÇÃO
- 
-DAS
- 
-SOLUÇÕES
- 
-A
- 
-Comissão
- 
-Julgadora
- 
-irá
- 
-analisar
- 
-as
- 
-soluções
- 
-validadas
- 
-pela
- 
-organização
- 
-do
- 
+
+ SELEÇÃO  DAS  SOLUÇÕES  A  Comissão  Julgadora  irá  analisar  as  soluções  validadas  pela  organização  do  
 hackathon.
- 
-Serão
- 
-consideradas
- 
-válidas
- 
-as
- 
-soluções
- 
-que
- 
-realizarem
- 
-todas
- 
-as
- 
+ Serão  consideradas  válidas  as  soluções  que  realizarem  todas  as  
 entregas
  
 previstas
@@ -1908,65 +953,13 @@ dos
 prazos
  
 estabelecidos.
- 
- 
-As
- 
-equipes
- 
-não
- 
-selecionadas
- 
-para
- 
-a
- 
-fase
- 
-de
- 
-avaliação
- 
-ﬁnal
- 
-não
- 
-terão
- 
-qualquer
- 
+  As  equipes  não  selecionadas  para  a  fase  de  avaliação  ﬁnal  não  terão  qualquer  
 classiﬁcação
  
 na
  
 competição.
- 
- 
-As
- 
-soluções
- 
-serão
- 
-avaliadas
- 
-pela
- 
-Comissão
- 
-Julgadora,
- 
-adotando
- 
-escala
- 
-numérica
- 
-de
- 
-1
- 
+  As  soluções  serão  avaliadas  pela  Comissão  Julgadora,  adotando  escala  numérica  de  1  
 (um)
  
 a
@@ -1980,134 +973,13 @@ conforme
 critérios
  
 abaixo:
- 
-●
- 
-Pertinência
- 
-temática
- 
-ao
- 
-desaﬁo.
- 
-●
- 
-Relevância
- 
-do
- 
-problema
- 
-resolvido;
- 
-●
- 
-Usabilidade
- 
-e
- 
-design
- 
-que
- 
-priorizem
- 
-o
- 
-acesso
- 
-simpliﬁcado
- 
-e
- 
-fácil
- 
-compreensão
- 
-do
- 
-usuário;
- 
-●
- 
-Inovação
- 
-e
- 
-criatividade
- 
-da
- 
-solução.
- 
- 
-Em
- 
-caso
- 
-de
- 
-empate,
- 
-prevalecerá
- 
-a
- 
-maior
- 
-nota
- 
-no
- 
-critério
- 
-“inovação
- 
-e
- 
-criatividade
- 
-da
- 
+ ●  Pertinência  temática  ao  desaﬁo.  ●  Relevância  do  problema  resolvido;  ●  Usabilidade  e  design  que  priorizem  o  acesso  simpliﬁcado  e  fácil  compreensão  do  usuário;  ●  Inovação  e  criatividade  da  solução.   Em  caso  de  empate,  prevalecerá  a  maior  nota  no  critério  “inovação  e  criatividade  da  
 solução”.
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+          
  
 
- 
-PREMIAÇÃO
- 
-O
- 
-pagamento
- 
-dos
- 
-prêmios
- 
-será
- 
-mediante
- 
-depósito
- 
-em
- 
-instituição
- 
-bancária
- 
-brasileira
- 
+
+ PREMIAÇÃO  O  pagamento  dos  prêmios  será  mediante  depósito  em  instituição  bancária  brasileira  
 para
  
 a
@@ -2140,34 +1012,7 @@ ele
  
 indicado
  
- 
- 
-O
- 
-valor
- 
-total
- 
-bruto
- 
-de
- 
-premiação
- 
-(sem
- 
-tributos)
- 
-é
- 
-de
- 
-R$75.000,00
- 
-(setenta
- 
-e
- 
+  O  valor  total  bruto  de  premiação  (sem  tributos)  é  de  R$75.000,00  (setenta  e  
 cinco
  
 mil
@@ -2208,40 +1053,7 @@ mil
  
 reais).
  
-Comunicação
- 
-com
- 
-a
- 
-organização
- 
-Toda
- 
-comunicação
- 
-durante
- 
-o
- 
-haCARthon
- 
-será
- 
-realizada
- 
-de
- 
-forma
- 
-remota
- 
-a
- 
-partir
- 
-de
- 
+Comunicação  com  a  organização  Toda  comunicação  durante  o  haCARthon  será  realizada  de  forma  remota  a  partir  de  
 canais
  
 de
@@ -2257,36 +1069,7 @@ WhatsApp
 e
  
 Discord.
- 
- 
-A
- 
-equipe
- 
-de
- 
-organização
- 
-estará
- 
-à
- 
-disposição
- 
-durante
- 
-todo
- 
-o
- 
-período
- 
-de
- 
-inscrições
- 
-para
- 
+  A  equipe  de  organização  estará  à  disposição  durante  todo  o  período  de  inscrições  para  
 tirar
  
 dúvidas
@@ -2308,34 +1091,7 @@ formação
 de
  
 equipes.
- 
- 
-Caso
- 
-você
- 
-ou
- 
-sua
- 
-equipe
- 
-tenham
- 
-alguma
- 
-dúvida,
- 
-mande
- 
-um
- 
-e-mail
- 
-que
- 
-nossa
- 
+  Caso  você  ou  sua  equipe  tenham  alguma  dúvida,  mande  um  e-mail  que  nossa  
 equipe
  
 irá
@@ -2343,13 +1099,7 @@ irá
 responder:
  
 desaﬁos.car@enap.gov.br
+   
+BOA  SORTE!  
  
  
- 
-BOA
- 
-SORTE!
- 
- 
- 
-

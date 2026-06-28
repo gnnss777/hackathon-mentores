@@ -1,37 +1,5 @@
- 
-BRIEFING
- 
-DOS
- 
-DESAFIOS
- 
- 
-O
- 
-Ministério
- 
-da
- 
-Gestão
- 
-e
- 
-Inovação
- 
-em
- 
-Serviços
- 
-Públicos
- 
-(MGI),
- 
-a
- 
-Fundação
- 
-Brasileira
- 
+ BRIEFING  DOS  DESAFIOS  
+ O  Ministério  da  Gestão  e  Inovação  em  Serviços  Públicos  (MGI),  a  Fundação  Brasileira  
 para
  
 o
@@ -69,16 +37,7 @@ Brasil
 apresentam
  
 o
- 
-haCARthon
-,
- 
-uma
- 
-maratona
- 
-de
- 
+ haCARthon,  uma  maratona  de  
 inovação
  
 aberta
@@ -116,34 +75,7 @@ Ambiental
 Rural
  
 (CAR).
- 
- 
-O
- 
-haCARthon
- 
-é
- 
-uma
- 
-iniciativa
- 
-de
- 
-inovação
- 
-aberta
- 
-que
- 
-surge
- 
-da
- 
-necessidade
- 
-de
- 
+  O  haCARthon é  uma  iniciativa  de  inovação  aberta  que  surge  da  necessidade  de  
 modernizar
  
 o
@@ -180,34 +112,7 @@ de
  
 dados.
  
- 
- 
-O
- 
-objetivo
- 
-é
- 
-estruturar
- 
-o
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)
- 
-como
- 
-um
- 
-Bem
- 
-Público
- 
+  O  objetivo  é  estruturar  o  Cadastro  Ambiental  Rural  (CAR)  como  um  Bem  Público  
 Digital,
  
 por
@@ -235,36 +140,7 @@ em
 código
  
 aberto.
- 
- 
-Com
- 
-isso,
- 
-busca-se
- 
-não
- 
-apenas
- 
-fortalecer
- 
-a
- 
-gestão
- 
-ambiental
- 
-e
- 
-fundiária
- 
-no
- 
-Brasil,
- 
-mas
- 
+  Com  isso,  busca-se  não  apenas  fortalecer  a  gestão  ambiental  e  fundiária  no  Brasil,  mas  
 também
  
 viabilizar
@@ -300,39 +176,11 @@ de
 seus
  
 territórios.
- 
- 
- 
- 
- 
- 
- 
- 
+        
  
 
- 
-DESAFIOS
- 
-As
- 
-soluções
- 
-desenvolvidas
- 
-durante
- 
-o
- 
-haCARthon
- 
-deverão
- 
-contribuir
- 
-com
- 
-três
- 
+
+ DESAFIOS  As  soluções  desenvolvidas  durante  o  haCARthon deverão  contribuir  com  três  
 desaﬁos,
  
 que
@@ -351,73 +199,10 @@ deste
  
 documento.
  
- 
- 
-Cada
- 
-equipe
- 
-deverá
- 
-escolher
- 
-um
- 
-dos
- 
-três
- 
-desaﬁos
- 
-abaixo
- 
-para
- 
-desenvolver
- 
-uma
- 
+  Cada  equipe  deverá  escolher  um  dos  três  desaﬁos  abaixo  para  desenvolver  uma  
 solução:
  
- 
- 
-DESAFIO
- 
-1:
- 
-Simpliﬁcar
- 
-o
- 
-CAR
- 
-para
- 
-o
- 
-usuário
-  
- 
-Como
- 
-podemos
- 
-simpliﬁcar
- 
-a
- 
-declaração
- 
-e
- 
-retiﬁcação
- 
-do
- 
-Cadastro
- 
-Ambiental
- 
+  DESAFIO  1:  Simpliﬁcar  o  CAR  para  o  usuário    Como  podemos  simpliﬁcar  a  declaração  e  retiﬁcação  do  Cadastro  Ambiental  
 Rural
  
 (CAR)
@@ -471,51 +256,7 @@ individuais
 e
  
 coletivos?
- 
- 
-DESAFIO
- 
-2:
- 
-Melhorar
- 
-o
- 
-acesso
- 
-a
- 
-dados
- 
-geoespaciais
- 
-do
- 
-CAR
- 
- 
-Como
- 
-podemos
- 
-atualizar
- 
-anualmente
- 
-com
- 
-rapidez
- 
-e
- 
-acurácia
- 
-o
- 
-mapeamento
- 
-de
- 
+  DESAFIO  2:  Melhorar  o  acesso  a  dados  geoespaciais  do  CAR   Como  podemos  atualizar  anualmente  com  rapidez  e  acurácia  o  mapeamento  de  
 uso
  
 e
@@ -575,45 +316,7 @@ Ambiental
 Rural
  
 (CAR)?
- 
- 
-DESAFIO
- 
-3:
- 
-Aumentar
- 
-o
- 
-entendimento
- 
-das
- 
-Legislações
- 
-do
- 
-CAR
- 
- 
-Como
- 
-podemos
- 
-aumentar
- 
-o
- 
-conhecimento
- 
-e
- 
-entendimento
- 
-da
- 
-legislação
- 
+  DESAFIO  3:  Aumentar  o  entendimento  das  Legislações  do  CAR   Como  podemos  aumentar  o  conhecimento  e  entendimento  da  legislação  
 ambiental
  
 associada
@@ -653,39 +356,11 @@ e
 recuperação
  
 ﬂorestal?
- 
- 
+  
  
 
- 
-CONTEXTO
- 
-GERAL
- 
-O
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)
- 
-é
- 
-um
- 
-registro
- 
-público
- 
-eletrônico
- 
-nacional
- 
-e
- 
+
+ CONTEXTO  GERAL  O  Cadastro  Ambiental  Rural  (CAR)  é  um  registro  público  eletrônico  nacional  e  
 obrigatório
  
 para
@@ -720,33 +395,7 @@ no
  
 7.830/2012.
   
- 
- 
- 
-Por
- 
-meio
- 
-da
- 
-integração
- 
-com
- 
-dados
- 
-geoespaciais,
- 
-o
- 
-CAR
- 
-tem
- 
-como
- 
-principal
- 
+   Por  meio  da  integração  com  dados  geoespaciais,  o  CAR  tem  como  principal  
 objetivo
  
 a
@@ -837,32 +486,7 @@ serviços
  
 ambientais.
   
- 
- 
-Segundo
- 
-o
- 
-Painel
- 
-de
- 
-Regularização
- 
-Ambiental
- 
-do
- 
-Serviço
- 
-Florestal
- 
-Brasileiro,
- 
-em
- 
-abril
- 
+  Segundo  o  Painel  de  Regularização  Ambiental  do  Serviço  Florestal  Brasileiro,  em  abril  
 de
  
 2026,
@@ -915,35 +539,7 @@ de
  
 km².
  
- 
- 
- 
-No
- 
-CAR,
- 
-cabe
- 
-ao
- 
-próprio
- 
-produtor
- 
-rural
- 
-o
- 
-cadastro
- 
-e
- 
-a
- 
-identiﬁcação
- 
-georreferenciada
- 
+   No  CAR,  cabe  ao  próprio  produtor  rural  o  cadastro  e  a  identiﬁcação  georreferenciada  
 das
  
 Áreas
@@ -1026,37 +622,7 @@ Florestal
  
 brasileiro.
  
- 
- 
- 
-A
- 
-inscrição
- 
-do
- 
-imóvel
- 
-rural
- 
-no
- 
-CAR
- 
-é
- 
-pré-requisito
- 
-para
- 
-uma
- 
-série
- 
-de
- 
-programas
- 
+   A  inscrição  do  imóvel  rural  no  CAR  é  pré-requisito  para  uma  série  de  programas  
 governamentais,
  
 como:
@@ -1120,36 +686,9 @@ outros.
  
  
 
+
  
- 
-A
- 
-inscrição
- 
-no
- 
-CAR
- 
-é
- 
-o
- 
-primeiro
- 
-passo
- 
-para
- 
-obtenção
- 
-da
- 
-regularidade
- 
-ambiental
- 
-do
- 
+ A  inscrição  no  CAR  é  o  primeiro  passo  para  obtenção  da  regularidade  ambiental  do  
 imóvel,
  
 e
@@ -1176,156 +715,7 @@ do
  
 registro.
   
- 
- 
-O
- 
-processo
- 
-de
- 
-registro
- 
-no
- 
-CAR
- 
-envolve
- 
-cinco
- 
-etapas
- 
-principais:
- 
- 
-1.
- 
-Preenchimento
- 
-pelo
- 
-proprietário
- 
-rural
- 
-com
- 
-dados
- 
-do
- 
-imóvel.
- 
- 
-2.
- 
-Análise
- 
-e
- 
-validação
- 
-dos
- 
-dados
- 
-pelos
- 
-órgãos
- 
-estaduais.
- 
- 
-3.
- 
-Integração
- 
-nacional
- 
-das
- 
-informações
- 
-pelo
- 
-governo
- 
-federal.
- 
- 
-4.
- 
-Uso
- 
-dos
- 
-dados
- 
-para
- 
-ações
- 
-de
- 
-regularização
- 
-e
- 
-gestão
- 
-ambiental.
- 
- 
-5.
- 
-Atualização
- 
-contínua
- 
-para
- 
-manter
- 
-a
- 
-base
- 
-de
- 
-dados
- 
-atualizada
- 
-e
- 
-conﬁável.
- 
- 
- 
- 
-Entre
- 
-os
- 
-dados
- 
-declarados
- 
-estão:
- 
-dados
- 
-pessoais
- 
-do
- 
-proprietário/possuidor,
- 
-como
- 
-o
- 
+  O  processo  de  registro  no  CAR  envolve  cinco  etapas  principais:   1.  Preenchimento  pelo  proprietário  rural  com  dados  do  imóvel.   2.  Análise  e  validação  dos  dados  pelos  órgãos  estaduais.   3.  Integração  nacional  das  informações  pelo  governo  federal.   4.  Uso  dos  dados  para  ações  de  regularização  e  gestão  ambiental.   5.  Atualização  contínua  para  manter  a  base  de  dados  atualizada  e  conﬁável.     Entre  os  dados  declarados  estão:  dados  pessoais  do  proprietário/possuidor,  como  o  
 Cadastro
  
 de
@@ -1489,36 +879,11 @@ de
 preservação.
  
  
- 
- 
- 
+   
  
 
- 
-PERSONAS
- 
-Os
- 
-três
- 
-desaﬁos
- 
-apresentados
- 
-impactam
- 
-diretamente
- 
-a
- 
-vida
- 
-de
- 
-duas
- 
-personas
- 
+
+ PERSONAS  Os  três  desaﬁos  apresentados  impactam  diretamente  a  vida  de  duas  personas  
 principais,
  
 representadas
@@ -1531,30 +896,7 @@ a
  
 seguir:
  
- 
-PERSONA
- 
-1
- 
- 
-Seu
- 
-Raimundo
- 
-é
- 
-um
- 
-pequeno
- 
-ou
- 
-médio
- 
-produtor
- 
-rural
- 
+ PERSONA  1  Seu  Raimundo é  um  pequeno  ou  médio  produtor  rural  
 que
  
 depende
@@ -1767,37 +1109,7 @@ ou
  
 prejuízos.
  
- 
-Na
- 
-tomada
- 
-de
- 
-decisão,
- 
-Seu
- 
-Raimundo
- 
-se
- 
-orienta
- 
-por
- 
-pessoas
- 
-e
- 
-instituições
- 
-de
- 
-conﬁança,
- 
-como
- 
+ Na  tomada  de  decisão,  Seu  Raimundo  se  orienta  por  pessoas  e  instituições  de  conﬁança,  como  
 vizinhos,
  
 sindicatos,
@@ -1945,32 +1257,12 @@ futuro
 da
  
 família.
- 
- 
+  
  
 
+
  
- 
-PERSONA
- 
-2
- 
- 
-Luana
-,
- 
-analista
- 
-ambiental
- 
-dos
- 
-órgãos
- 
-estaduais
- 
-do
- 
+ PERSONA  2   Luana,  analista  ambiental  dos  órgãos  estaduais  do  
 CAR,
  
 é
@@ -2057,25 +1349,7 @@ quem
  
 precisa.
  
- 
-Ela
- 
-ajuda
- 
-a
- 
-corrigir
- 
-e
- 
-validar
- 
-informações
- 
-do
- 
-CAR,
- 
+ Ela  ajuda  a  corrigir  e  validar  informações  do  CAR,  
 PRA
  
 e
@@ -2116,35 +1390,7 @@ outras
  
 instituições.
  
- 
-Tem
- 
-uma
- 
-preocupação
- 
-genuína
- 
-em
- 
-atender
- 
-bem,
- 
-explicar
- 
-os
- 
-processos
- 
-e
- 
-garantir
- 
-que
- 
-todos
- 
+ Tem  uma  preocupação  genuína  em  atender  bem,  explicar  os  processos  e  garantir  que  todos  
 acessem
  
 seus
@@ -2262,53 +1508,12 @@ e
 conservação
  
 ambiental.
- 
- 
- 
- 
- 
- 
- 
- 
+        
  
 
- 
-DESAFIO
- 
-1:
- 
-Simpliﬁcar
- 
-o
- 
-CAR
- 
-para
- 
-o
- 
-usuário
- 
- 
- 
-Como
- 
-podemos
- 
-simpliﬁcar
- 
-a
- 
-declaração
- 
-e
- 
-retiﬁcação
- 
-do
- 
-Cadastro
- 
+
+ DESAFIO  1:  Simpliﬁcar  o  CAR  para  o  usuário  
+  Como  podemos  simpliﬁcar  a  declaração  e  retiﬁcação  do  Cadastro  
 Ambiental
  
 Rural
@@ -2364,42 +1569,8 @@ individuais
 e
  
 coletivos?
- 
- 
-Contexto
- 
-do
- 
-problema
- 
-O
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)
- 
-é
- 
-um
- 
-registro
- 
-obrigatório
- 
-e
- 
-fundamental
- 
-para
- 
-que
- 
-o
- 
+  
+Contexto  do  problema  O  Cadastro  Ambiental  Rural  (CAR)  é  um  registro  obrigatório  e  fundamental  para  que  o  
 Brasil
  
 concilie
@@ -2413,37 +1584,7 @@ e
 conservação
  
 ambiental.
- 
-Embora
- 
-o
- 
-sistema
- 
-já
- 
-conte
- 
-com
- 
-mais
- 
-de
- 
-8,2
- 
-milhões
- 
-de
- 
-imóveis
- 
-cadastrados
- 
-,
- 
-o
- 
+ Embora  o  sistema  já  conte  com  mais  de  8,2  milhões  de  imóveis  cadastrados  ,  o  
 caminho
  
 entre
@@ -2496,31 +1637,7 @@ dos
  
 ﬁscalizadores.
   
- 
-Atualmente,
- 
-o
- 
-processo
- 
-de
- 
-registro
- 
-e
- 
-retiﬁcação
- 
-enfrenta
- 
-quatro
- 
-grandes
- 
-gargalos
- 
-que
- 
+ Atualmente,  o  processo  de  registro  e  retiﬁcação  enfrenta  quatro  grandes  gargalos  que  
 impedem
  
 a
@@ -2532,46 +1649,7 @@ da
 regularização
  
 ambiental:
- 
- 
-A
- 
-Barreira
- 
-da
- 
-Exclusão
- 
-Digital
- 
-e
- 
-Técnica
- 
-Muitos
- 
-proprietários
- 
-e
- 
-possuidores
- 
-rurais
- 
-vivem
- 
-em
- 
-áreas
- 
-com
- 
-acesso
- 
-limitado
- 
-ou
- 
+  A  Barreira  da  Exclusão  Digital  e  Técnica  Muitos  proprietários  e  possuidores  rurais  vivem  em  áreas  com  acesso  limitado  ou  
 inexistente
  
 à
@@ -2664,55 +1742,12 @@ com
  
 precisão.
   
- 
- 
- 
+   
  
 
- 
-DESAFIO
- 
-1:
- 
-Simpliﬁcar
- 
-o
- 
-CAR
- 
-para
- 
-o
- 
-usuário
- 
- 
-O
- 
-Ciclo
- 
-de
- 
-Retiﬁcações
- 
-Inﬁnitas
- 
-Pela
- 
-diﬁculdade
- 
-no
- 
-preenchimento
- 
-voluntário,
- 
-os
- 
-dados
- 
-autodeclarados
- 
+
+ DESAFIO  1:  Simpliﬁcar  o  CAR  para  o  usuário
+  O  Ciclo  de  Retiﬁcações  Inﬁnitas  Pela  diﬁculdade  no  preenchimento  voluntário,  os  dados  autodeclarados  
 frequentemente
  
 apresentam
@@ -2815,48 +1850,7 @@ crédito
  
 rural.
   
- 
- 
-Ruído
- 
-na
- 
-Comunicação
- 
-entre
- 
-Estado
- 
-e
- 
-Produtor
- 
-Existe
- 
-uma
- 
-lacuna
- 
-crítica
- 
-na
- 
-comunicação
- 
-entre
- 
-as
- 
-OEMAs
- 
-e
- 
-os
- 
-proprietários
- 
-rurais.
- 
+  Ruído  na  Comunicação  entre  Estado  e  Produtor  Existe  uma  lacuna  crítica  na  comunicação  entre  as  OEMAs  e  os  proprietários  rurais.  
 Sem
  
 uma
@@ -2904,219 +1898,15 @@ sanções
 ambientais.
   
  
-Bases
- 
-de
- 
-Dados
- 
-e
- 
-referências
- 
-sugeridas
- 
-para
- 
-pesquisa
- 
->
- 
-Site
- 
-do
- 
-CAR
- 
- 
->
- 
-LEI
- 
-Nº
- 
-12.651,
- 
-DE
- 
-25
- 
-DE
- 
-MAIO
- 
-DE
- 
-2012
-  
- 
->
- 
-Decreto
- 
-no
- 
-7.830/2012,
- 
-que
- 
-regulamenta
- 
-o
- 
-CAR
- 
- 
->
- 
-Manuais
- 
-do
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
->
- 
-Portal
- 
-de
- 
-Dados
- 
-do
- 
-CAR
- 
-–
- 
-Portal
- 
-de
- 
-Consulta
- 
-Pública
- 
- 
->
- 
-Painel
- 
-da
- 
-Regularização
- 
-Ambiental
- 
- 
->
- 
-Onde
- 
-Estamos
- 
-na
- 
-Implementação
- 
-do
- 
-Código
- 
-Florestal?
- 
-Radiograﬁa
- 
-do
- 
-CAR
- 
-e
- 
-do
- 
-PRA
- 
-nos
- 
-Estados
- 
-Brasileiros
- 
-–
- 
-Edição
- 
-2025
- 
-–
- 
-Climate
- 
-Policy
- 
-Initiative
-  
- 
- 
- 
- 
- 
- 
+Bases  de  Dados  e  referências  sugeridas  para  pesquisa
+ >  Site  do  CAR  >  LEI  Nº  12.651,  DE  25  DE  MAIO  DE  2012   >  Decreto  no  7.830/2012,  que  regulamenta  o  CAR   >  Manuais  do  Cadastro  Ambiental  Rural >  Portal  de  Dados  do  CAR  –  Portal  de  Consulta  Pública   >  Painel  da  Regularização  Ambiental   >  Onde  Estamos  na  Implementação  do  Código  Florestal? Radiograﬁa  do  CAR  e  do  PRA  nos  Estados  Brasileiros  –  Edição  2025  –  Climate  Policy  Initiative         
  
 
+
+ DESAFIO  1:  Simpliﬁcar  o  CAR  para  o  usuário  
  
-DESAFIO
- 
-1:
- 
-Simpliﬁcar
- 
-o
- 
-CAR
- 
-para
- 
-o
- 
-usuário
- 
- 
-Exemplos
- 
-de
- 
-soluções
- 
-As
- 
-soluções
- 
-devem
- 
-ser
- 
-pensadas
- 
-para
- 
-que
- 
-possam
- 
-ser
- 
-desenvolvidas
- 
-e
- 
-evoluídas
- 
+Exemplos  de  soluções  
+As  soluções  devem  ser  pensadas  para  que  possam  ser  desenvolvidas  e  evoluídas  
 em
  
 modelo
@@ -3127,34 +1917,7 @@ código
  
 aberto.
  
-Importante:
- 
-O
- 
-foco
- 
-do
- 
-haCARthon
- 
-é
- 
-a
- 
-construção
- 
-e
- 
-validação
- 
-de
- 
-soluções
- 
-para
- 
-os
- 
+Importante:  O  foco  do  haCARthon  é  a  construção  e  validação  de  soluções  para  os  
 desaﬁos
  
 propostos.
@@ -3217,38 +1980,7 @@ sua
  
 proposta.
  
-Exemplos
- 
-de
- 
-soluções
- 
-possíveis:
- 
-●
- 
-Ferramentas
- 
-de
- 
-suporte
- 
-ao
- 
-preenchimento
- 
-do
- 
-CAR
- 
-e
- 
-bots
- 
-e
- 
-sistemas
- 
+Exemplos  de  soluções  possíveis:  ●  Ferramentas  de  suporte  ao  preenchimento  do  CAR  e  bots  e  sistemas  
 automatizados
  
 de
@@ -3269,35 +2001,7 @@ dos
  
 cadastros.
  
- 
-●
- 
-Soluções
- 
-que
- 
-apresentem
- 
-design
- 
-gráﬁco
- 
-simples
- 
-que
- 
-indica
- 
-o
- 
-passo
- 
-a
- 
-passo
- 
-das
- 
+ ●  Soluções  que  apresentem  design  gráﬁco  simples  que  indica  o  passo  a  passo  das  
 etapas
  
 de
@@ -3310,33 +2014,7 @@ documentos,
  
 autorizações
  
- 
-●
- 
-Tutorial
- 
-em
- 
-que
- 
-as
- 
-pessoas
- 
-encontrem
- 
-as
- 
-informações
- 
-de
- 
-como
- 
-resolver
- 
-seus
- 
+ ●  Tutorial  em  que  as  pessoas  encontrem  as  informações  de  como  resolver  seus  
 problemas.
  
 Explicação
@@ -3365,56 +2043,11 @@ não
  
 pode.
   
- 
- 
- 
- 
- 
- 
- 
- 
+        
  
 
- 
-DESAFIO
- 
-2:
- 
-Melhorar
- 
-o
- 
-acesso
- 
-a
- 
-dados
- 
-geoespaciais
- 
-do
- 
-CAR
- 
- 
-Como
- 
-podemos
- 
-atualizar
- 
-anualmente
- 
-com
- 
-rapidez
- 
-e
- 
-acurácia
- 
-o
- 
+
+ DESAFIO  2:  Melhorar  o  acesso  a  dados  geoespaciais  do  CAR   Como  podemos  atualizar  anualmente  com  rapidez  e  acurácia  o  
 mapeamento
  
 de
@@ -3478,40 +2111,8 @@ Ambiental
 Rural
  
 (CAR)?
- 
- 
-Contexto
- 
-do
- 
-problema
- 
-Para
- 
-que
- 
-o
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)
- 
-cumpra
- 
-seu
- 
-papel
- 
-de
- 
-enfrentamento
- 
-ao
- 
+  
+Contexto  do  problema  Para  que  o  Cadastro  Ambiental  Rural  (CAR)  cumpra  seu  papel  de  enfrentamento  ao  
 desmatamento
  
 e
@@ -3633,35 +2234,7 @@ ambientais
 e
  
 produtores.
- 
-A
- 
-falta
- 
-de
- 
-bases
- 
-integradas
- 
-e
- 
-consistentes
- 
-gera
- 
-uma
- 
-série
- 
-de
- 
-gargalos
- 
-que
- 
-extrapolam
- 
+ A  falta  de  bases  integradas  e  consistentes  gera  uma  série  de  gargalos  que  extrapolam  
 a
  
 questão
@@ -3695,120 +2268,16 @@ problemas
 críticos,
  
 como:
- 
-●
- 
-Sobreposição
- 
-de
- 
-áreas
- 
-e
- 
-posses
- 
-indeﬁnidas.
- 
-●
- 
-Desmembramentos
- 
-ou
- 
-fracionamentos
- 
-irregulares
- 
-e
- 
-falta
- 
-de
- 
-registro
- 
-em
- 
+ ●  Sobreposição  de  áreas  e  posses  indeﬁnidas.  ●  Desmembramentos  ou  fracionamentos  irregulares  e  falta  de  registro  em  
 cartório.
- 
-●
- 
-Heranças
- 
-não
- 
-formalizadas,
- 
-ocupações
- 
-em
- 
-áreas
- 
-públicas
- 
-e
- 
-"contratos
- 
-de
- 
+ ●  Heranças  não  formalizadas,  ocupações  em  áreas  públicas  e  "contratos  de  
 gaveta".
  
  
 
- 
-DESAFIO
- 
-2:
- 
-Melhorar
- 
-o
- 
-acesso
- 
-a
- 
-dados
- 
-geoespaciais
- 
-do
- 
-CAR
- 
- 
- 
-Além
- 
-disso,
- 
-a
- 
-carência
- 
-de
- 
-integração
- 
-entre
- 
-as
- 
-esferas
- 
-municipal
- 
-e
- 
-estadual
- 
-impede
- 
-que
- 
+
+ DESAFIO  2:  Melhorar  o  acesso  a  dados  geoespaciais  do  CAR  
+  Além  disso,  a  carência  de  integração  entre  as  esferas  municipal  e  estadual  impede  que  
 o
  
 sistema
@@ -3848,32 +2317,7 @@ por
 leis
  
 locais.
- 
- 
-Entender
- 
-o
- 
-que
- 
-acontece
- 
-no
- 
-território
- 
-exige
- 
-um
- 
-mapeamento
- 
-detalhado
- 
-do
- 
-que
- 
+  Entender  o  que  acontece  no  território  exige  um  mapeamento  detalhado  do  que  
 compõe
  
 a
@@ -3908,68 +2352,8 @@ elementos
  
 como:
  
-●
- 
-Corpos
- 
-hídricos,
- 
-aﬂoramentos
- 
-rochosos
- 
-e
- 
-estradas.
- 
-●
- 
-Áreas
- 
-de
- 
-plantio
- 
-de
- 
-silvicultura
- 
-e
- 
-remanescentes
- 
-de
- 
-mata
- 
-nativa.
- 
-Esses
- 
-fatores
- 
-são
- 
-determinantes
- 
-para
- 
-a
- 
-delimitação
- 
-das
- 
-áreas
- 
-internas
- 
-do
- 
-imóvel.
- 
-Eles
- 
+●  Corpos  hídricos,  aﬂoramentos  rochosos  e  estradas.  ●  Áreas  de  plantio  de  silvicultura  e  remanescentes  de  mata  nativa.  
+Esses  fatores  são  determinantes  para  a  delimitação  das  áreas  internas  do  imóvel.  Eles  
 inﬂuenciam
  
 diretamente
@@ -4030,168 +2414,15 @@ Reserva
  
 Legal.
  
-Bases
- 
-de
- 
-Dados
- 
-e
- 
-referências
- 
-sugeridas
- 
-para
- 
-pesquisa
- 
->
- 
-Decreto
- 
-no
- 
-7.830/2012,
- 
-que
- 
-regulamenta
- 
-o
- 
-CAR
- 
- 
->
- 
-Conjuntos
- 
-de
- 
-Dados
- 
-de
- 
-Regularização
- 
-Ambiental
- 
-no
- 
-Sistema
- 
-Nacional
- 
-de
- 
-Informações
- 
-Florestais
- 
-(SNIF)
- 
--
- 
-Atuais
- 
-bases
- 
-de
- 
-referência
- 
-disponíveis
- 
-para
- 
-o
- 
-CAR:
-  
- 
->
- 
-Mapas
- 
-gerados
- 
-pela
- 
-FBDS
- 
-para
- 
-os
- 
-estados
- 
-brasileiros
- 
-utilizarem
- 
-no
- 
-CAR
- 
- 
- 
- 
- 
+Bases  de  Dados  e  referências  sugeridas  para  pesquisa
+ >  Decreto  no  7.830/2012,  que  regulamenta  o  CAR   >  Conjuntos  de  Dados  de  Regularização  Ambiental  no  Sistema  Nacional  de  Informações  Florestais  (SNIF)  -  Atuais  bases  de  referência  disponíveis  para  o  CAR:    >  Mapas  gerados  pela  FBDS  para  os  estados  brasileiros  utilizarem  no  CAR     
  
 
+
+ DESAFIO  2:  Melhorar  o  acesso  a  dados  geoespaciais  do  CAR  
  
-DESAFIO
- 
-2:
- 
-Melhorar
- 
-o
- 
-acesso
- 
-a
- 
-dados
- 
-geoespaciais
- 
-do
- 
-CAR
- 
- 
-Exemplos
- 
-de
- 
-soluções
- 
-As
- 
-soluções
- 
-devem
- 
-ser
- 
-pensadas
- 
-para
- 
-que
- 
-possam
- 
-ser
- 
-desenvolvidas
- 
-e
- 
-evoluídas
- 
+Exemplos  de  soluções  
+As  soluções  devem  ser  pensadas  para  que  possam  ser  desenvolvidas  e  evoluídas  
 em
  
 modelo
@@ -4202,34 +2433,7 @@ código
  
 aberto.
  
-Importante:
- 
-O
- 
-foco
- 
-do
- 
-haCARthon
- 
-é
- 
-a
- 
-construção
- 
-e
- 
-validação
- 
-de
- 
-soluções
- 
-para
- 
-os
- 
+Importante:  O  foco  do  haCARthon  é  a  construção  e  validação  de  soluções  para  os  
 desaﬁos
  
 propostos.
@@ -4292,58 +2496,7 @@ sua
  
 proposta.
  
-Exemplos
- 
-de
- 
-soluções
- 
-possíveis:
- 
- 
-●
- 
-Sistemas
- 
-de
- 
-dados
- 
-integrados
- 
-e
- 
-com
- 
-ﬂuxo
- 
-e
- 
-correções
- 
-rápidas
- 
- 
-●
- 
-Sistemas
- 
-de
- 
-dados
- 
-georreferenciados
- 
-vetorizados
- 
-de
- 
-feições
- 
-naturais
- 
-(rios,
- 
+Exemplos  de  soluções  possíveis:   ●  Sistemas  de  dados  integrados  e  com  ﬂuxo  e  correções  rápidas   ●  Sistemas  de  dados  georreferenciados  vetorizados  de  feições  naturais  (rios,  
 rochas),
  
 Áreas
@@ -4366,74 +2519,7 @@ uso
  
 restrito.
  
- 
-●
- 
-Soluções
- 
-para
- 
-geração
- 
-automatizada
- 
-de
- 
-bases
- 
-de
- 
-referência
-  
- 
-●
- 
-Soluções
- 
-para
- 
-atualização
- 
-de
- 
-mapas
- 
-de
- 
-uso
- 
-e
- 
-cobertura
- 
-do
- 
-solo
- 
-●
- 
-Sistemas
- 
-que
- 
-permitam
- 
-desenho
- 
-georreferenciado
- 
-dos
- 
-imóveis
- 
-rurais
- 
-a
- 
-partir
- 
-de
- 
+ ●  Soluções  para  geração  automatizada  de  bases  de  referência    ●  Soluções  para  atualização  de  mapas  de  uso  e  cobertura  do  solo  ●  Sistemas  que  permitam  desenho  georreferenciado  dos  imóveis  rurais  a  partir  de  
 tecnologias
  
 acessíveis
@@ -4444,53 +2530,13 @@ celulares,
  
 drones).
  
+  
  
- 
- 
- 
- 
- 
- 
+    
  
 
- 
-DESAFIO
- 
-3:
- 
-Aumentar
- 
-o
- 
-entendimento
- 
-das
- 
-Legislações
- 
-do
- 
-CAR
- 
- 
-Como
- 
-podemos
- 
-aumentar
- 
-o
- 
-conhecimento
- 
-e
- 
-entendimento
- 
-da
- 
-legislação
- 
+
+ DESAFIO  3:  Aumentar  o  entendimento  das  Legislações  do  CAR   Como  podemos  aumentar  o  conhecimento  e  entendimento  da  legislação  
 ambiental
  
 associada
@@ -4530,40 +2576,8 @@ e
 recuperação
  
 ﬂorestal?
- 
- 
-Contexto
- 
-do
- 
-problema
- 
-O
- 
-Cadastro
- 
-Ambiental
- 
-Rural
- 
-(CAR)
- 
-é
- 
-o
- 
-pilar
- 
-da
- 
-regularização
- 
-ambiental
- 
-no
- 
-Brasil,
- 
+  
+Contexto  do  problema  O  Cadastro  Ambiental  Rural  (CAR)  é  o  pilar  da  regularização  ambiental  no  Brasil,  
 fundamentado
  
 na
@@ -4681,30 +2695,7 @@ o
 Poder
  
 Judiciário.
- 
- 
-As
- 
-leis
- 
-ambientais
- 
-brasileiras
- 
-são
- 
-reconhecidas
- 
-por
- 
-serem
- 
-extensas
- 
-e
- 
-tecnicamente
- 
+  As  leis  ambientais  brasileiras  são  reconhecidas  por  serem  extensas  e  tecnicamente  
 complexas.
  
 Essa
@@ -4758,27 +2749,7 @@ essa
 complexidade
  
 gera:
- 
-●
- 
-Diﬁculdade
- 
-de
- 
-entendimento:
- 
-Barreiras
- 
-na
- 
-compreensão
- 
-das
- 
-regras
- 
-especíﬁcas
- 
+ ●  Diﬁculdade  de  entendimento:  Barreiras  na  compreensão  das  regras  especíﬁcas  
 do
  
 Código
@@ -4806,35 +2777,12 @@ e
 reserva
  
 legal.
- 
- 
+  
  
 
+
  
-●
- 
-Insegurança
- 
-Jurídica:
- 
-O
- 
-receio
- 
-de
- 
-cometer
- 
-erros
- 
-involuntários
- 
-que
- 
-resultem
- 
-em
- 
+●  Insegurança  Jurídica:  O  receio  de  cometer  erros  involuntários  que  resultem  em  
 sanções,
  
 multas
@@ -4846,33 +2794,7 @@ embargos
 à
  
 produção.
- 
-●
- 
-Desconexão
- 
-com
- 
-Canais
- 
-Oﬁciais:
- 
-Enquanto
- 
-a
- 
-lei
- 
-está
- 
-em
- 
-manuais
- 
-densos,
- 
-o
- 
+ ●  Desconexão  com  Canais  Oﬁciais:  Enquanto  a  lei  está  em  manuais  densos,  o  
 produtor
  
 busca
@@ -4896,32 +2818,7 @@ conversas
 com
  
 vizinhos.
- 
- 
-O
- 
-problema
- 
-da
- 
-falta
- 
-de
- 
-clareza
- 
-estende-se
- 
-aos
- 
-analistas
- 
-ambientais.
- 
-Estes
- 
-buscam
- 
+  O  problema  da  falta  de  clareza  estende-se  aos  analistas  ambientais.  Estes  buscam  
 equilibrar
  
 o
@@ -5015,36 +2912,7 @@ eﬁciência
 do
  
 CAR.
- 
- 
-Para
- 
-que
- 
-a
- 
-regularização
- 
-avance,
- 
-é
- 
-vital
- 
-que
- 
-tanto
- 
-a
- 
-população
- 
-quanto
- 
-os
- 
-órgãos
- 
+  Para  que  a  regularização  avance,  é  vital  que  tanto  a  população  quanto  os  órgãos  
 públicos
  
 tenham
@@ -5072,121 +2940,16 @@ nos
 imóveis
  
 rurais.
- 
- 
-Bases
- 
-de
- 
-Dados
- 
-e
- 
-referências
- 
-sugeridas
- 
-para
- 
-pesquisa
- 
->
- 
-Decreto
- 
-no
- 
-7.830/2012,
- 
-que
- 
-regulamenta
- 
-o
- 
-CAR
- 
- 
->
- 
-LEI
- 
-Nº
- 
-12.651,
- 
-DE
- 
-25
- 
-DE
- 
-MAIO
- 
-DE
- 
-2012
   
- 
- 
- 
- 
- 
- 
- 
- 
+Bases  de  Dados  e  referências  sugeridas  para  pesquisa
+ >  Decreto  no  7.830/2012,  que  regulamenta  o  CAR   >  LEI  Nº  12.651,  DE  25  DE  MAIO  DE  2012          
  
 
+
+ DESAFIO  3:  Aumentar  o  entendimento  das  Legislações  do  CAR  
  
-DESAFIO
- 
-3:
- 
-Aumentar
- 
-o
- 
-entendimento
- 
-das
- 
-Legislações
- 
-do
- 
-CAR
- 
- 
-Exemplos
- 
-de
- 
-soluções
- 
-As
- 
-soluções
- 
-devem
- 
-ser
- 
-pensadas
- 
-para
- 
-que
- 
-possam
- 
-ser
- 
-desenvolvidas
- 
-e
- 
-evoluídas
- 
+Exemplos  de  soluções  
+As  soluções  devem  ser  pensadas  para  que  possam  ser  desenvolvidas  e  evoluídas  
 em
  
 modelo
@@ -5197,34 +2960,7 @@ código
  
 aberto.
  
-Importante:
- 
-O
- 
-foco
- 
-do
- 
-haCARthon
- 
-é
- 
-a
- 
-construção
- 
-e
- 
-validação
- 
-de
- 
-soluções
- 
-para
- 
-os
- 
+Importante:  O  foco  do  haCARthon  é  a  construção  e  validação  de  soluções  para  os  
 desaﬁos
  
 propostos.
@@ -5287,33 +3023,7 @@ sua
  
 proposta.
  
-Exemplos
- 
-de
- 
-soluções
- 
-possíveis:
- 
- 
-●
- 
-Simpliﬁcação
- 
-de
- 
-Linguagem:
- 
-Transformar
- 
-termos
- 
-jurídicos
- 
-em
- 
-orientações
- 
+Exemplos  de  soluções  possíveis:   ●  Simpliﬁcação  de  Linguagem:  Transformar  termos  jurídicos  em  orientações  
 claras
  
 e
@@ -5322,31 +3032,7 @@ exemplos
  
 concretos.
   
- 
-●
- 
-Educação
- 
-e
- 
-Engajamento:
- 
-Criar
- 
-meios
- 
-para
- 
-que
- 
-o
- 
-produtor
- 
-entenda
- 
-os
- 
+ ●  Educação  e  Engajamento:  Criar  meios  para  que  o  produtor  entenda  os  
 benefícios
  
 da
@@ -5369,31 +3055,7 @@ incentivos
  
 ambientais.
   
- 
-●
- 
-Suporte
- 
-aos
- 
-Analistas:
- 
-Ferramentas
- 
-que
- 
-facilitem
- 
-a
- 
-Luana
- 
-explicar
- 
-processos
- 
-e
- 
+ ●  Suporte  aos  Analistas:  Ferramentas  que  facilitem  a  Luana  explicar  processos  e  
 garantir
  
 que
@@ -5405,62 +3067,14 @@ acessem
 seus
  
 direitos.
- 
-●
- 
-Formas
- 
-de
- 
-tradução
- 
-do
- 
-código
- 
-ﬂorestal
- 
-para
- 
-uma
- 
-linguagem
- 
-de
- 
-comunicação
- 
+ ●  Formas  de  tradução  do  código  ﬂorestal  para  uma  linguagem  de  comunicação  
 ampla
  
 e
  
 viral
  
- 
-●
- 
-Análise
- 
-automatizada
- 
-de
- 
-dados
- 
-e
- 
-de
- 
-imagens
- 
-resolvendo
- 
-a
- 
-interpretação
- 
-da
- 
+ ●  Análise  automatizada  de  dados  e  de  imagens  resolvendo  a  interpretação  da  
 legislação
  
 aplicada
@@ -5471,29 +3085,7 @@ cada
  
 imóvel.
  
- 
-●
- 
-Soluções
- 
-de
- 
-ciência
- 
-de
- 
-dados
- 
-que
- 
-façam
- 
-interpretações
- 
-automáticas
- 
-da
- 
+ ●  Soluções  de  ciência  de  dados  que  façam  interpretações  automáticas  da  
 legislação
  
 para
@@ -5507,31 +3099,9 @@ proprietário.
  
  
 
+
  
-●
- 
-Plataformas
- 
-que
- 
-ajudem
- 
-a
- 
-comunicar
- 
-conceitos,
- 
-ideias
- 
-e
- 
-informações
- 
-sobre
- 
-o
- 
+●  Plataformas  que  ajudem  a  comunicar  conceitos,  ideias  e  informações  sobre  o  
 CAR
  
 e
@@ -5540,48 +3110,7 @@ as
  
 legislações.
  
- 
-●
- 
-Programas
- 
-de
- 
-formação
- 
-de
- 
-multiplicadores
- 
-(lideranças
- 
-locais)
-  
- 
-●
- 
-Iniciativas
- 
-que
- 
-tornem
- 
-acessíveis
- 
-informações
- 
-sobre
- 
-os
- 
-benefícios
- 
-do
- 
-CAR
- 
-para
- 
+ ●  Programas  de  formação  de  multiplicadores  (lideranças  locais)    ●  Iniciativas  que  tornem  acessíveis  informações  sobre  os  benefícios  do  CAR  para  
 públicos
  
 diferenciados
@@ -5594,7 +3123,5 @@ grandes,
  
 etc).
  
+  
  
- 
- 
-

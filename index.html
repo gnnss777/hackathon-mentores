@@ -428,7 +428,11 @@ function adicionarMensagem(papel, conteudo, fontes){
   var div = document.createElement('div');
   div.className = 'chat-msg ' + papel;
   if(papel === 'assistant'){
-    div.innerHTML = '<button class="msg-copy" onclick="copiarMsg(this)">Copiar</button>' + mdToHtml(conteudo);
+    var md = document.createElement('div');
+    md.style.display = 'none';
+    md.setAttribute('data-md', conteudo);
+    div.appendChild(md);
+    div.innerHTML += '<button class="msg-copy" onclick="copiarMsg(this)">Copiar</button>' + mdToHtml(conteudo);
   } else {
     div.innerHTML = conteudo.replace(/\n/g, '<br>');
   }
@@ -443,7 +447,8 @@ function adicionarMensagem(papel, conteudo, fontes){
 }
 function copiarMsg(btn){
   var msg = btn.parentNode;
-  var txt = msg.textContent.replace(/^Copiar/,'').replace(/Fontes:.*/,'').trim();
+  var md = msg.querySelector('[data-md]');
+  var txt = md ? md.getAttribute('data-md') : msg.textContent.replace(/^Copiar/,'').replace(/Fontes:.*/,'').trim();
   navigator.clipboard.writeText(txt).then(function(){
     btn.textContent = 'Copiado!';
     setTimeout(function(){ btn.textContent = 'Copiar'; }, 1200);
