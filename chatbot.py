@@ -295,7 +295,7 @@ else:
                     papel = "Usuário" if msg["papel"] == "user" else "Assistente"
                     historico += f"{papel}: {msg['conteudo']}\n\n"
 
-                from api.system_prompt import SYSTEM_PROMPT
+                from api.system_prompt import SYSTEM_PROMPT, LIVES_YOUTUBE
                 prompt = SYSTEM_PROMPT + f"""
 
 HISTÓRICO RECENTE:

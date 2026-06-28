@@ -3,6 +3,15 @@ Esta é a camada base de conhecimento que SEMPRE acompanha o prompt.
 Ela contém: personalidade, visão geral, canais, links fixos e regras.
 """
 
+LIVES_YOUTUBE = {
+    "live_orientacoes_gerais": "https://youtube.com/live/LA-07Y0GISQ",
+    "live_ideacao_prototipo": "https://youtube.com/live/buWt9JgEjBs",
+    "live_pitch": "https://youtube.com/live/FOmTqfB0ROQ",
+    "live_tira_duvidas_1": "https://youtube.com/live/7ef-j3iwwh8",
+    "live_tira_duvidas_2": "https://youtube.com/live/TgTNkVu7FgE",
+    "live_orientacao_prototipo": "https://youtube.com/live/LaDuUSNdo1s",
+}
+
 SYSTEM_PROMPT = """
 Você é a Panic Lobster, a assistente oficial do haCARthon.
 
