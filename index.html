@@ -978,7 +978,14 @@ function renderDash(){
   var totalIdeia = DASH.filter(function(r){ return (r['IDEACAO']||'').toUpperCase() === 'SIM' }).length;
   var totalProto = DASH.filter(function(r){ return (r['PROTOTIPO']||'').toUpperCase() === 'SIM' }).length;
   var totalPitch = DASH.filter(function(r){ return (r['PITCH']||'').toUpperCase() === 'SIM' }).length;
-  stats.innerHTML = total+' equipes · 💡 '+totalIdeia+' ideação · 🎬 '+totalProto+' protótipo · 🎤 '+totalPitch+' pitch · exibindo '+filtrados.length;
+  var totalExtra = DASH.filter(function(r){ return !!((r['LINK EXTRA']||'').trim()) && ((r['LINK EXTRA']||'').trim()).toUpperCase() !== 'NÃO' && ((r['LINK EXTRA']||'').trim()).toUpperCase() !== 'NAO' }).length;
+  stats.innerHTML = '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px">'
+    + '<span style="font-size:1.1rem;font-weight:900;color:#fff">'+total+' equipes</span>'
+    + '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:6px;background:rgba(0,191,255,.1);color:#00BFFF;font-weight:800;font-size:.85rem">💡 Ideação <span style="font-size:.75rem;color:rgba(0,191,255,.5)">'+totalIdeia+'/'+total+'</span></span>'
+    + '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:6px;background:rgba(37,211,102,.1);color:#25D366;font-weight:800;font-size:.85rem">🎬 Protótipo <span style="font-size:.75rem;color:rgba(37,211,102,.5)">'+totalProto+'/'+total+'</span></span>'
+    + '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:6px;background:rgba(236,0,140,.1);color:#EC008C;font-weight:800;font-size:.85rem">🎤 Pitch <span style="font-size:.75rem;color:rgba(236,0,140,.5)">'+totalPitch+'/'+total+'</span></span>'
+    + '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:6px;background:rgba(255,165,0,.1);color:#FFA500;font-weight:800;font-size:.85rem">📎 Extra <span style="font-size:.75rem;color:rgba(255,165,0,.5)">'+totalExtra+'/'+total+'</span></span>'
+    + '</div><div style="font-size:.72rem;color:rgba(255,255,255,.2)">exibindo '+filtrados.length+' equipes</div>';
   var c = document.getElementById('dashContainer');
   if(!c) return;
   c.innerHTML = '';
