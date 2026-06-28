@@ -194,11 +194,12 @@ function $$(s){return document.querySelectorAll(s)}
 function esp(r){return (r['\u00c1rea de atua\u00e7\u00e3o/conhecimento/especialidade (escolha at\u00e9 3 op\u00e7\u00f5es) *']||'').split(';').map(function(s){return s.trim()}).filter(Boolean)}
 function des(r){return (r['Qual dos desafios voc\u00ea acredita que pode colaborar com as equipes? Selecione em ordem de prioridade e fique \u00e0 vontade para selecionar quantos desejar. *']||'').split(';').map(function(s){return s.trim().replace(/^DESAFIO \d: /,'')}).filter(Boolean)}
 function inf(r){var v=(r['Informe qual *']||'').trim();return v?[v]:[]}
+function allEsp(r){return esp(r).concat(inf(r))}
 
 function contar(){
   var ec={},dc={};
   DATA.forEach(function(r){
-    esp(r).concat(inf(r)).forEach(function(e){ec[e]=(ec[e]||0)+1});
+    allEsp(r).forEach(function(e){ec[e]=(ec[e]||0)+1});
     des(r).forEach(function(d){dc[d]=(dc[d]||0)+1});
   });
   return {e:Object.entries(ec).sort(function(a,b){return b[1]-a[1]}), d:Object.entries(dc).sort(function(a,b){return b[1]-a[1]})};
@@ -221,7 +222,7 @@ function montarFiltros(){
 function filtrar(){
   var q=$('#filterSearch').value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   return DATA.filter(function(r){
-    if(sel.e.size&&!esp(r).some(function(e){return sel.e.has(e)}))return false;
+    if(sel.e.size&&!allEsp(r).some(function(e){return sel.e.has(e)}))return false;
     if(sel.d.size&&!des(r).some(function(d){return sel.d.has(d)}))return false;
     if(sel.disc.size){var nk=r['NICK DISCORD']||'';var hasDisc=nk&&nk!='N\u00e3o Entrou'&&nk!='N\u00e3o';if(sel.disc.has('Com Discord')&&!hasDisc)return false;if(sel.disc.has('Sem Discord')&&hasDisc)return false}
     if(q){var h=((r['Nome Completo *']||'')+' '+(r['E-mail *']||'')+' '+(r['Estado *']||'')).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(!h.includes(q))return false}
@@ -244,7 +245,7 @@ function render(p){
   var s=(p-1)*N,pd=f.slice(s,s+N),c=$('#cardsContainer');
   c.innerHTML='';
   pd.forEach(function(r){
-    var n=r['Nome Completo *']||'', em=r['E-mail *']||'', tel=r['Telefone (WhatsApp) *']||'', est=r['Estado *']||'', el=esp(r),dl=des(r),il=inf(r);
+    var n=r['Nome Completo *']||'', em=r['E-mail *']||'', tel=r['Telefone (WhatsApp) *']||'', est=r['Estado *']||'', dl=des(r);
     var nick=r['NICK DISCORD']||'', taDisc=r['TA NO DISCORD?']||'';
     var iniciais=n.split(' ').map(function(s){return s[0]}).filter(Boolean).slice(0,2).join('').toUpperCase();
     var discExibe = (nick&&nick!='N\u00e3o Entrou') ? nick : '';
@@ -256,7 +257,7 @@ function render(p){
     card.innerHTML='<div class="card-row card-row-top"><div class="card-avatar">'+esc(iniciais)+'</div><div class="card-info"><div class="card-nome">'+esc(n)+' <span class="card-estado">'+esc(est)+'</span><button class="bio-btn" data-bio=\''+esc(bioTxt)+'\' data-linkedin="'+esc(linkedin)+'" data-nome="'+esc(n)+'">BIO</button></div><div class="card-email" data-copy="'+esc(em)+'">'+esc(em)+'</div></div></div><div class="card-linha-contato"><div class="card-discord">'+(discExibe?'<svg width="18" height="18" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.054C1.482 8.205.726 11.937.925 15.604a.074.074 0 0 0 .042.059 19.916 19.916 0 0 0 5.994 3.032.076.076 0 0 0 .08-.025 14.09 14.09 0 0 0 1.226-1.994.072.072 0 0 0-.04-.1 13.116 13.116 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.1c.36.698.772 1.362 1.225 1.994a.076.076 0 0 0 .08.025 19.839 19.839 0 0 0 6.12-3.032.077.077 0 0 0 .041-.059c.238-4.202-.668-7.895-2.757-11.18a.063.063 0 0 0-.031-.054zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>':'')+(discExibe?'<span class="nick" data-copy="'+esc(discExibe)+'">'+esc(discExibe)+'</span>':'<span style="color:rgba(255,255,255,.25);font-size:.7rem">Sem Discord</span>')+' <span class="status-dot '+(discOn?'on':'off')+'"></span></div>'+
       '<span class="card-wpp" data-copy="'+esc(tel)+'"><svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-1.099-1.028-1.84-2.268-2.055-2.65-.216-.382-.023-.589.163-.775.166-.166.373-.433.56-.65.187-.217.25-.372.374-.62.124-.248.062-.468-.031-.65-.093-.182-.67-1.616-.92-2.214-.242-.58-.487-.48-.67-.488-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.199 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.545.796 4.913 2.156 6.84L.808 23.293l4.674-1.33A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.636-.51-5.186-1.473l-.373-.224-2.36.672.654-2.263-.249-.392A9.962 9.962 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg> '+esc(tel)+'</span>'+
     '</div><div class="card-tags">'+
-      el.concat(il).map(function(x){return '<span class="tag" data-g="e" data-t="'+esc(x)+'">'+esc(x)+'</span>'}).join('')+
+      allEsp(r).map(function(x){return '<span class="tag" data-g="e" data-t="'+esc(x)+'">'+esc(x)+'</span>'}).join('')+
       dl.map(function(x){return '<span class="tag tag-desafio" data-g="d" data-t="'+esc(x)+'">'+esc(x)+'</span>'}).join('')+
     '</div></div>';
     c.appendChild(card);
