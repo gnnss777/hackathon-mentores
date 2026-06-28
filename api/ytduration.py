@@ -1,4 +1,4 @@
-import json, re, requests, sys
+import json, re, requests
 from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
@@ -18,11 +18,10 @@ def get_session():
             pass
     return SESSION
 
-def try_parse(html, pos, label):
+def try_parse(html, pos):
     depth = 0
     in_string = False
     escape = False
-    last_safe = pos
     for i in range(pos, len(html)):
         c = html[i]
         if escape:
@@ -41,12 +40,11 @@ def try_parse(html, pos, label):
         elif c == '}':
             depth -= 1
             if depth == 0:
-                json_str = html[pos:i+1]
                 try:
-                    return json.loads(json_str), label + "_ok"
-                except json.JSONDecodeError as e:
-                    return None, f"{label}_json_err:{e}"
-    return None, f"{label}_no_end"
+                    return json.loads(html[pos:i+1])
+                except Exception:
+                    return None
+    return None
 
 def fetch_duration(video_id):
     session = get_session()
@@ -59,32 +57,31 @@ def fetch_duration(video_id):
     except Exception as e:
         return None, f"http:{e}"
 
-    # Try regex match for ytInitialPlayerResponse
     m = re.search(r'var\s+ytInitialPlayerResponse\s*=\s*{', html)
-    if m:
-        data, status = try_parse(html, m.end() - 1, "ipr")
-        if data:
-            vd = data.get("videoDetails", {})
-            secs = str(vd.get("lengthSeconds", ""))
-            if secs and secs != "0":
-                return int(secs), None
-            return None, f"ipr_secs={secs}"
-        return None, status
+    if not m:
+        return None, f"no_regex_match len={len(html)}"
 
-    # Check if string exists at all
-    idx = html.find("ytInitialPlayerResponse")
-    if idx >= 0:
-        snippet = html[idx:idx+100]
-        return None, f"ytipr_exists_but_no_match:{snippet[:80]}"
+    data = try_parse(html, m.end() - 1)
+    if not data:
+        return None, f"json_parse_fail"
 
-    # Fallback: direct regex for lengthSeconds
-    for p in [r'"approxDurationMs"\s*:\s*"?(\d+)"?', r'"lengthSeconds"\s*:\s*"?(\d+)"?']:
-        m2 = re.search(p, html)
-        if m2:
-            val = int(m2.group(1))
-            return round(val / 1000) if val > 1000 else val, None
+    vd = data.get("videoDetails", {})
+    if not vd:
+        vd_keys = list(data.keys())[:5]
+        return None, f"no_videoDetails keys={vd_keys}"
 
-    return None, f"no_ytipr len={len(html)}"
+    ls = vd.get("lengthSeconds")
+    if ls:
+        return int(str(ls)), None
+
+    # Try alternate fields
+    for alt in ["duration", "length", "videoDuration"]:
+        v = vd.get(alt)
+        if v:
+            return int(str(v)), None
+
+    keys = list(vd.keys())[:15]
+    return None, f"vd_keys={keys}"
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -113,7 +110,7 @@ class handler(BaseHTTPRequestHandler):
             CACHE[video_id] = result
             self._respond(result)
         except Exception as e:
-            self._respond({"ok": False, "erro": f"{type(e).__name__}:{e}"})
+            self._respond({"ok": False, "erro": str(e)[:200]})
 
     def _respond(self, data):
         self.send_response(200)
