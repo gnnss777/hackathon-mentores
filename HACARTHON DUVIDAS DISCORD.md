@@ -197,3 +197,153 @@
 * Bruno, vou te chamar no privado
 
 [image1]: <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAABF0lEQVR4XrXU2RKCMAyF4b7/U7qAtOwgLnc6UShJmrSo48V//Z3ATE1x2D2KI7QXs9mB5PKjrzxlvqrIfTVkT6TGFWKGg7yvBmzEkwP+ibclZPUBv+IayAsG2B/xhuEchLrK+fwAm4XwFly7WgN5hoMSjHHxagHuGNzXpVgwwOUbrhbw9doVxtAANVWQcQIaxTlMcApzdGzrIMPREI7gGqyg5w5qSGQAhlP/O4WvKAWnviUZjn6K9zMegzF4GaDOFwyoPsHrOK6hV2jsX5EBGE7hy2dP4zM6gzzzvjiGvwcsT6n0zyX8ouC380AyHMa4dr306VOXcxi6pwbgdx0/Mtr103J9Ar9Poy8YIL5yfkD882+5HuPQE7k1a4QljaqIAAAAAElFTkSuQmCC>
+
+* ### Matheus F. Silva
+* ### —
+* ### 6/27/2026 12:09 AM
+* Eu consigo ainda solicitar um mentoria // reunião com algum mentor? como eu faço isso?
+
+* ### SouBeatrizKaroline
+* ### —
+* ### 6/27/2026 12:34 AM
+* Amanhã as 10h, eu acho
+
+* ### Matheus F. Silva
+* ### —
+* ### 6/27/2026 12:35 AM
+* Ufa! Ainda bem! Obrigado Beatriz!
+
+* ### Luis Lopes
+* ### —
+* ### 6/27/2026 1:12 AM
+* Meu vídeo do protótipo é uma gravação de tela do smartphone demonstrando o funcionamento da ferramenta. Como o vídeo é curto (até 2 minutos) e foi gravado na orientação vertical, o YouTube o classifica automaticamente como Shorts. Há algum problema em enviá-lo nesse formato ou é necessário que o vídeo seja publicado em orientação horizontal?
+
+* ### Fenix
+* ### —
+* ### 6/27/2026 1:19 AM
+* BOA NOITE
+
+* ### Panic Lobster
+* ### —
+* ### 6/27/2026 4:20 AM
+* Nao tem problema ser shorts
+
+* ### Morpheus
+* ### —
+* ### 6/27/2026 8:25 AM
+* bom dia! na plataforma de declaração o CAR pre-preenchido nós somente conseguimos na parte de Geo na aba do imóvel? as demais abam não funcionam? exemplo "Uso do Solo" alguém poderia dar uma luz?
+
+* ### Panic Lobster
+* ### —
+* ### 6/27/2026 8:55 AM
+* O preenchimento das demais abas só ficam liberadas depois da vetorização do limite do imóvel e da sede do imóvel, que são itens obrigatórios. Quando vetorizar e confirmar a etapa no botão "confirmar etapa imóvel" localizado no canto inferior direito no mapa, as outras abas são liberadas.
+
+* ### Gabrielly Amorim
+* ### —
+* ### 6/27/2026 9:09 AM
+* Bom dia! A entrega da ideação é em pdf?
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 9:25 AM
+* Bom dia Gabi, não! A entrega de ideação é direto pela plataforma 🔥-entregas e funciona como um formulário 😉
+
+* ### Raphael Vanderlei
+* ### —
+* ### 6/27/2026 10:56 AM
+* Bom dia, minha equipe não conseguiu participar sexta e sábado e não assistimos as lives. Ainda dá tempo de participar ou estamos desclassificados?
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 10:58 AM
+* Bom diaa, da tempo sim, só precisa realizar as entregas até hoje às 23:59 😉
+
+* ### moy
+* ### —
+* ### 6/27/2026 11:18 AM
+* Bom dia, na etapa de prototipagem, a solução precisa conter todas as informações técnicas de tecnologias que seriam usadas em uma versão completa ou podemos abstrair detalhes técnicos como bases de dados ou frameworks?
+
+* ### Wagner Gois Vieira
+* ### —
+* ### 6/27/2026 11:19 AM
+* Preciso de uma mentoria para o desafio 2
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 11:20 AM
+* Bom dia!! Pode abstrair dentro do tempo de 2 minutinhos
+
+* ### ItsMika✨
+* ### —
+* ### 6/27/2026 11:20 AM
+* Bom dia! Estou precisando de mentoria também, mas seria para ideação [sim, estamos um pouco atrasados -_-]
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 11:20 AM
+* Bom dia! Você consegue pedir mentoria direto na sua sala através do comando !queromentoria + solicitação
+
+* ### ItsMika✨
+* ### —
+* ### 6/27/2026 11:21 AM
+* Solicitei a mentoria, mas não apareceu
+
+* ### Elias Vinicius
+* ### —
+* ### 6/27/2026 11:21 AM
+* Bom dia pessoal! Tudo bem? Uma duvida; Tanto o vídeo do pitch quanto o vídeo do protótipo devem ser realizados fora da plataforma (canva) e postado no YouTube? Fiquei confuso nessa orientação
+
+* ### ItsMika✨
+* ### —
+* ### 6/27/2026 11:21 AM
+* Vou solicitar de novo sendo menos específica
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 11:21 AM
+* Estamos com alto fluxo de pedidos, mas em breve um mentor entra na sua sala 😉
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 11:21 AM
+* Não precisa, pode deixar como está
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 11:22 AM
+* Os dois precisam ser postados no YouTube, o Canva é apenas uma sugestão, pode fazer o slide na plataforma que preferir
+
+* ### Elias Vinicius
+* ### —
+* ### 6/27/2026 11:23 AM
+* Depois disso o link deve ser enviado via plataforma. Correto?
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 11:23 AM
+* Isso mesmo, respeitando o tempo limite pra cada entrega (protótipo - 2 minutos; pitch - 3 minutos)
+
+* ### gabibi
+* ### —
+* ### 6/27/2026 12:12 PM
+* pessoal, para ter mentoria é exclusivamente pelo chat de equipe?
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 12:13 PM
+* Oiie, sim! Através do comando !queromentoria.
+
+* ### gabibi
+* ### —
+* ### 6/27/2026 12:16 PM
+* gratidão!
+
+* ### Brandão
+* ### —
+* ### 6/27/2026 1:16 PM
+* Boa tarde pessoal! Temos limite de caracteres nos textos da Entrega 1?
+
+* ### Isabela | Organização
+* ### —
+* ### 6/27/2026 1:21 PM
+* Boa tarde, não tem 😉
