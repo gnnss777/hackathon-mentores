@@ -216,9 +216,13 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 <input type="file" id="fileInput" accept=".pdf,.txt,.docx,.md" multiple style="display:none">
 </div>
 
-<div style="display:flex;gap:8px;margin-bottom:16px">
+<div style="display:flex;gap:8px;margin-bottom:8px">
 <input type="text" id="ytUrl" placeholder="Link do YouTube (ex: https://youtu.be/...)" style="flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
 <button onclick="importarYoutube()" style="padding:10px 20px;border:none;border-radius:8px;background:#FF0000;color:#fff;font-size:.82rem;cursor:pointer;font-weight:800;font-family:'Nunito Sans',sans-serif;white-space:nowrap">YouTube</button>
+</div>
+<div style="display:flex;gap:8px;margin-bottom:16px">
+<input type="text" id="webUrl" placeholder="URL de site (ex: https://site.gov.br/...)" style="flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
+<button onclick="importarWebpage()" style="padding:10px 20px;border:none;border-radius:8px;background:#25D366;color:#fff;font-size:.82rem;cursor:pointer;font-weight:800;font-family:'Nunito Sans',sans-serif;white-space:nowrap">Site</button>
 </div>
 
 <div id="uploadStatus" style="display:none;padding:12px;border-radius:8px;margin-bottom:16px;font-size:.82rem;font-weight:600"></div>
@@ -642,6 +646,38 @@ function importarYoutube(){
     data.chunks.forEach(function(c){ stored.push(c); });
     localStorage.setItem('customChunks', JSON.stringify(stored));
     status.innerHTML = 'Transcrição importada! ' + data.total_chunks + ' chunks adicionados.';
+    status.style.background = 'rgba(37,211,102,.1)';
+    status.style.color = '#25D366';
+    status.style.border = '1px solid rgba(37,211,102,.2)';
+    input.value = '';
+    carregarDocsBase();
+    setTimeout(function(){ status.style.display = 'none'; }, 3000);
+  })
+  .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
+}
+function importarWebpage(){
+  var input = document.getElementById('webUrl');
+  var url = input.value.trim();
+  if(!url) return;
+  var status = document.getElementById('uploadStatus');
+  status.style.display = 'block';
+  status.style.background = 'rgba(37,211,102,.1)';
+  status.style.color = '#25D366';
+  status.style.border = '1px solid rgba(37,211,102,.2)';
+  status.innerHTML = 'Baixando conteudo do site...';
+  fetch('/api/webpage', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({url: url})
+  })
+  .then(function(r){ return r.json() })
+  .then(function(data){
+    if(data.erro){ status.innerHTML = 'Erro: ' + data.erro; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; return; }
+    var stored = [];
+    try { var s = localStorage.getItem('customChunks'); if(s) stored = JSON.parse(s); } catch(ex){}
+    data.chunks.forEach(function(c){ stored.push(c); });
+    localStorage.setItem('customChunks', JSON.stringify(stored));
+    status.innerHTML = 'Conteudo importado! ' + data.total_chunks + ' chunks adicionados.';
     status.style.background = 'rgba(37,211,102,.1)';
     status.style.color = '#25D366';
     status.style.border = '1px solid rgba(37,211,102,.2)';

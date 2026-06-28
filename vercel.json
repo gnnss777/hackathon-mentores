@@ -9,6 +9,9 @@
     "api/youtube.py": {
       "maxDuration": 30
     },
+    "api/webpage.py": {
+      "maxDuration": 30
+    },
     "api/docs.py": {
       "maxDuration": 10
     }
