@@ -3,58 +3,27 @@ from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
 
-MOBILE_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.147 Mobile Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-}
+# Multiple Invidious instances as fallback
+INVIDIOUS_INSTANCES = [
+    "https://inv.nadeko.net",
+    "https://invidious.xyz",
+    "https://yewtu.be",
+    "https://invidious.protokolla.fi",
+]
 
 def fetch_duration(video_id):
-    # Strategy 1: try mobile YouTube (better chance than desktop)
-    try:
-        req = urllib.request.Request(
-            f"https://m.youtube.com/watch?v={video_id}",
-            headers=MOBILE_HEADERS
-        )
-        resp = urllib.request.urlopen(req, timeout=15)
-        html = resp.read().decode("utf-8", errors="replace")
-
-        patterns = [
-            (r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)', int),
-            (r'"lengthSeconds":"?(\d+)"?', int),
-            (r'length_seconds["\']?\s*[:=]\s*["\']?(\d+)', int),
-            (r'videoDetails.*?"lengthSeconds":"(\d+)"', int),
-        ]
-        for pat, cast in patterns:
-            m = re.search(pat, html)
-            if m:
-                return cast(m.group(1)), None
-    except Exception:
-        pass
-
-    # Strategy 2: try desktop YouTube with curl-like headers
-    try:
-        req2 = urllib.request.Request(
-            f"https://www.youtube.com/watch?v={video_id}",
-            headers={
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "en-US,en;q=0.9",
-            }
-        )
-        resp2 = urllib.request.urlopen(req2, timeout=15)
-        html2 = resp2.read().decode("utf-8", errors="replace")
-        patterns2 = [
-            (r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)', int),
-            (r'"lengthSeconds":"?(\d+)"?', int),
-        ]
-        for pat, cast in patterns2:
-            m2 = re.search(pat, html2)
-            if m2:
-                return cast(m2.group(1)), None
-    except Exception:
-        pass
-
+    for instance in INVIDIOUS_INSTANCES:
+        try:
+            req = urllib.request.Request(
+                f"{instance}/api/v1/videos/{video_id}",
+                headers={"User-Agent": "Mozilla/5.0"}
+            )
+            resp = urllib.request.urlopen(req, timeout=10)
+            data = json.loads(resp.read().decode("utf-8"))
+            if data.get("lengthSeconds"):
+                return int(data["lengthSeconds"]), instance
+        except Exception:
+            continue
     return None, None
 
 class handler(BaseHTTPRequestHandler):
@@ -77,9 +46,9 @@ class handler(BaseHTTPRequestHandler):
             self._respond(CACHE[cache_key])
             return
         try:
-            secs, _ = fetch_duration(video_id)
+            secs, used = fetch_duration(video_id)
             if secs:
-                result = {"ok": True, "segundos": secs}
+                result = {"ok": True, "segundos": secs, "source": used}
             else:
                 result = {"ok": False, "erro": "duration_not_found"}
             CACHE[cache_key] = result
