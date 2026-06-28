@@ -1,22 +1,8 @@
 import json
-import re
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse
-
-def chunk_text(texto, fonte, chunk_size=500):
-    paragrafos = re.split(r'\n\s*\n', texto)
-    chunks = []
-    buffer = ""
-    for p in paragrafos:
-        if len(buffer) + len(p) < chunk_size:
-            buffer += p + "\n"
-        else:
-            if buffer:
-                chunks.append({"texto": buffer.strip(), "fonte": fonte})
-            buffer = p + "\n"
-    if buffer:
-        chunks.append({"texto": buffer.strip(), "fonte": fonte})
-    return chunks
+from chunker import chunk_text
+from docsync import load_custom, save_custom
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -47,12 +33,18 @@ class handler(BaseHTTPRequestHandler):
             domain = parsed.netloc.replace("www.", "")
             fonte = f"webpage_{domain}"
             chunks = chunk_text(texto, fonte)
+
+            existentes = load_custom()
+            existentes.extend(chunks)
+            save_custom(existentes)
+
             response = json.dumps({
                 "chunks": chunks,
                 "total_chars": len(texto),
                 "total_chunks": len(chunks),
                 "fonte": fonte,
-                "url": url
+                "url": url,
+                "server_synced": True
             }, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

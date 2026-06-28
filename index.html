@@ -623,6 +623,11 @@ function carregarDocsBase(){
     container.innerHTML = h;
   }).catch(function(){ container.innerHTML = '<div style="color:rgba(255,0,0,.5);font-size:.8rem">Erro de conexão</div>'; });
 }
+function syncCustomChunks(){
+  try { var s = localStorage.getItem('customChunks'); if(!s) return; var chunks = JSON.parse(s); if(chunks.length === 0) return;
+    fetch('/api/docsync', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({chunks: chunks})}).catch(function(){});
+  } catch(e){}
+}
 function importarYoutube(){
   var input = document.getElementById('ytUrl');
   var url = input.value.trim();
@@ -651,9 +656,10 @@ function importarYoutube(){
     status.style.border = '1px solid rgba(37,211,102,.2)';
     input.value = '';
     carregarDocsBase();
+    syncCustomChunks();
     setTimeout(function(){ status.style.display = 'none'; }, 3000);
   })
-  .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
+  .catch(function(err){ status.innerHTML = 'Erro: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
 }
 function importarWebpage(){
   var input = document.getElementById('webUrl');
@@ -683,6 +689,7 @@ function importarWebpage(){
     status.style.border = '1px solid rgba(37,211,102,.2)';
     input.value = '';
     carregarDocsBase();
+    syncCustomChunks();
     setTimeout(function(){ status.style.display = 'none'; }, 3000);
   })
   .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
@@ -716,6 +723,7 @@ function uploadArquivo(file){
       status.style.color = '#25D366';
       status.style.border = '1px solid rgba(37,211,102,.2)';
       carregarDocsBase();
+      syncCustomChunks();
       setTimeout(function(){ status.style.display = 'none'; }, 3000);
     })
     .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
@@ -728,6 +736,7 @@ document.getElementById('dropArea').addEventListener('dragleave', function(){ th
 document.getElementById('dropArea').addEventListener('drop', function(e){ e.preventDefault(); this.style.borderColor = 'rgba(255,255,255,.1)'; this.style.background = 'rgba(255,255,255,.02)'; for(var i=0;i<e.dataTransfer.files.length;i++) uploadArquivo(e.dataTransfer.files[i]); });
 document.getElementById('fileInput').addEventListener('change', function(){ for(var i=0;i<this.files.length;i++) uploadArquivo(this.files[i]); this.value = ''; });
 carregarDocsBase();
+syncCustomChunks();
 
 montarFiltros();
 render(1);

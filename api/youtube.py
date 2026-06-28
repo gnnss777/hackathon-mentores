@@ -1,23 +1,10 @@
 import json
 import re
 from http.server import BaseHTTPRequestHandler
+from chunker import chunk_text
+from docsync import load_custom, save_custom
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-
-def chunk_text(texto, fonte, chunk_size=500):
-    linhas = [l.strip() for l in texto.replace(". ", ".\n").replace("? ", "?\n").replace("! ", "!\n").split("\n") if l.strip()]
-    partes = []
-    parte = []
-    for linha in linhas:
-        parte.append(linha)
-        if len(" ".join(parte)) >= chunk_size:
-            partes.append(" ".join(parte))
-            parte = []
-    if parte:
-        partes.append(" ".join(parte))
-    if not partes:
-        partes = [texto[:500]]
-    return [{"texto": p, "fonte": fonte} for p in partes]
 
 def extract_video_id(url):
     patterns = [
@@ -106,13 +93,20 @@ class handler(BaseHTTPRequestHandler):
                 raise ValueError("Nenhuma legenda encontrada para este vídeo")
             fonte = f"yt_{video_id}"
             chunks = chunk_text(text, fonte)
+
+            existentes = load_custom()
+            existentes.extend(chunks)
+            save_custom(existentes)
+
             response = json.dumps({
                 "chunks": chunks,
                 "total_chunks": len(chunks),
                 "total_chars": len(text),
                 "fonte": fonte,
-                "video_id": video_id
+                "video_id": video_id,
+                "server_synced": True
             }, ensure_ascii=False).encode("utf-8")
+
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")

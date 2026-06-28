@@ -1,42 +1,10 @@
 import json
 import os
-import re
 import base64
 import io
 from http.server import BaseHTTPRequestHandler
-
-def chunk_text(texto, fonte, chunk_size=500):
-    if fonte.startswith("yt_"):
-        linhas = texto.split("\n")
-        partes = []
-        parte = []
-        for linha in linhas:
-            linha = linha.strip()
-            if not linha:
-                continue
-            parte.append(linha)
-            if len(" ".join(parte)) >= chunk_size:
-                partes.append(" ".join(parte))
-                parte = []
-        if parte:
-            partes.append(" ".join(parte))
-        chunks = [{"texto": p, "fonte": fonte} for p in partes]
-        if not chunks:
-            chunks = [{"texto": texto[:500], "fonte": fonte}]
-        return chunks
-    paragrafos = re.split(r'\n\s*\n', texto)
-    chunks = []
-    buffer = ""
-    for p in paragrafos:
-        if len(buffer) + len(p) < chunk_size:
-            buffer += p + "\n"
-        else:
-            if buffer:
-                chunks.append({"texto": buffer.strip(), "fonte": fonte})
-            buffer = p + "\n"
-    if buffer:
-        chunks.append({"texto": buffer.strip(), "fonte": fonte})
-    return chunks
+from chunker import chunk_text
+from docsync import load_custom, save_custom
 
 def extract_text_pdf(content_bytes):
     try:
@@ -96,12 +64,17 @@ class handler(BaseHTTPRequestHandler):
             fonte = f"custom_{filename.replace('.', '_')}"
             chunks = chunk_text(text, fonte)
 
+            existentes = load_custom()
+            existentes.extend(chunks)
+            save_custom(existentes)
+
             response = json.dumps({
                 "chunks": chunks,
                 "total_chars": len(text),
                 "total_chunks": len(chunks),
                 "fonte": fonte,
-                "filename": filename
+                "filename": filename,
+                "server_synced": True
             }, ensure_ascii=False).encode("utf-8")
 
             self.send_response(200)

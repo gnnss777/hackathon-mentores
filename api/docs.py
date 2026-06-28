@@ -35,7 +35,8 @@ class handler(BaseHTTPRequestHandler):
                 "yt_tira_duvidas1": "Live: Tira-dúvidas 1",
                 "yt_tira_duvidas2": "Live: Tira-dúvidas 2",
                 "avisos-programacao": "Avisos e Programação (Markdown)",
-                "mentores": "Mentores (88 fichas)"
+                "mentores": "Mentores (88 fichas)",
+                "duvidas-discord": "Dúvidas do Discord (FAQ)"
             }
 
             docs = []
