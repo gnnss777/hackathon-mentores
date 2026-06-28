@@ -91,6 +91,16 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .overlay.show{display:flex}
 .overlay-card{background:#1A1A2E;border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;padding:28px;position:relative;animation:fadeIn .2s}
+
+.dash-overlay-card{max-width:1100px;width:95%;max-height:90vh;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.dash-overlay-scroll{flex:1;overflow-y:auto;min-height:0}
+.dash-overlay-split{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.dash-overlay-left{border-right:1px solid rgba(255,255,255,.06);overflow-y:auto}
+.dash-overlay-right{overflow-y:auto}
+@media(max-width:860px){
+  .dash-overlay-split{grid-template-columns:1fr}
+  .dash-overlay-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .overlay-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,.3);font-size:1.4rem;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all .15s;line-height:1}
 .overlay-close:hover{color:#EC008C}
@@ -101,7 +111,6 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .overlay-card .bio-linkedin:hover{text-decoration:underline}
 
 /* OVERLAY DASH (julgamento) */
-.dash-overlay-card{max-width:900px;padding:0;overflow:hidden}
 .dash-overlay-header{padding:24px 28px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
 .dash-overlay-header h2{font-size:1.2rem;font-weight:900;color:#fff;margin:0}
 .dash-overlay-header .sub{font-size:.75rem;color:rgba(255,255,255,.25);margin-top:2px}
@@ -327,9 +336,9 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 </div>
 
-<div class="overlay" id="dashOverlay">
+<div class="overlay" id="dashOverlay" onclick="if(event.target===this)fecharDashOverlay()">
 <div class="overlay-card dash-overlay-card">
-<div id="dashOverlayContent"></div>
+<div class="dash-overlay-scroll" id="dashOverlayContent"></div>
 </div>
 </div>
 
@@ -983,24 +992,21 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
   }
   html += '</div>';
   html += '<div class="dash-overlay-section"><h3>📄 Documentos do Projeto</h3><div class="hint">PDFs, apresentações e materiais de apoio enviados pela equipe.</div><div class="dash-overlay-placeholder"><div class="icon">📄</div>Nenhum documento enviado ainda.<br><span style="font-size:.72rem;color:rgba(255,255,255,.08)">Placeholder — futura integração com upload de PDF/docs.</span></div></div>';
-  html += '<div class="dash-overlay-section"><h3>⭐ Formulário de Avaliação</h3><div class="hint">Preencha os critérios abaixo para avaliar a equipe. Este é um rascunho do formulário.</div><div class="dash-form">';
-  html += '<label>Critério 1 — Pertinência temática</label><select><option value="">Selecione...</option><option value="1">1 — Ruim</option><option value="2">2 — Fraco</option><option value="3">3 — Regular</option><option value="4">4 — Bom</option><option value="5">5 — Excelente</option></select>';
-  html += '<label>Critério 2 — Qualidade da Solução</label><div class="radio-group">';
-  for(var i=1;i<=5;i++){
-    html += '<label><input type="radio" name="q2" value="'+i+'"><span>'+i+'</span></label>';
-  }
-  html += '</div>';
-  html += '<label>Critério 3 — Clareza do Pitch</label><div class="radio-group">';
-  for(var i=1;i<=5;i++){
-    html += '<label><input type="radio" name="q3" value="'+i+'"><span>'+i+'</span></label>';
-  }
-  html += '</div>';
-  html += '<label>Observações do Jurado</label><textarea placeholder="Comentários, pontos fortes, sugestões..."></textarea>';
-  html += '<label>Nota Final (0-10)</label><input type="text" placeholder="Ex: 8.5">';
-  html += '<button class="btn-submit" onclick="alert(\'Formulário de demonstração — ainda não salva respostas.\')">💾 Salvar avaliação</button>';
-  html += '</div></div>';
-  c.innerHTML = html;
-  c.querySelectorAll('.dash-form .radio-group label').forEach(function(l){
+  var contentHtml = html;
+  var formHtml = '<div class="dash-overlay-section"><h3>⭐ Formulário de Avaliação</h3><div class="hint">Preencha os critérios abaixo para avaliar a equipe.</div><div class="dash-form">';
+  formHtml += '<label>Critério 1 — Pertinência temática</label><select><option value="">Selecione...</option><option value="1">1 — Ruim</option><option value="2">2 — Fraco</option><option value="3">3 — Regular</option><option value="4">4 — Bom</option><option value="5">5 — Excelente</option></select>';
+  formHtml += '<label>Critério 2 — Qualidade da Solução</label><div class="radio-group">';
+  for(var i=1;i<=5;i++){ formHtml += '<label><input type="radio" name="q2" value="'+i+'"><span>'+i+'</span></label>'; }
+  formHtml += '</div>';
+  formHtml += '<label>Critério 3 — Clareza do Pitch</label><div class="radio-group">';
+  for(var i=1;i<=5;i++){ formHtml += '<label><input type="radio" name="q3" value="'+i+'"><span>'+i+'</span></label>'; }
+  formHtml += '</div>';
+  formHtml += '<label>Observações do Jurado</label><textarea placeholder="Comentários, pontos fortes, sugestões..." style="min-height:80px"></textarea>';
+  formHtml += '<label>Nota Final (0-10)</label><input type="text" placeholder="Ex: 8.5">';
+  formHtml += '<button class="btn-submit" onclick="alert(\'Formulário de demonstração.\')">💾 Salvar avaliação</button>';
+  formHtml += '</div></div>';
+  c.innerHTML = '<div class="dash-overlay-split"><div class="dash-overlay-left">'+contentHtml+'</div><div class="dash-overlay-right">'+formHtml+'</div></div>';
+  c.querySelectorAll('.dash-overlay-right .radio-group label').forEach(function(l){
     l.addEventListener('click', function(){
       var input = this.querySelector('input');
       if(input) input.checked = true;
@@ -1009,10 +1015,15 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
     });
   });
   document.getElementById('dashOverlay').classList.add('show');
+  document.addEventListener('keydown', dashEscClose);
+}
+function dashEscClose(e){
+  if(e.key === 'Escape') fecharDashOverlay();
 }
 function fecharDashOverlay(){
   document.getElementById('dashOverlay').classList.remove('show');
   document.getElementById('dashOverlayContent').innerHTML = '';
+  document.removeEventListener('keydown', dashEscClose);
 }
 document.getElementById('dropArea').addEventListener('click', function(){ document.getElementById('fileInput').click(); });
 document.getElementById('dropArea').addEventListener('dragover', function(e){ e.preventDefault(); this.style.borderColor = '#EC008C'; this.style.background = 'rgba(236,0,140,.05)'; });
