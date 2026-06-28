@@ -20,9 +20,6 @@
     },
     "api/cadastro.py": {
       "maxDuration": 30
-    },
-    "api/ytduration.py": {
-      "maxDuration": 30
     }
   }
 }
