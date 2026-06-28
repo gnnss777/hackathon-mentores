@@ -190,10 +190,9 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .dash-status-row{display:flex;gap:6px;margin-bottom:6px;align-items:center}
 .dash-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:5px;text-transform:uppercase;letter-spacing:.3px}
 .dash-delivery-line{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:8px}
-.dash-del-item{display:flex;align-items:center;justify-content:center;gap:3px;font-weight:700;padding:4px 2px;border-radius:5px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);font-size:.68rem;white-space:nowrap}
-.dash-del-icon{font-size:.9rem}
-.dash-del-check{color:#25D366;font-weight:800}
-.dash-del-cross{color:rgba(255,255,255,.2);font-weight:800}
+.dash-del-item{display:flex;align-items:center;justify-content:center;gap:2px;font-weight:700;padding:3px 2px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);font-size:.68rem;white-space:nowrap;line-height:1}
+.dash-del-check{color:#25D366}
+.dash-del-cross{color:rgba(255,255,255,.2)}
 .dash-info-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.68rem;color:rgba(255,255,255,.35);padding:6px 0;border-top:1px solid rgba(255,255,255,.04);margin-bottom:8px}
 .dash-cta{display:block;width:100%;padding:8px;border:none;border-radius:8px;background:linear-gradient(135deg,rgba(236,0,140,.1),rgba(74,31,168,.1));color:#EC008C;font-weight:800;font-size:.72rem;font-family:'Nunito Sans',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;text-align:center}
 .dash-cta:hover{background:linear-gradient(135deg,rgba(236,0,140,.2),rgba(74,31,168,.2))}
@@ -279,24 +278,21 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 
 <!-- GERENCIAMENTO VIEW -->
 <!-- DASH ENTREGAS VIEW -->
-<div class="chat-container" id="dashView">
-<div style="padding:16px;max-width:1200px;margin:0 auto;width:100%">
-<div class="chat-toolbar">
-<h3 style="color:#fff;font-weight:800">📋 Dash Entregas</h3>
-<div style="display:flex;gap:8px">
-<button class="download-chat-btn" onclick="recarregarDash()" title="Recarregar">🔄 Atualizar</button>
+<div id="dashView" style="display:none">
+<div style="display:flex;gap:24px;align-items:flex-start">
+<div class="sidebar" style="width:200px;flex-shrink:0;position:sticky;top:20px">
+<div class="tag-filter-area" id="dashFilterArea">
+<div style="margin-bottom:16px"><input type="text" id="dashSearch" placeholder="Buscar equipe..." oninput="renderDash()" style="width:100%;padding:8px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif"></div>
 </div>
 </div>
-<div class="stats" id="dashStats"></div>
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px" id="dashFilters">
-  <select id="fltAval" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Avaliação: Todas</option><option value="avaliado">✅ Avaliado</option><option value="nao">❌ Não avaliado</option></select>
-  <select id="fltDesafio" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Desafio: Todos</option><option value="D1">D1 - Simplificar CAR</option><option value="D2">D2 - Dados geoespaciais</option><option value="D3">D3 - Legislação</option></select>
-  <select id="fltEntrega" onchange="renderDash()" style="padding:6px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-family:'Nunito Sans',sans-serif;font-weight:600"><option value="">Entrega: Todas</option><option value="ideia_ok">💡 Ideação feita</option><option value="ideia_nao">💡 Ideação pendente</option><option value="proto_ok">🎬 Protótipo feito</option><option value="proto_nao">🎬 Protótipo pendente</option><option value="pitch_ok">🎤 Pitch feito</option><option value="pitch_nao">🎤 Pitch pendente</option><option value="extra_ok">📎 Extra enviado</option></select>
+<div class="main" style="flex:1;min-width:0">
+<div class="chat-toolbar" style="margin-bottom:8px">
+<h3 style="color:#fff;font-weight:800;font-size:1rem">📋 Dash Entregas</h3>
+<button class="download-chat-btn" onclick="recarregarDash()" style="font-size:.7rem;padding:6px 14px">🔄 Atualizar</button>
 </div>
-<div style="margin-bottom:16px">
-<input type="text" id="dashSearch" placeholder="Buscar por equipe..." oninput="renderDash()" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
+<div class="stats" id="dashStats" style="font-size:.75rem"></div>
+<div class="grid-cards" id="dashContainer" style="margin-top:10px"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div></div>
 </div>
-<div class="grid-cards" id="dashContainer"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div></div>
 </div>
 </div>
 
@@ -492,7 +488,7 @@ function switchTab(tab){
   document.getElementById('mentoresView').style.display = tab==='mentores' ? 'block' : 'none';
   document.getElementById('mentoresSidebar').style.display = tab==='mentores' ? 'block' : 'none';
   document.getElementById('chatView').classList.toggle('active', tab==='chat');
-  document.getElementById('dashView').classList.toggle('active', tab==='dash');
+  document.getElementById('dashView').style.display = tab==='dash' ? 'block' : 'none';
   document.getElementById('gerenciamentoView').classList.toggle('active', tab==='gerenciamento');
   var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'dash': 'Dash Entregas', 'gerenciamento': 'Gerenciar documentos'};
   document.getElementById('headerSub').textContent = subs[tab] || '';
@@ -859,9 +855,44 @@ function uploadArquivo(file){
 }
 // === DASH ENTREGAS ===
 var DASH = [];
+var FLT_DASH = {aval:'', desafio:'', entrega:''};
+function montarDashFiltros(){
+  var area = document.getElementById('dashFilterArea');
+  if(!area) return;
+  area.innerHTML = '<div style="margin-bottom:16px"><input type="text" id="dashSearch" placeholder="Buscar equipe..." oninput="renderDash()" style="width:100%;padding:8px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;font-size:.72rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:\'Nunito Sans\',sans-serif"></div>';
+  area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Avaliação</div>';
+  area.innerHTML += '<div class="tag-filter-area" id="dashFltAval">'+
+    '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'aval\',\'\',this)">Todas</span>'+
+    '<span class="filter-tag" data-val="avaliado" onclick="dashFiltroClick(\'aval\',\'avaliado\',this)">✅ Avaliado</span>'+
+    '<span class="filter-tag" data-val="nao" onclick="dashFiltroClick(\'aval\',\'nao\',this)">❌ Não avaliado</span>'+
+  '</div>';
+  area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px">Desafio</div>';
+  area.innerHTML += '<div class="tag-filter-area" id="dashFltDesafio">'+
+    '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'desafio\',\'\',this)">Todos</span>'+
+    '<span class="filter-tag" data-val="D1" onclick="dashFiltroClick(\'desafio\',\'D1\',this)" style="border-color:rgba(0,191,255,.2)">D1</span>'+
+    '<span class="filter-tag" data-val="D2" onclick="dashFiltroClick(\'desafio\',\'D2\',this)" style="border-color:rgba(37,211,102,.2)">D2</span>'+
+    '<span class="filter-tag" data-val="D3" onclick="dashFiltroClick(\'desafio\',\'D3\',this)" style="border-color:rgba(255,165,0,.2)">D3</span>'+
+  '</div>';
+  area.innerHTML += '<div style="font-size:.65rem;font-weight:800;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px">Entrega</div>';
+  area.innerHTML += '<div class="tag-filter-area" id="dashFltEntrega">'+
+    '<span class="filter-tag active" data-val="" onclick="dashFiltroClick(\'entrega\',\'\',this)">Todas</span>'+
+    '<span class="filter-tag" data-val="ideia_ok" onclick="dashFiltroClick(\'entrega\',\'ideia_ok\',this)">💡 Ideação</span>'+
+    '<span class="filter-tag" data-val="proto_ok" onclick="dashFiltroClick(\'entrega\',\'proto_ok\',this)">🎬 Protótipo</span>'+
+    '<span class="filter-tag" data-val="pitch_ok" onclick="dashFiltroClick(\'entrega\',\'pitch_ok\',this)">🎤 Pitch</span>'+
+    '<span class="filter-tag" data-val="extra_ok" onclick="dashFiltroClick(\'entrega\',\'extra_ok\',this)">📎 Extra</span>'+
+  '</div>';
+}
+function dashFiltroClick(grupo, val, el){
+  FLT_DASH[grupo] = val;
+  var parent = el.parentNode;
+  parent.querySelectorAll('.filter-tag').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  renderDash();
+}
 function carregarDash(){
   var c = document.getElementById('dashContainer');
   if(!c) return;
+  montarDashFiltros();
   c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div>';
   Promise.all([
     fetch('/api/sheetsync').then(function(r){ return r.json() }),
@@ -887,9 +918,9 @@ function recarregarDash(){
 var EQUIPES_CADASTRO = {};
 function renderDash(){
   var q = (document.getElementById('dashSearch').value||'').toLowerCase();
-  var fltAval = document.getElementById('fltAval').value;
-  var fltDesafio = document.getElementById('fltDesafio').value;
-  var fltEntrega = document.getElementById('fltEntrega').value;
+  var fltAval = FLT_DASH.aval;
+  var fltDesafio = FLT_DASH.desafio;
+  var fltEntrega = FLT_DASH.entrega;
   var avals = carregarAvaliacoes();
   var filtrados = DASH.filter(function(r){
     var eq = r['EQUIPE']||'';
@@ -971,10 +1002,10 @@ function renderDash(){
     card.innerHTML += '<div class="dash-card-body">';
     card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+(jaAvaliado?'<span class="dash-badge" style="background:rgba(37,211,102,.12);color:#25D366;margin-left:auto">✅ Avaliado</span>':'')+'</div>';
     card.innerHTML += '<div class="dash-delivery-line">';
-    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">💡</span><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>Ideação</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎬</span><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>Protótipo</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎤</span><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>Pitch</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">📎</span><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>Extra</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>💡Ideação</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>🎬Prot.</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>📎Extra</span>';
     card.innerHTML += '</div>';
     if(qual) card.innerHTML += '<div style="text-align:center;margin-bottom:6px"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
     card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2)">🎬 Vídeos disponíveis</span>':'<span style="color:rgba(255,255,255,.1)">Sem vídeos</span>')+'</div>';
