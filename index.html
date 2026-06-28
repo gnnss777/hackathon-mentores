@@ -213,7 +213,7 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(255,255,255,.2)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
 <p style="color:rgba(255,255,255,.3);margin:10px 0 4px;font-size:.85rem">Arraste arquivos aqui ou clique para selecionar</p>
 <p style="color:rgba(255,255,255,.15);font-size:.7rem">PDF ou TXT até 4MB</p>
-<input type="file" id="fileInput" accept=".pdf,.txt" multiple style="display:none">
+<input type="file" id="fileInput" accept=".pdf,.txt,.docx,.md" multiple style="display:none">
 </div>
 
 <div style="display:flex;gap:8px;margin-bottom:16px">
@@ -656,7 +656,8 @@ function uploadArquivo(file){
   var reader = new FileReader();
   reader.onload = function(e){
     var base64 = e.target.result.split(',')[1];
-    var tipo = file.name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'txt';
+    var nm = file.name.toLowerCase();
+    var tipo = nm.endsWith('.pdf') ? 'pdf' : nm.endsWith('.docx') ? 'docx' : 'txt';
     status.style.display = 'block';
     status.style.background = 'rgba(236,0,140,.1)';
     status.style.color = '#EC008C';

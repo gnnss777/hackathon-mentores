@@ -51,6 +51,14 @@ def extract_text_pdf(content_bytes):
     except ImportError:
         raise Exception("pypdf library not available")
 
+def extract_text_docx(content_bytes):
+    try:
+        from docx import Document
+        doc = Document(io.BytesIO(content_bytes))
+        return "\n".join(p.text for p in doc.paragraphs if p.text.strip())
+    except ImportError:
+        raise Exception("python-docx library not available")
+
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
@@ -74,8 +82,11 @@ class handler(BaseHTTPRequestHandler):
 
             content_bytes = base64.b64decode(content_b64)
 
-            if file_type == "pdf" or filename.lower().endswith(".pdf"):
+            lower = filename.lower()
+            if file_type == "pdf" or lower.endswith(".pdf"):
                 text = extract_text_pdf(content_bytes)
+            elif file_type == "docx" or lower.endswith(".docx"):
+                text = extract_text_docx(content_bytes)
             else:
                 text = content_bytes.decode("utf-8", errors="replace")
 
