@@ -185,7 +185,6 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .dash-del-icon{font-size:.9rem}
 .dash-del-check{color:#25D366;font-weight:800}
 .dash-del-cross{color:rgba(255,255,255,.2);font-weight:800}
-.dash-del-video{font-size:.7rem;color:#FF0000;font-weight:800;margin-left:2px}
 .dash-info-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.68rem;color:rgba(255,255,255,.35);padding:6px 0;border-top:1px solid rgba(255,255,255,.04);margin-bottom:8px}
 .dash-cta{display:block;width:100%;padding:8px;border:none;border-radius:8px;background:linear-gradient(135deg,rgba(236,0,140,.1),rgba(74,31,168,.1));color:#EC008C;font-weight:800;font-size:.72rem;font-family:'Nunito Sans',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;text-align:center}
 .dash-cta:hover{background:linear-gradient(135deg,rgba(236,0,140,.2),rgba(74,31,168,.2))}
@@ -922,9 +921,10 @@ function renderDash(){
     card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+'</div>';
     card.innerHTML += '<div class="dash-delivery-line">';
     card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">💡</span><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>Ideação</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎬</span><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>Protótipo'+(protoOk&&linkProto?'<span class="dash-del-video">▶</span>':'')+'</span>';
-    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎤</span><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>Pitch'+(pitchOk&&linkPitch?'<span class="dash-del-video">▶</span>':'')+'</span>';
-    if(linkExtra) card.innerHTML += '<span class="dash-del-item" style="color:#FFA500">📎 Extra</span>';
+    var extraOk = !!linkExtra;
+    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎬</span><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>Protótipo</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎤</span><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>Pitch</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">📎</span><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>Extra</span>';
     if(qual) card.innerHTML += '<span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span>';
     card.innerHTML += '</div>';
     card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2)">🎬 Vídeos disponíveis</span>':'<span style="color:rgba(255,255,255,.1)">Sem vídeos</span>')+'</div>';
