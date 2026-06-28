@@ -877,6 +877,10 @@ function renderDash(){
     card.innerHTML += '</div>';
     var st = (r['STATUS ']||r['STATUS']||'-').trim();
     card.innerHTML += '<div class="dash-chip" style="margin-top:2px">📋 '+esc(st)+'</div>';
+    var statusPanic = (r['STATUS PELA PANIC']||'').trim();
+    if(statusPanic) card.innerHTML += '<div class="dash-chip" style="background:rgba(236,0,140,.08);color:#EC008C;border-color:rgba(236,0,140,.15)">🍕 '+esc(statusPanic)+'</div>';
+    var email = (r['EMAIL LIDER']||'').trim();
+    if(email) card.innerHTML += '<div style="font-size:.65rem;color:rgba(255,255,255,.3);text-align:center;padding:2px 0">📧 '+esc(email)+'</div>';
     card.innerHTML += '<div class="dash-grid2">';
     if(linkProto) card.innerHTML += '<div class="dash-chip" style="background:rgba(255,0,0,.1);color:#FF0000;border-color:rgba(255,0,0,.2)">🎬 Protótipo</div>';
     if(linkPitch) card.innerHTML += '<div class="dash-chip" style="background:rgba(236,0,140,.1);color:#EC008C;border-color:rgba(236,0,140,.2)">🎤 Pitch</div>';
