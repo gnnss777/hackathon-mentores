@@ -144,13 +144,16 @@ PERGUNTA: {pergunta}
 
 RESPOSTA:"""
 
-            resposta_api = cliente.chat.completions.create(
-                model="deepseek-chat",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.7,
-                max_tokens=500
-            )
-            texto = resposta_api.choices[0].message.content
+            try:
+                resposta_api = cliente.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.7,
+                    max_tokens=500
+                )
+                texto = resposta_api.choices[0].message.content
+            except Exception as e:
+                raise ValueError(f"Erro ao consultar DeepSeek: {e}")
 
             links_lives = {f: LIVES_YOUTUBE[f] for f in fontes if f in LIVES_YOUTUBE}
             response = json.dumps({
