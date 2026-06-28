@@ -186,18 +186,18 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 #dashContainer{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dash-card{background:#1A1A2E;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:0;animation:fadeIn .2s;overflow:hidden;cursor:pointer;transition:all .2s}
 .dash-card:hover{border-color:rgba(236,0,140,.3);box-shadow:0 0 20px rgba(236,0,140,.08);transform:translateY(-2px)}
-.dash-card-header{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+.dash-card-header{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
 .dash-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4A1FA8,#EC008C);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0}
 .dash-card-nome{font-size:.82rem;font-weight:800;color:#fff;flex:1}
-.dash-card-body{padding:8px 10px 10px}
-.dash-status-row{display:flex;gap:6px;margin-bottom:6px;align-items:center}
-.dash-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:5px;text-transform:uppercase;letter-spacing:.3px}
-.dash-delivery-line{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:8px}
-.dash-del-item{display:flex;align-items:center;justify-content:center;gap:2px;font-weight:700;padding:3px 2px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);font-size:.68rem;white-space:nowrap;line-height:1}
+.dash-card-body{padding:6px 8px 8px}
+.dash-status-row{display:flex;gap:6px;margin-bottom:4px;align-items:center}
+.dash-badge{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.3px}
+.dash-delivery-line{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px;margin-bottom:0}
+.dash-del-item{display:flex;align-items:center;justify-content:center;gap:2px;font-weight:700;padding:2px 1px;border-radius:3px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);font-size:.65rem;white-space:nowrap;line-height:1}
 .dash-del-check{color:#25D366}
 .dash-del-cross{color:rgba(255,255,255,.2)}
-.dash-info-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.68rem;color:rgba(255,255,255,.35);padding:6px 0;border-top:1px solid rgba(255,255,255,.04);margin-bottom:8px}
-.dash-cta{display:block;width:100%;padding:8px;border:none;border-radius:8px;background:linear-gradient(135deg,rgba(236,0,140,.1),rgba(74,31,168,.1));color:#EC008C;font-weight:800;font-size:.72rem;font-family:'Nunito Sans',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;text-align:center}
+.dash-info-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.6rem;color:rgba(255,255,255,.3);padding:3px 0;border-top:1px solid rgba(255,255,255,.03);margin-bottom:5px}
+.dash-cta{display:block;width:100%;padding:6px;border:none;border-radius:6px;background:linear-gradient(135deg,rgba(236,0,140,.1),rgba(74,31,168,.1));color:#EC008C;font-weight:800;font-size:.68rem;font-family:'Nunito Sans',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;text-align:center}
 .dash-cta:hover{background:linear-gradient(135deg,rgba(236,0,140,.2),rgba(74,31,168,.2))}
 .dash-switch input{opacity:0;width:0;height:0}
 .dash-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.1);border-radius:18px;transition:.2s}
@@ -1026,9 +1026,9 @@ function renderDash(){
     card.innerHTML += '<span class="dash-del-item"><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>🎤Pitch</span>';
     card.innerHTML += '<span class="dash-del-item"><span class="'+(extraOk?'dash-del-check':'dash-del-cross')+'">'+(extraOk?'✔':'✘')+'</span>📎Extra</span>';
     card.innerHTML += '</div>';
-    if(qual) card.innerHTML += '<div style="text-align:center;margin-bottom:6px"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
-    card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2)">🎬 Vídeos disponíveis</span>':'<span style="color:rgba(255,255,255,.1)">Sem vídeos</span>')+'</div>';
-    card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Ver detalhes')+'</div>';
+    if(qual) card.innerHTML += '<div style="text-align:center;margin:3px 0"><span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span></div>';
+    card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2);font-size:.62rem">🎬 Vídeos</span>':'<span style="color:rgba(255,255,255,.1);font-size:.62rem">Sem vídeos</span>')+'</div>';
+    card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Detalhes')+'</div>';
     card.innerHTML += '</div>';
     c.appendChild(card);
   });
