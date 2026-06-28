@@ -14,6 +14,9 @@
     },
     "api/docs.py": {
       "maxDuration": 10
+    },
+    "api/sheetsync.py": {
+      "maxDuration": 30
     }
   }
 }

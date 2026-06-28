@@ -136,6 +136,23 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 .chat-welcome h3{font-size:1.2rem;color:rgba(255,255,255,.3);margin-bottom:8px;font-weight:700}
 .chat-welcome p{font-size:.85rem;line-height:1.6}
 
+/* DASH ENTREGAS */
+.dash-card{background:#1A1A2E;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px;animation:fadeIn .2s}
+.dash-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.dash-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4A1FA8,#EC008C);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:#fff;flex-shrink:0}
+.dash-card-nome{font-size:.85rem;font-weight:700;color:#fff;word-break:break-word}
+.dash-card-body{display:flex;flex-direction:column;gap:6px}
+.dash-campo{display:flex;align-items:center;gap:8px;font-size:.78rem}
+.dash-campo-label{color:rgba(255,255,255,.3);font-weight:600;min-width:55px;flex-shrink:0;text-transform:uppercase;letter-spacing:.3px;font-size:.68rem}
+.dash-campo-valor{color:rgba(255,255,255,.7);word-break:break-word}
+.dash-desafios{font-size:.72rem;line-height:1.4}
+.dash-toggle{gap:6px}
+.dash-switch{position:relative;display:inline-block;width:32px;height:18px;flex-shrink:0}
+.dash-switch input{opacity:0;width:0;height:0}
+.dash-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.1);border-radius:18px;transition:.2s}
+.dash-slider:before{position:absolute;content:"";height:14px;width:14px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s}
+.dash-switch input:checked+.dash-slider:before{transform:translateX(14px)}
+.dash-valor-toggle{font-weight:700;font-size:.75rem;min-width:32px}
 @media(max-width:768px){
   .layout{flex-direction:column}
   .sidebar{width:100%;position:static}
@@ -166,6 +183,7 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 <span class="header-hack">haCARthon</span>
 <span class="badge active" id="tabMentores" onclick="switchTab('mentores')">MENTORES</span>
 <span class="badge" id="tabChat" onclick="switchTab('chat')">CHAT IA</span>
+<span class="badge" id="tabDash" onclick="switchTab('dash')">DASH ENTREGAS</span>
 <span class="badge" id="tabGerenciamento" onclick="switchTab('gerenciamento')">GERENCIAMENTO</span>
 </div>
 <span class="sub" id="headerSub">88 mentores cadastrados</span>
@@ -211,6 +229,23 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 </div>
 
 <!-- GERENCIAMENTO VIEW -->
+<!-- DASH ENTREGAS VIEW -->
+<div class="chat-container" id="dashView">
+<div style="padding:16px;max-width:1200px;margin:0 auto;width:100%">
+<div class="chat-toolbar">
+<h3 style="color:#fff;font-weight:800">📋 Dash Entregas</h3>
+<div style="display:flex;gap:8px">
+<button class="download-chat-btn" onclick="recarregarDash()" title="Recarregar">🔄 Atualizar</button>
+</div>
+</div>
+<div class="stats" id="dashStats"></div>
+<div style="margin-bottom:16px">
+<input type="text" id="dashSearch" placeholder="Buscar por nome, email, nick..." oninput="renderDash()" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
+</div>
+<div class="grid-cards" id="dashContainer"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div></div>
+</div>
+</div>
+
 <div class="chat-container" id="gerenciamentoView">
 <div style="padding:16px;max-width:700px;margin:0 auto;width:100%">
 <h3 style="color:#fff;font-weight:800;margin-bottom:8px">Gerenciar Documentos</h3>
@@ -392,13 +427,16 @@ $('#filterSearch').addEventListener('input',function(){render(1)})
 function switchTab(tab){
   document.getElementById('tabMentores').classList.toggle('active', tab==='mentores');
   document.getElementById('tabChat').classList.toggle('active', tab==='chat');
+  document.getElementById('tabDash').classList.toggle('active', tab==='dash');
   document.getElementById('tabGerenciamento').classList.toggle('active', tab==='gerenciamento');
   document.getElementById('mentoresView').style.display = tab==='mentores' ? 'block' : 'none';
   document.getElementById('mentoresSidebar').style.display = tab==='mentores' ? 'block' : 'none';
   document.getElementById('chatView').classList.toggle('active', tab==='chat');
+  document.getElementById('dashView').classList.toggle('active', tab==='dash');
   document.getElementById('gerenciamentoView').classList.toggle('active', tab==='gerenciamento');
-  var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'gerenciamento': 'Gerenciar documentos'};
+  var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'dash': 'Dash Entregas', 'gerenciamento': 'Gerenciar documentos'};
   document.getElementById('headerSub').textContent = subs[tab] || '';
+  if(tab==='dash') carregarDash();
 }
 
 // === CHAT ===
@@ -758,6 +796,81 @@ function uploadArquivo(file){
     .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
   };
   reader.readAsDataURL(file);
+}
+// === DASH ENTREGAS ===
+var DASH = [];
+function carregarDash(){
+  var c = document.getElementById('dashContainer');
+  if(!c) return;
+  c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div>';
+  fetch('/api/sheetsync').then(function(r){ return r.json() }).then(function(data){
+    DASH = data.rows;
+    renderDash();
+  }).catch(function(e){
+    c.innerHTML = '<div style="color:#ff4444;font-size:.8rem;padding:20px 0">Erro ao carregar: '+e.message+'</div>';
+  });
+}
+function recarregarDash(){
+  DASH = [];
+  fetch('/api/sheetsync', {method:'POST'}).then(function(r){ return r.json() }).then(function(data){
+    carregarDash();
+  }).catch(function(e){
+    carregarDash();
+  });
+}
+function renderDash(){
+  var q = (document.getElementById('dashSearch').value||'').toLowerCase();
+  var filtrados = DASH.filter(function(r){
+    var nome = (r['Nome Completo *']||'').toLowerCase();
+    var email = (r['E-mail *']||'').toLowerCase();
+    var nick = (r['NICK DISCORD']||'').toLowerCase();
+    return !q || nome.includes(q) || email.includes(q) || nick.includes(q);
+  });
+  var stats = document.getElementById('dashStats');
+  if(!stats) return;
+  var totalBio = DASH.filter(function(r){ return (r['Preencheu mini bio?']||'').toUpperCase() === 'SIM' }).length;
+  var totalDisc = DASH.filter(function(r){ return (r['TA NO DISCORD?']||'').toUpperCase() === 'SIM' }).length;
+  var totalApto = DASH.filter(function(r){ return (r['APTO?']||'').toLowerCase() === 'sim' }).length;
+  stats.innerHTML = DASH.length+' inscrições · '+totalBio+' bio · '+totalDisc+' Discord · '+totalApto+' aptos · exibindo '+filtrados.length;
+  var c = document.getElementById('dashContainer');
+  if(!c) return;
+  c.innerHTML = '';
+  filtrados.forEach(function(r){
+    var card = document.createElement('div');
+    card.className = 'dash-card';
+    var iniciais = (r['Nome Completo *']||'').split(' ').map(function(s){ return s[0] }).filter(Boolean).slice(0,2).join('').toUpperCase();
+    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">'+esc(iniciais)+'</div><div class="dash-card-nome">'+esc(r['Nome Completo *']||'')+'</div></div>';
+    card.innerHTML += '<div class="dash-card-body">';
+    card.innerHTML += dashLinha('Mini bio', r['Preencheu mini bio?'], '#00BFFF');
+    card.innerHTML += dashLinha('Discord', r['TA NO DISCORD?'], '#5865F2');
+    card.innerHTML += dashLinha('Part.', r['PARTIICPANTE?'], '#FFA500');
+    card.innerHTML += dashLinha('Apto', r['APTO?'], '#25D366');
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Nick</span><span class="dash-campo-valor">'+esc(r['NICK DISCORD']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Email</span><span class="dash-campo-valor">'+esc(r['E-mail *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Tel</span><span class="dash-campo-valor">'+esc(r['Telefone (WhatsApp) *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Estado</span><span class="dash-campo-valor">'+esc(r['Estado *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Cidade</span><span class="dash-campo-valor">'+esc(r['Cidade *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Área</span><span class="dash-campo-valor">'+esc(r['Área de atuação/conhecimento/especialidade (escolha até 3 opções) *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Cargo</span><span class="dash-campo-valor">'+esc(r['Cargo que ocupa']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">LinkedIn</span><span class="dash-campo-valor">'+(r['Link do currículo ou linkedin *']?'<a href="'+esc(r['Link do currículo ou linkedin *'])+'" target="_blank" style="color:#00BFFF">🔗 Link</a>':'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Inscrição</span><span class="dash-campo-valor">'+esc(r['Início Inscrição']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Faixa</span><span class="dash-campo-valor">'+esc(r['Qual sua Faixa Etária? *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Gênero</span><span class="dash-campo-valor">'+esc(r['Qual gênero você se identifica? *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Raça</span><span class="dash-campo-valor">'+esc(r['Qual raça você se identifica? *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Formação</span><span class="dash-campo-valor">'+esc(r['Formação Acadêmica *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Atua</span><span class="dash-campo-valor">'+esc(r['Atualmente, você atua onde? *']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">1º hack?</span><span class="dash-campo-valor">'+esc(r['É seu 1º hackathon como mentor?']||'-')+'</span></div>';
+    card.innerHTML += '<div class="dash-campo"><span class="dash-campo-label">Desafios</span><span class="dash-campo-valor dash-desafios">'+esc(r['Qual dos desafios você acredita que pode colaborar com as equipes? Selecione em ordem de prioridade e fique à vontade para selecionar quantos desejar. *']||'-')+'</span></div>';
+    card.innerHTML += '</div>';
+    c.appendChild(card);
+  });
+  if(!filtrados.length) c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Nenhum resultado</div>';
+}
+function dashLinha(label, valor, color){
+  var val = (valor||'').trim();
+  var isSim = val.toUpperCase() === 'SIM';
+  var checked = isSim ? 'checked' : '';
+  return '<div class="dash-campo dash-toggle"><span class="dash-campo-label">'+label+'</span><label class="dash-switch"><input type="checkbox" '+checked+' disabled><span class="dash-slider" style="'+(isSim?'background:'+color:'')+'"></span></label><span class="dash-valor-toggle" style="color:'+(isSim?color:'rgba(255,255,255,.25)')+'">'+(isSim?'Sim':'Não')+'</span></div>';
 }
 document.getElementById('dropArea').addEventListener('click', function(){ document.getElementById('fileInput').click(); });
 document.getElementById('dropArea').addEventListener('dragover', function(e){ e.preventDefault(); this.style.borderColor = '#EC008C'; this.style.background = 'rgba(236,0,140,.05)'; });
