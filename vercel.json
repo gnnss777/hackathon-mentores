@@ -17,6 +17,9 @@
     },
     "api/sheetsync.py": {
       "maxDuration": 30
+    },
+    "api/cadastro.py": {
+      "maxDuration": 30
     }
   }
 }

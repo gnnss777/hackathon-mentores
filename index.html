@@ -138,25 +138,23 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 
 /* DASH ENTREGAS */
 #dashContainer{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.dash-card{background:#1A1A2E;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px;animation:fadeIn .2s}
-.dash-card:hover{border-color:rgba(236,0,140,.3);box-shadow:0 0 20px rgba(236,0,140,.08)}
-.dash-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06)}
-.dash-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4A1FA8,#EC008C);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:#fff;flex-shrink:0}
-.dash-card-nome{font-size:.85rem;font-weight:700;color:#fff;word-break:break-word}
-.dash-card-body{display:flex;flex-direction:column;gap:8px}
-.dash-grid2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.dash-chip{font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:6px;text-align:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7)}
-.dash-campo{display:flex;align-items:center;gap:6px;font-size:.75rem}
-.dash-campo-label{color:rgba(255,255,255,.3);font-weight:700;min-width:40px;flex-shrink:0;text-transform:uppercase;letter-spacing:.3px;font-size:.65rem}
-.dash-campo-valor{color:rgba(255,255,255,.7);word-break:break-word}
-.dash-desafios{font-size:.72rem;line-height:1.4}
-.dash-toggle{gap:4px}
-.dash-switch{position:relative;display:inline-block;width:28px;height:16px;flex-shrink:0}
-.dash-switch input{opacity:0;width:0;height:0}
-.dash-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.1);border-radius:18px;transition:.2s}
-.dash-slider:before{position:absolute;content:"";height:12px;width:12px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s}
-.dash-switch input:checked+.dash-slider:before{transform:translateX(12px)}
-.dash-valor-toggle{font-weight:700;font-size:.7rem;min-width:28px}
+.dash-card{background:#1A1A2E;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:0;animation:fadeIn .2s;overflow:hidden;cursor:pointer;transition:all .2s}
+.dash-card:hover{border-color:rgba(236,0,140,.3);box-shadow:0 0 20px rgba(236,0,140,.08);transform:translateY(-2px)}
+.dash-card-header{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+.dash-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4A1FA8,#EC008C);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0}
+.dash-card-nome{font-size:.82rem;font-weight:800;color:#fff;flex:1}
+.dash-card-body{padding:8px 12px 10px}
+.dash-status-row{display:flex;gap:6px;margin-bottom:8px}
+.dash-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:5px;text-transform:uppercase;letter-spacing:.3px}
+.dash-delivery-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;font-size:.75rem}
+.dash-del-item{display:flex;align-items:center;gap:4px;font-weight:600;padding:2px 8px;border-radius:5px;background:rgba(255,255,255,.04)}
+.dash-del-icon{font-size:.9rem}
+.dash-del-check{color:#25D366;font-weight:800}
+.dash-del-cross{color:rgba(255,255,255,.2);font-weight:800}
+.dash-del-video{font-size:.7rem;color:#FF0000;font-weight:800;margin-left:2px}
+.dash-info-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.68rem;color:rgba(255,255,255,.35);padding:6px 0;border-top:1px solid rgba(255,255,255,.04);margin-bottom:8px}
+.dash-cta{display:block;width:100%;padding:8px;border:none;border-radius:8px;background:linear-gradient(135deg,rgba(236,0,140,.1),rgba(74,31,168,.1));color:#EC008C;font-weight:800;font-size:.72rem;font-family:'Nunito Sans',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;text-align:center}
+.dash-cta:hover{background:linear-gradient(135deg,rgba(236,0,140,.2),rgba(74,31,168,.2))}
 .dash-switch input{opacity:0;width:0;height:0}
 .dash-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.1);border-radius:18px;transition:.2s}
 .dash-slider:before{position:absolute;content:"";height:14px;width:14px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s}
@@ -819,8 +817,12 @@ function carregarDash(){
   var c = document.getElementById('dashContainer');
   if(!c) return;
   c.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:20px 0">Carregando entregas...</div>';
-  fetch('/api/sheetsync').then(function(r){ return r.json() }).then(function(data){
-    DASH = data.rows;
+  Promise.all([
+    fetch('/api/sheetsync').then(function(r){ return r.json() }),
+    fetch('/api/cadastro').then(function(r){ return r.json() })
+  ]).then(function(results){
+    DASH = results[0].rows;
+    EQUIPES_CADASTRO = results[1].teams || {};
     renderDash();
   }).catch(function(e){
     c.innerHTML = '<div style="color:#ff4444;font-size:.8rem;padding:20px 0">Erro ao carregar: '+e.message+'</div>';
@@ -828,68 +830,69 @@ function carregarDash(){
 }
 function recarregarDash(){
   DASH = [];
-  fetch('/api/sheetsync', {method:'POST'}).then(function(r){ return r.json() }).then(function(data){
-    carregarDash();
-  }).catch(function(e){
+  EQUIPES_CADASTRO = {};
+  Promise.all([
+    fetch('/api/sheetsync', {method:'POST'}).then(function(r){ return r.json() }),
+    fetch('/api/cadastro', {method:'POST'}).then(function(r){ return r.json() })
+  ]).catch(function(){}).then(function(){
     carregarDash();
   });
 }
+var EQUIPES_CADASTRO = {};
 function renderDash(){
   var q = (document.getElementById('dashSearch').value||'').toLowerCase();
   var filtrados = DASH.filter(function(r){
     var eq = (r['EQUIPE']||'').toLowerCase();
-    var st = (r['STATUS ']||r['STATUS']||'').toLowerCase();
     var em = (r['EMAIL LIDER']||'').toLowerCase();
-    return !q || eq.includes(q) || st.includes(q) || em.includes(q);
+    return !q || eq.includes(q) || em.includes(q);
   });
   var stats = document.getElementById('dashStats');
   if(!stats) return;
   var total = DASH.length;
-  var totalCad = DASH.filter(function(r){ return (r['CADASTRO TIME']||'').toUpperCase() === 'SIM' }).length;
   var totalIdeia = DASH.filter(function(r){ return (r['IDEACAO']||'').toUpperCase() === 'SIM' }).length;
   var totalProto = DASH.filter(function(r){ return (r['PROTOTIPO']||'').toUpperCase() === 'SIM' }).length;
   var totalPitch = DASH.filter(function(r){ return (r['PITCH']||'').toUpperCase() === 'SIM' }).length;
-  stats.innerHTML = total+' equipes · 🏁 '+totalCad+' cadastro · 💡 '+totalIdeia+' ideação · 🎬 '+totalProto+' protótipo · 🎤 '+totalPitch+' pitch · exibindo '+filtrados.length;
+  stats.innerHTML = total+' equipes · 💡 '+totalIdeia+' ideação · 🎬 '+totalProto+' protótipo · 🎤 '+totalPitch+' pitch · exibindo '+filtrados.length;
   var c = document.getElementById('dashContainer');
   if(!c) return;
   c.innerHTML = '';
   filtrados.forEach(function(r){
     var card = document.createElement('div');
     card.className = 'dash-card';
-    card.style.cursor = 'pointer';
     var eq = r['EQUIPE']||'?';
     var linkProto = (r['LINK PROTOTIPO']||'').trim();
     var linkExtra = (r['LINK EXTRA']||'').trim();
     var linkPitch = (r['LINK PITCH']||'').trim();
     var qual = (r['QUALIDADE DA SOLUÇÃO']||r['QUALIDADE DA SOLU' + String.fromCharCode(199) + 'O']||'').trim();
+    var statusPanic = (r['STATUS PELA PANIC']||'').trim();
+    var email = (r['EMAIL LIDER']||'').trim();
+    var temVideo = linkProto || linkPitch;
+    var statusCadastro = EQUIPES_CADASTRO[eq];
+    var cadastroOk = statusCadastro && statusCadastro.toUpperCase() === 'SIM';
+    var ideiaOk = (r['IDEACAO']||'').toUpperCase() === 'SIM';
+    var protoOk = (r['PROTOTIPO']||'').toUpperCase() === 'SIM';
+    var pitchOk = (r['PITCH']||'').toUpperCase() === 'SIM';
+    var qualCor = qual.toUpperCase() === 'ALTA' ? '#25D366' : qual.toUpperCase() === 'MAIS OU MENOS' ? '#FFA500' : qual ? '#ff4444' : '';
+    var statusBg = cadastroOk ? 'rgba(37,211,102,.12)' : 'rgba(255,165,0,.12)';
+    var statusCor = cadastroOk ? '#25D366' : '#FFA500';
+    var statusTxt = cadastroOk ? '✅ Cadastro OK' : '⏳ Pendente';
     (function(eq, lp, le, lpi){
       card.addEventListener('click', function(){
         abrirDashOverlay(eq, lp, le, lpi);
       });
     })(eq, linkProto, linkExtra, linkPitch);
-    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar" style="background:linear-gradient(135deg,#EC008C,#4A1FA8)">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div></div>';
+    card.innerHTML = '<div class="dash-card-header"><div class="dash-avatar">#'+esc(eq)+'</div><div class="dash-card-nome">Equipe '+esc(eq)+'</div></div>';
     card.innerHTML += '<div class="dash-card-body">';
-    card.innerHTML += '<div class="dash-grid2">';
-    card.innerHTML += dashLinha('Time', r['CADASTRO TIME'], '#5865F2');
-    card.innerHTML += dashLinha('Ideação', r['IDEACAO'], '#00BFFF');
-    card.innerHTML += dashLinha('Protótipo', r['PROTOTIPO'], '#25D366');
-    card.innerHTML += dashLinha('Pitch', r['PITCH'], '#EC008C');
+    card.innerHTML += '<div class="dash-status-row"><span class="dash-badge" style="background:'+statusBg+';color:'+statusCor+'">'+statusTxt+'</span>'+(statusPanic?'<span class="dash-badge" style="background:rgba(236,0,140,.08);color:#EC008C">🍕 '+esc(statusPanic)+'</span>':'')+'</div>';
+    card.innerHTML += '<div class="dash-delivery-line">';
+    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">💡</span><span class="'+(ideiaOk?'dash-del-check':'dash-del-cross')+'">'+(ideiaOk?'✔':'✘')+'</span>Ideação</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎬</span><span class="'+(protoOk?'dash-del-check':'dash-del-cross')+'">'+(protoOk?'✔':'✘')+'</span>Protótipo'+(protoOk&&linkProto?'<span class="dash-del-video">▶</span>':'')+'</span>';
+    card.innerHTML += '<span class="dash-del-item"><span class="dash-del-icon">🎤</span><span class="'+(pitchOk?'dash-del-check':'dash-del-cross')+'">'+(pitchOk?'✔':'✘')+'</span>Pitch'+(pitchOk&&linkPitch?'<span class="dash-del-video">▶</span>':'')+'</span>';
+    if(linkExtra) card.innerHTML += '<span class="dash-del-item" style="color:#FFA500">📎 Extra</span>';
+    if(qual) card.innerHTML += '<span class="dash-badge" style="background:'+qualCor+'15;color:'+qualCor+'">⭐ '+esc(qual)+'</span>';
     card.innerHTML += '</div>';
-    var st = (r['STATUS ']||r['STATUS']||'-').trim();
-    card.innerHTML += '<div class="dash-chip" style="margin-top:2px">📋 '+esc(st)+'</div>';
-    var statusPanic = (r['STATUS PELA PANIC']||'').trim();
-    if(statusPanic) card.innerHTML += '<div class="dash-chip" style="background:rgba(236,0,140,.08);color:#EC008C;border-color:rgba(236,0,140,.15)">🍕 '+esc(statusPanic)+'</div>';
-    var email = (r['EMAIL LIDER']||'').trim();
-    if(email) card.innerHTML += '<div style="font-size:.65rem;color:rgba(255,255,255,.3);text-align:center;padding:2px 0">📧 '+esc(email)+'</div>';
-    card.innerHTML += '<div class="dash-grid2">';
-    if(linkProto) card.innerHTML += '<div class="dash-chip" style="background:rgba(255,0,0,.1);color:#FF0000;border-color:rgba(255,0,0,.2)">🎬 Protótipo</div>';
-    if(linkPitch) card.innerHTML += '<div class="dash-chip" style="background:rgba(236,0,140,.1);color:#EC008C;border-color:rgba(236,0,140,.2)">🎤 Pitch</div>';
-    if(linkExtra) card.innerHTML += '<div class="dash-chip" style="background:rgba(255,165,0,.1);color:#FFA500;border-color:rgba(255,165,0,.2)">📎 Extra</div>';
-    if(qual){
-      var corQual = qual.toUpperCase() === 'ALTA' ? '#25D366' : qual.toUpperCase() === 'MAIS OU MENOS' ? '#FFA500' : '#ff4444';
-      card.innerHTML += '<div class="dash-chip" style="background:'+corQual+'15;color:'+corQual+';border-color:'+corQual+'30">⭐ '+esc(qual)+'</div>';
-    }
-    card.innerHTML += '</div>';
+    card.innerHTML += '<div class="dash-info-line"><span>📧 '+esc(email)+'</span>'+(temVideo?'<span style="color:rgba(255,255,255,.2)">🎬 Vídeos disponíveis</span>':'<span style="color:rgba(255,255,255,.1)">Sem vídeos</span>')+'</div>';
+    card.innerHTML += '<div class="dash-cta">'+(temVideo?'👁 Ver vídeos':'📋 Ver detalhes')+'</div>';
     card.innerHTML += '</div>';
     c.appendChild(card);
   });
@@ -916,12 +919,6 @@ function abrirDashOverlay(eq, linkProto, linkExtra, linkPitch){
 function fecharDashOverlay(){
   document.getElementById('dashOverlay').classList.remove('show');
   document.getElementById('dashOverlayContent').innerHTML = '';
-}
-function dashLinha(label, valor, color){
-  var val = (valor||'').trim();
-  var isSim = val.toUpperCase() === 'SIM';
-  var checked = isSim ? 'checked' : '';
-  return '<div class="dash-campo dash-toggle"><span class="dash-campo-label">'+label+'</span><label class="dash-switch"><input type="checkbox" '+checked+' disabled><span class="dash-slider" style="'+(isSim?'background:'+color:'')+'"></span></label><span class="dash-valor-toggle" style="color:'+(isSim?color:'rgba(255,255,255,.25)')+'">'+(isSim?'Sim':'Não')+'</span></div>';
 }
 document.getElementById('dropArea').addEventListener('click', function(){ document.getElementById('fileInput').click(); });
 document.getElementById('dropArea').addEventListener('dragover', function(e){ e.preventDefault(); this.style.borderColor = '#EC008C'; this.style.background = 'rgba(236,0,140,.05)'; });
