@@ -9,15 +9,24 @@ cliente = OpenAI(api_key=os.environ.get("DEEPSEEK_KEY", ""), base_url="https://a
 with open("api/chunks.json", encoding="utf-8") as f:
     CHUNKS = json.load(f)
 
-def buscar(query, k=8):
+def merge_chunks(custom_chunks=None):
+    base = list(CHUNKS)
+    if custom_chunks and isinstance(custom_chunks, list):
+        for c in custom_chunks:
+            if "texto" in c and "fonte" in c:
+                base.append(c)
+    return base
+
+def buscar(query, k=8, custom_chunks=None):
+    all_chunks = merge_chunks(custom_chunks)
     q_words = set(re.sub(r'[^a-z0-9\s]', '', query.lower()).split())
     scores = []
-    for i, c in enumerate(CHUNKS):
+    for i, c in enumerate(all_chunks):
         c_words = set(re.sub(r'[^a-z0-9\s]', '', c["texto"].lower()).split())
         overlap = len(q_words & c_words)
         if overlap > 0:
             scores.append((overlap, i))
-    scores.sort(key=lambda x: (-x[0], -len(CHUNKS[x[1]]["texto"])))
+    scores.sort(key=lambda x: (-x[0], -len(all_chunks[x[1]]["texto"])))
     indices = [i for _, i in scores[:k]]
 
     temas_mentor = any(w in query.lower() for w in ["mentor", "mentoria", "quem pode ajudar"])
@@ -25,7 +34,7 @@ def buscar(query, k=8):
     fontes = set()
     props_mentor = 0
     for i in indices:
-        c = CHUNKS[i]
+        c = all_chunks[i]
         is_mentor = c["fonte"] == "mentores"
         if is_mentor and not temas_mentor and props_mentor >= 1:
             continue
@@ -33,7 +42,7 @@ def buscar(query, k=8):
             props_mentor += 1
         partes.append(c["texto"])
         fontes.add(c["fonte"])
-    return partes, fontes
+    return partes, fontes, all_chunks
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -50,11 +59,12 @@ class handler(BaseHTTPRequestHandler):
             data = json.loads(body)
             pergunta = data.get("pergunta", "").strip()
             historico = data.get("historico", "")
+            custom_chunks = data.get("customChunks", None)
 
             if not pergunta:
                 raise ValueError("Pergunta vazia")
 
-            partes, fontes = buscar(pergunta)
+            partes, fontes, _ = buscar(pergunta, custom_chunks=custom_chunks)
             contexto = "\n\n".join(partes)
 
             prompt = f"""Você é um assistente especializado no haCARthon, um hackathon do Cadastro Ambiental Rural (CAR).
@@ -65,6 +75,7 @@ REGRAS:
 3. Se NÃO encontrar resposta nos documentos, sugira procurar um mentor especialista e diga "Você pode pedir mentoria no Discord com !queromentoria".
 4. Só liste mentores específicos se a pergunta for sobre "mentor", "mentoria" ou "quem pode ajudar".
 5. Use o histórico da conversa para manter contexto.
+6. Documentos enviados pelo usuário (custom_*) têm prioridade máxima.
 
 Responda em português de forma clara, natural e completa.
 
