@@ -2,6 +2,9 @@
   "functions": {
     "api/chat.py": {
       "maxDuration": 30
+    },
+    "api/upload.py": {
+      "maxDuration": 30
     }
   }
 }

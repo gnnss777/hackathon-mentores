@@ -132,6 +132,7 @@ body{font-family:'Nunito Sans',system-ui,-apple-system,sans-serif;background:#0D
 <span class="header-hack">haCARthon</span>
 <span class="badge active" id="tabMentores" onclick="switchTab('mentores')">MENTORES</span>
 <span class="badge" id="tabChat" onclick="switchTab('chat')">CHAT IA</span>
+<span class="badge" id="tabGerenciamento" onclick="switchTab('gerenciamento')">GERENCIAMENTO</span>
 </div>
 <span class="sub" id="headerSub">88 mentores cadastrados</span>
 </div>
@@ -169,6 +170,30 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 <div class="chat-input-area">
 <textarea id="chatInput" placeholder="Digite sua dúvida..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMensagem()}"></textarea>
 <button id="chatBtn" onclick="enviarMensagem()">Enviar</button>
+</div>
+</div>
+
+<!-- GERENCIAMENTO VIEW -->
+<div class="chat-container" id="gerenciamentoView">
+<div style="padding:16px;max-width:700px;margin:0 auto;width:100%">
+<h3 style="color:#fff;font-weight:800;margin-bottom:8px">Gerenciar Documentos</h3>
+<p style="color:rgba(255,255,255,.4);font-size:.8rem;margin-bottom:20px">Envie PDFs ou arquivos de texto para alimentar a base de conhecimento do chatbot.</p>
+
+<div id="dropArea" style="border:2px dashed rgba(255,255,255,.1);border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.02);margin-bottom:20px">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(255,255,255,.2)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+<p style="color:rgba(255,255,255,.3);margin:10px 0 4px;font-size:.85rem">Arraste arquivos aqui ou clique para selecionar</p>
+<p style="color:rgba(255,255,255,.15);font-size:.7rem">PDF ou TXT até 4MB</p>
+<input type="file" id="fileInput" accept=".pdf,.txt" multiple style="display:none">
+</div>
+
+<div id="uploadStatus" style="display:none;padding:12px;border-radius:8px;margin-bottom:16px;font-size:.82rem;font-weight:600"></div>
+
+<div id="docsList">
+<h4 style="color:rgba(255,255,255,.4);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:10px">Documentos base (fixos)</h4>
+<div style="font-size:.8rem;color:rgba(255,255,255,.25);margin-bottom:16px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px">5 PDFs + 5 lives + 88 mentores (732 chunks)</div>
+<h4 style="color:rgba(255,255,255,.4);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:10px">Seus documentos</h4>
+<div id="customDocsContainer"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Nenhum documento enviado ainda.</div></div>
+</div>
 </div>
 </div>
 
@@ -322,10 +347,13 @@ $('#filterSearch').addEventListener('input',function(){render(1)})
 function switchTab(tab){
   document.getElementById('tabMentores').classList.toggle('active', tab==='mentores');
   document.getElementById('tabChat').classList.toggle('active', tab==='chat');
+  document.getElementById('tabGerenciamento').classList.toggle('active', tab==='gerenciamento');
   document.getElementById('mentoresView').style.display = tab==='mentores' ? 'block' : 'none';
   document.getElementById('mentoresSidebar').style.display = tab==='mentores' ? 'block' : 'none';
   document.getElementById('chatView').classList.toggle('active', tab==='chat');
-  document.getElementById('headerSub').textContent = tab==='mentores' ? DATA.length+' mentores cadastrados' : 'Chat com IA';
+  document.getElementById('gerenciamentoView').classList.toggle('active', tab==='gerenciamento');
+  var subs = {'mentores': DATA.length+' mentores cadastrados', 'chat': 'Chat com IA', 'gerenciamento': 'Gerenciar documentos'};
+  document.getElementById('headerSub').textContent = subs[tab] || '';
 }
 
 // === CHAT ===
@@ -362,10 +390,13 @@ function enviarMensagem(){
     return (m.papel === 'user' ? 'Usuário' : 'Assistente') + ': ' + m.conteudo;
   }).join('\n\n');
 
+  var customChunks = [];
+  try { var stored = localStorage.getItem('customChunks'); if(stored) customChunks = JSON.parse(stored); } catch(e){}
+
   fetch('/api/chat', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({pergunta: pergunta, historico: historicoStr})
+    body: JSON.stringify({pergunta: pergunta, historico: historicoStr, customChunks: customChunks.length > 0 ? customChunks : undefined})
   })
   .then(function(r){ return r.json() })
   .then(function(data){
@@ -391,6 +422,77 @@ document.getElementById('chatInput').addEventListener('input', function(){
   this.style.height = 'auto';
   this.style.height = Math.min(this.scrollHeight, 120) + 'px';
 });
+
+// === GERENCIAMENTO ===
+function carregarDocsCustom(){
+  var container = document.getElementById('customDocsContainer');
+  try {
+    var stored = localStorage.getItem('customChunks');
+    if(!stored){ container.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Nenhum documento enviado ainda.</div>'; return; }
+    var docs = JSON.parse(stored);
+    if(!docs.length){ container.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Nenhum documento enviado ainda.</div>'; return; }
+    var agrup = {};
+    docs.forEach(function(c){ var fn = c.fonte.replace('custom_','').replace(/_/g,'.'); agrup[fn] = (agrup[fn]||0)+1; });
+    var h = '';
+    for(var fn in agrup){
+      h += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:6px;font-size:.8rem">';
+      h += '<span style="color:rgba(255,255,255,.6)">' + esc(fn) + ' <span style="color:rgba(255,255,255,.2)">(' + agrup[fn] + ' chunks)</span></span>';
+      h += '<button onclick="removerDocumento(\'' + esc(fn.replace('.','_')) + '\')" style="background:rgba(236,0,140,.1);border:1px solid rgba(236,0,140,.2);color:#EC008C;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:.7rem;font-weight:800;font-family:\'Nunito Sans\',sans-serif">Remover</button>';
+      h += '</div>';
+    }
+    container.innerHTML = h || '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Nenhum documento enviado ainda.</div>';
+  } catch(e){ container.innerHTML = '<div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Nenhum documento enviado ainda.</div>'; }
+}
+function removerDocumento(prefixo){
+  try {
+    var stored = localStorage.getItem('customChunks');
+    if(!stored) return;
+    var docs = JSON.parse(stored);
+    var filtrados = docs.filter(function(c){ return c.fonte.indexOf(prefixo) === -1; });
+    localStorage.setItem('customChunks', JSON.stringify(filtrados));
+    carregarDocsCustom();
+  } catch(e){}
+}
+function uploadArquivo(file){
+  var status = document.getElementById('uploadStatus');
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var base64 = e.target.result.split(',')[1];
+    var tipo = file.name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'txt';
+    status.style.display = 'block';
+    status.style.background = 'rgba(236,0,140,.1)';
+    status.style.color = '#EC008C';
+    status.style.border = '1px solid rgba(236,0,140,.2)';
+    status.innerHTML = 'Enviando ' + esc(file.name) + '...';
+    fetch('/api/upload', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({filename: file.name, content: base64, type: tipo})
+    })
+    .then(function(r){ return r.json() })
+    .then(function(data){
+      if(data.erro){ status.innerHTML = 'Erro: ' + data.erro; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; return; }
+      var stored = [];
+      try { var s = localStorage.getItem('customChunks'); if(s) stored = JSON.parse(s); } catch(ex){}
+      data.chunks.forEach(function(c){ stored.push(c); });
+      localStorage.setItem('customChunks', JSON.stringify(stored));
+      status.innerHTML = esc(file.name) + ' processado! ' + data.total_chunks + ' chunks adicionados.';
+      status.style.background = 'rgba(37,211,102,.1)';
+      status.style.color = '#25D366';
+      status.style.border = '1px solid rgba(37,211,102,.2)';
+      carregarDocsCustom();
+      setTimeout(function(){ status.style.display = 'none'; }, 3000);
+    })
+    .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
+  };
+  reader.readAsDataURL(file);
+}
+document.getElementById('dropArea').addEventListener('click', function(){ document.getElementById('fileInput').click(); });
+document.getElementById('dropArea').addEventListener('dragover', function(e){ e.preventDefault(); this.style.borderColor = '#EC008C'; this.style.background = 'rgba(236,0,140,.05)'; });
+document.getElementById('dropArea').addEventListener('dragleave', function(){ this.style.borderColor = 'rgba(255,255,255,.1)'; this.style.background = 'rgba(255,255,255,.02)'; });
+document.getElementById('dropArea').addEventListener('drop', function(e){ e.preventDefault(); this.style.borderColor = 'rgba(255,255,255,.1)'; this.style.background = 'rgba(255,255,255,.02)'; for(var i=0;i<e.dataTransfer.files.length;i++) uploadArquivo(e.dataTransfer.files[i]); });
+document.getElementById('fileInput').addEventListener('change', function(){ for(var i=0;i<this.files.length;i++) uploadArquivo(this.files[i]); this.value = ''; });
+carregarDocsCustom();
 
 montarFiltros();
 render(1);
