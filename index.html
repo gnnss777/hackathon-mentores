@@ -444,10 +444,17 @@ function toggleDoc(fonte){
 }
 function restaurarTodos(){
   saveHiddenFontes([]);
+  saveDeletedFontes([]);
   carregarDocsBase();
 }
 function getCustomDocs(){
   try { var s = localStorage.getItem('customChunks'); return s ? JSON.parse(s) : []; } catch(e){ return []; }
+}
+function getDeletedFontes(){
+  try { var d = localStorage.getItem('deletedFontes'); return d ? JSON.parse(d) : []; } catch(e){ return []; }
+}
+function saveDeletedFontes(arr){
+  localStorage.setItem('deletedFontes', JSON.stringify(arr));
 }
 function apagarDocumento(fonte, nome){
   if(!confirm('Tem certeza que deseja apagar "' + nome + '"?')) return;
@@ -460,6 +467,9 @@ function apagarDocumento(fonte, nome){
   var h = getHiddenFontes();
   if(h.indexOf(fonte) === -1) h.push(fonte);
   saveHiddenFontes(h);
+  var d = getDeletedFontes();
+  if(d.indexOf(fonte) === -1) d.push(fonte);
+  saveDeletedFontes(d);
   carregarDocsBase();
 }
 function btnDesativar(fonte, oculto){
@@ -476,6 +486,7 @@ function carregarDocsBase(){
   var container = document.getElementById('baseDocsContainer');
   var countEl = document.getElementById('baseCount');
   var hidden = getHiddenFontes();
+  var deleted = getDeletedFontes();
   var customDocs = getCustomDocs();
   fetch('/api/docs').then(function(r){ return r.json() }).then(function(data){
     if(data.erro){ container.innerHTML = '<div style="color:rgba(255,0,0,.5);font-size:.8rem">Erro ao carregar</div>'; return; }
@@ -483,6 +494,7 @@ function carregarDocsBase(){
     var h = '';
     // base docs
     data.documentos.forEach(function(d){
+      if(deleted.indexOf(d.fonte) !== -1) return;
       var oculto = hidden.indexOf(d.fonte) !== -1;
       var cor = d.fonte.startsWith('yt_') ? '#00BFFF' : d.fonte === 'mentores' ? '#EC008C' : 'rgba(255,255,255,.5)';
       h += '<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:' + (oculto ? 'rgba(255,0,0,.04)' : 'rgba(255,255,255,.03)') + ';opacity:' + (oculto ? '.4' : '1') + '">';
@@ -511,10 +523,10 @@ function carregarDocsBase(){
       h += btnApagar(fonte, g.label);
       h += '</div></div>';
     }
-    if(hidden.length > 0){
-      h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Ativar todos</button>';
+    if(hidden.length > 0 || deleted.length > 0){
+      h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Ativar/restaurar todos</button>';
     }
-    var baseCount = data.documentos.length;
+    var baseCount = data.documentos.filter(function(d){ return deleted.indexOf(d.fonte) === -1; }).length;
     var customCount = Object.keys(agrup).length;
     countEl.textContent = '(' + baseCount + ' base + ' + customCount + ' custom, ' + totalChunks + ' chunks)';
     container.innerHTML = h;
