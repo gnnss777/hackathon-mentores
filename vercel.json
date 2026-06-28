@@ -5,6 +5,9 @@
     },
     "api/upload.py": {
       "maxDuration": 30
+    },
+    "api/docs.py": {
+      "maxDuration": 10
     }
   }
 }
