@@ -1,5 +1,7 @@
 import json
 import re
+import urllib.request
+import urllib.error
 from http.server import BaseHTTPRequestHandler
 
 def chunk_text(texto, fonte, chunk_size=500):
@@ -31,6 +33,26 @@ def extract_video_id(url):
             return m.group(1)
     return None
 
+def fetch_captions(video_id):
+    req = urllib.request.Request(
+        f"https://youtubetranscript.com/?server_vid2={video_id}",
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+    texts = re.findall(r'<text[^>]*start="([^"]*)"[^>]*dur="([^"]*)"[^>]*>([^<]*)</text>', body)
+    if not texts:
+        raise ValueError("Nenhuma legenda encontrada para este vídeo")
+    parts = []
+    for _, _, t in texts:
+        t = t.replace("&#39;", "'").replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"')
+        parts.append(t)
+    text = " ".join(parts)
+    text = re.sub(r'\s+', ' ', text).strip()
+    if not text or len(text) < 20:
+        raise ValueError("Nenhuma legenda encontrada para este vídeo")
+    return text
+
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
@@ -50,14 +72,7 @@ class handler(BaseHTTPRequestHandler):
             if not video_id:
                 raise ValueError("URL do YouTube inválida")
 
-            from youtube_transcript_api import YouTubeTranscriptApi
-            api = YouTubeTranscriptApi()
-            transcript = api.fetch(video_id, languages=["pt"])
-            text = " ".join([s.text for s in transcript.snippets])
-
-            if not text.strip():
-                raise ValueError("Nenhuma legenda encontrada para este vídeo")
-
+            text = fetch_captions(video_id)
             fonte = f"yt_{video_id}"
             chunks = chunk_text(text, fonte)
 
@@ -66,8 +81,7 @@ class handler(BaseHTTPRequestHandler):
                 "total_chunks": len(chunks),
                 "total_chars": len(text),
                 "fonte": fonte,
-                "video_id": video_id,
-                "title": video_id
+                "video_id": video_id
             }, ensure_ascii=False).encode("utf-8")
 
             self.send_response(200)
@@ -78,10 +92,6 @@ class handler(BaseHTTPRequestHandler):
 
         except Exception as e:
             msg = str(e)
-            if "Subtitles are disabled" in msg:
-                msg = "Este vídeo não possui legendas disponíveis"
-            elif "Could not find a transcript" in msg:
-                msg = "Nenhuma legenda encontrada para este vídeo"
             self.send_response(500)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
