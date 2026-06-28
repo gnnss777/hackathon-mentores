@@ -2,31 +2,56 @@ import json, re, urllib.request
 from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
-INVIDIOUS = "https://invidious.snopyta.org"
+
+MOBILE_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.147 Mobile Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 def fetch_duration(video_id):
-    # Try Invidious API first (lightweight, no JS)
-    req = urllib.request.Request(
-        f"{INVIDIOUS}/api/v1/videos/{video_id}",
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
+    # Strategy 1: try mobile YouTube (better chance than desktop)
     try:
-        resp = urllib.request.urlopen(req, timeout=10)
-        data = json.loads(resp.read().decode("utf-8"))
-        if data.get("lengthSeconds"):
-            return int(data["lengthSeconds"]), None
+        req = urllib.request.Request(
+            f"https://m.youtube.com/watch?v={video_id}",
+            headers=MOBILE_HEADERS
+        )
+        resp = urllib.request.urlopen(req, timeout=15)
+        html = resp.read().decode("utf-8", errors="replace")
+
+        patterns = [
+            (r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)', int),
+            (r'"lengthSeconds":"?(\d+)"?', int),
+            (r'length_seconds["\']?\s*[:=]\s*["\']?(\d+)', int),
+            (r'videoDetails.*?"lengthSeconds":"(\d+)"', int),
+        ]
+        for pat, cast in patterns:
+            m = re.search(pat, html)
+            if m:
+                return cast(m.group(1)), None
     except Exception:
         pass
 
-    # Fallback: try YouTube oembed (returns some data)
+    # Strategy 2: try desktop YouTube with curl-like headers
     try:
         req2 = urllib.request.Request(
-            f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json",
-            headers={"User-Agent": "Mozilla/5.0"}
+            f"https://www.youtube.com/watch?v={video_id}",
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9",
+            }
         )
-        resp2 = urllib.request.urlopen(req2, timeout=10)
-        data2 = json.loads(resp2.read().decode("utf-8"))
-        return None, None
+        resp2 = urllib.request.urlopen(req2, timeout=15)
+        html2 = resp2.read().decode("utf-8", errors="replace")
+        patterns2 = [
+            (r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)', int),
+            (r'"lengthSeconds":"?(\d+)"?', int),
+        ]
+        for pat, cast in patterns2:
+            m2 = re.search(pat, html2)
+            if m2:
+                return cast(m2.group(1)), None
     except Exception:
         pass
 

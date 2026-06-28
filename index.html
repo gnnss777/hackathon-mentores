@@ -1098,14 +1098,31 @@ function obterDuracaoVideo(link, tipo){
     if(CACHE_DURACAO[key] !== undefined) return resolve(CACHE_DURACAO[key]);
     var id = getYoutubeId(normalizeUrl(link));
     if(!id) { CACHE_DURACAO[key] = null; return resolve(null); }
-    fetch('/api/ytduration?v='+encodeURIComponent(id))
+    // Try oembed first (works in browser, no CORS)
+    fetch('https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v='+id+'&format=json')
       .then(function(r){ return r.json() })
+      .then(function(d){
+        if(d && d.thumbnail_url){
+          // oembed doesn't have duration. Try yt API via /api/ytduration
+          return fetch('/api/ytduration?v='+encodeURIComponent(id)).then(function(r){ return r.json() });
+        }
+        return {ok: false};
+      })
       .then(function(dados){
-        if(!dados.ok || !dados.segundos) {
-          console.warn('ytduration API falhou para', id, ':', dados.erro || 'sem erro');
-          CACHE_DURACAO[key] = { erro: dados.erro || 'unknown' };
+        if(!dados || !dados.ok || !dados.segundos) {
+          console.warn('ytduration falhou para', id, ':', dados&&dados.erro);
+          CACHE_DURACAO[key] = { erro: 'not_found' };
           return resolve(CACHE_DURACAO[key]);
         }
+        var secs = dados.segundos;
+        var limite = tipo === 'prototipo' ? 120 : 180;
+        var excedeu = secs > limite;
+        CACHE_DURACAO[key] = { segundos: secs, excedeu: excedeu, limite: limite };
+        resolve(CACHE_DURACAO[key]);
+      })
+      .catch(function(err){ console.error('ytduration error:', err); CACHE_DURACAO[key] = null; resolve(null); });
+  });
+}
         var secs = dados.segundos;
         var limite = tipo === 'prototipo' ? 120 : 180;
         var excedeu = secs > limite;
