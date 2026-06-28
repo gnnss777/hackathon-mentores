@@ -435,14 +435,10 @@ function getHiddenFontes(){
 function saveHiddenFontes(arr){
   localStorage.setItem('hiddenFontes', JSON.stringify(arr));
 }
-function removerDocBase(fonte){
+function toggleDoc(fonte){
   var h = getHiddenFontes();
-  if(h.indexOf(fonte) === -1) h.push(fonte);
-  saveHiddenFontes(h);
-  carregarDocsBase();
-}
-function restaurarDocBase(fonte){
-  var h = getHiddenFontes().filter(function(f){ return f !== fonte; });
+  var idx = h.indexOf(fonte);
+  if(idx === -1) h.push(fonte); else h.splice(idx, 1);
   saveHiddenFontes(h);
   carregarDocsBase();
 }
@@ -453,6 +449,26 @@ function restaurarTodos(){
 function getCustomDocs(){
   try { var s = localStorage.getItem('customChunks'); return s ? JSON.parse(s) : []; } catch(e){ return []; }
 }
+function apagarCustomDoc(fonte, nome){
+  if(!confirm('Tem certeza que deseja apagar "' + nome + '" permanentemente?')) return;
+  try {
+    var docs = getCustomDocs();
+    var filtrados = docs.filter(function(c){ return c.fonte !== fonte; });
+    localStorage.setItem('customChunks', JSON.stringify(filtrados));
+    carregarDocsBase();
+  } catch(e){}
+}
+function btnDesativar(fonte, oculto){
+  var label = oculto ? 'Ativar' : 'Desativar';
+  var cor = oculto ? '#00BFFF' : 'rgba(255,255,255,.4)';
+  var bg = oculto ? 'rgba(0,191,255,.1)' : 'rgba(255,255,255,.05)';
+  var bd = oculto ? 'rgba(0,191,255,.2)' : 'rgba(255,255,255,.08)';
+  return '<button onclick="toggleDoc(\'' + fonte + '\')" style="background:' + bg + ';border:1px solid ' + bd + ';color:' + cor + ';padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif;text-transform:uppercase;letter-spacing:.5px">' + label + '</button>';
+}
+function btnApagar(fonte, nome, isCustom){
+  if(!isCustom) return '';
+  return '<button onclick="apagarCustomDoc(\'' + esc(fonte) + '\',\'' + esc(nome) + '\')" style="background:rgba(236,0,140,.08);border:1px solid rgba(236,0,140,.15);color:#EC008C;padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif;text-transform:uppercase;letter-spacing:.5px">Apagar</button>';
+}
 function carregarDocsBase(){
   var container = document.getElementById('baseDocsContainer');
   var countEl = document.getElementById('baseCount');
@@ -462,45 +478,44 @@ function carregarDocsBase(){
     if(data.erro){ container.innerHTML = '<div style="color:rgba(255,0,0,.5);font-size:.8rem">Erro ao carregar</div>'; return; }
     var totalChunks = data.total_chunks + customDocs.length;
     var h = '';
+    // base docs
     data.documentos.forEach(function(d){
       var oculto = hidden.indexOf(d.fonte) !== -1;
       var cor = d.fonte.startsWith('yt_') ? '#00BFFF' : d.fonte === 'mentores' ? '#EC008C' : 'rgba(255,255,255,.5)';
-      h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:' + (oculto ? 'rgba(255,0,0,.04)' : 'rgba(255,255,255,.03)') + ';opacity:' + (oculto ? '.4' : '1') + '">';
+      h += '<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:' + (oculto ? 'rgba(255,0,0,.04)' : 'rgba(255,255,255,.03)') + ';opacity:' + (oculto ? '.4' : '1') + '">';
       h += '<span style="width:6px;height:6px;border-radius:50%;background:' + cor + ';flex-shrink:0"></span>';
-      h += '<span style="flex:1;color:rgba(255,255,255,.6)">' + esc(d.nome) + '</span>';
-      h += '<span style="color:rgba(255,255,255,.2);font-size:.7rem;margin-right:6px">' + d.total + ' chunks</span>';
-      if(oculto){
-        h += '<button onclick="restaurarDocBase(\'' + d.fonte + '\')" title="Restaurar" style="background:none;border:none;color:#00BFFF;cursor:pointer;font-size:1rem;line-height:1;padding:2px 6px;font-family:\'Nunito Sans\',sans-serif">&#x21BA;</button>';
-      } else {
-        h += '<button onclick="removerDocBase(\'' + d.fonte + '\')" title="Remover" style="background:none;border:none;color:rgba(255,255,255,.2);cursor:pointer;font-size:1.1rem;line-height:1;padding:2px 6px;font-family:\'Nunito Sans\',sans-serif;transition:color .15s" onmouseover="this.style.color=\'#EC008C\'" onmouseout="this.style.color=\'rgba(255,255,255,.2)\'">&times;</button>';
-      }
-      h += '</div>';
+      h += '<span style="flex:1;color:rgba(255,255,255,.6);min-width:0">' + esc(d.nome) + ' <span style="color:rgba(255,255,255,.2);font-size:.7rem">' + d.total + ' chunks</span></span>';
+      h += '<div style="display:flex;gap:4px;flex-shrink:0">';
+      h += btnDesativar(d.fonte, oculto);
+      h += btnApagar(d.fonte, d.nome, false);
+      h += '</div></div>';
     });
     // custom docs
     var agrup = {};
-    customDocs.forEach(function(c){ var fn = c.fonte.replace('custom_','').replace(/_/g,'.'); agrup[fn] = (agrup[fn]||0)+1; });
-    for(var fn in agrup){
-      h += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:rgba(236,0,140,.04);border:1px solid rgba(236,0,140,.06)">';
+    customDocs.forEach(function(c){
+      var nm = c.fonte; // ex: "custom_teste_txt"
+      if(!agrup[nm]) agrup[nm] = {count: 0, label: c.fonte.replace('custom_','').replace(/_/g,'.')};
+      agrup[nm].count++;
+    });
+    for(var fonte in agrup){
+      var g = agrup[fonte];
+      var oculto = hidden.indexOf(fonte) !== -1;
+      h += '<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:' + (oculto ? 'rgba(255,0,0,.04)' : 'rgba(236,0,140,.04)') + ';border:1px solid rgba(236,0,140,.06);opacity:' + (oculto ? '.4' : '1') + '">';
       h += '<span style="width:6px;height:6px;border-radius:50%;background:#EC008C;flex-shrink:0"></span>';
-      h += '<span style="flex:1;color:rgba(255,255,255,.6)">' + esc(fn) + '</span>';
-      h += '<span style="color:rgba(255,255,255,.2);font-size:.7rem;margin-right:6px">' + agrup[fn] + ' chunks</span>';
-      h += '<button onclick="removerDocumento(\'' + esc(fn.replace('.','_')) + '\')" title="Remover" style="background:none;border:none;color:rgba(255,255,255,.2);cursor:pointer;font-size:1.1rem;line-height:1;padding:2px 6px;font-family:\'Nunito Sans\',sans-serif;transition:color .15s" onmouseover="this.style.color=\'#EC008C\'" onmouseout="this.style.color=\'rgba(255,255,255,.2)\'">&times;</button>';
-      h += '</div>';
+      h += '<span style="flex:1;color:rgba(255,255,255,.6);min-width:0">' + esc(g.label) + ' <span style="color:rgba(255,255,255,.2);font-size:.7rem">' + g.count + ' chunks</span></span>';
+      h += '<div style="display:flex;gap:4px;flex-shrink:0">';
+      h += btnDesativar(fonte, oculto);
+      h += btnApagar(fonte, g.label, true);
+      h += '</div></div>';
     }
     if(hidden.length > 0){
-      h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Restaurar todos</button>';
+      h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Ativar todos</button>';
     }
-    countEl.textContent = '(' + data.documentos.length + ' base + ' + Object.keys(agrup).length + ' custom, ' + totalChunks + ' chunks)';
+    var baseCount = data.documentos.length;
+    var customCount = Object.keys(agrup).length;
+    countEl.textContent = '(' + baseCount + ' base + ' + customCount + ' custom, ' + totalChunks + ' chunks)';
     container.innerHTML = h;
   }).catch(function(){ container.innerHTML = '<div style="color:rgba(255,0,0,.5);font-size:.8rem">Erro de conexão</div>'; });
-}
-function removerDocumento(prefixo){
-  try {
-    var docs = getCustomDocs();
-    var filtrados = docs.filter(function(c){ return c.fonte.indexOf(prefixo) === -1; });
-    localStorage.setItem('customChunks', JSON.stringify(filtrados));
-    carregarDocsBase();
-  } catch(e){}
 }
 function uploadArquivo(file){
   var status = document.getElementById('uploadStatus');
