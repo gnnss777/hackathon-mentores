@@ -9,16 +9,18 @@ cliente = OpenAI(api_key=os.environ.get("DEEPSEEK_KEY", ""), base_url="https://a
 with open("api/chunks.json", encoding="utf-8") as f:
     CHUNKS = json.load(f)
 
-def merge_chunks(custom_chunks=None):
+def merge_chunks(custom_chunks=None, hidden_fontes=None):
     base = list(CHUNKS)
+    if hidden_fontes and isinstance(hidden_fontes, list):
+        base = [c for c in base if c["fonte"] not in hidden_fontes]
     if custom_chunks and isinstance(custom_chunks, list):
         for c in custom_chunks:
             if "texto" in c and "fonte" in c:
                 base.append(c)
     return base
 
-def buscar(query, k=8, custom_chunks=None):
-    all_chunks = merge_chunks(custom_chunks)
+def buscar(query, k=8, custom_chunks=None, hidden_fontes=None):
+    all_chunks = merge_chunks(custom_chunks, hidden_fontes)
     q_words = set(re.sub(r'[^a-z0-9\s]', '', query.lower()).split())
     scores = []
     for i, c in enumerate(all_chunks):
@@ -60,11 +62,12 @@ class handler(BaseHTTPRequestHandler):
             pergunta = data.get("pergunta", "").strip()
             historico = data.get("historico", "")
             custom_chunks = data.get("customChunks", None)
+            hidden_fontes = data.get("hiddenFontes", None)
 
             if not pergunta:
                 raise ValueError("Pergunta vazia")
 
-            partes, fontes, _ = buscar(pergunta, custom_chunks=custom_chunks)
+            partes, fontes, _ = buscar(pergunta, custom_chunks=custom_chunks, hidden_fontes=hidden_fontes)
             contexto = "\n\n".join(partes)
 
             prompt = f"""Você é um assistente especializado no haCARthon, um hackathon do Cadastro Ambiental Rural (CAR).
