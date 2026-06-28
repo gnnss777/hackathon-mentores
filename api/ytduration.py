@@ -18,27 +18,6 @@ def get_session():
             pass
     return SESSION
 
-def extract_json(html, key):
-    start_marker = 'var ' + key + ' = '
-    pos = html.find(start_marker)
-    if pos == -1:
-        start_marker2 = key + ' = '
-        pos = html.find(start_marker2)
-        if pos >= 0:
-            pos += len(start_marker2)
-            if pos < len(html) and html[pos] == '{':
-                return _parse_json(html, pos)
-    else:
-        pos += len(start_marker)
-        if pos < len(html) and html[pos] == '{':
-            return _parse_json(html, pos)
-
-    # Try with \\s* between key and =
-    m = re.search(re.escape(key) + r'\s*=\s*{', html)
-    if m:
-        return _parse_json(html, m.end() - 1)
-    return None
-
 def _parse_json(html, pos):
     depth = 0
     in_string = False
@@ -68,6 +47,23 @@ def _parse_json(html, pos):
                     return None
     return None
 
+def extract_json(html, var_name):
+    m = re.search(r'var\s+' + re.escape(var_name) + r'\s*=\s*{', html)
+    if m:
+        pos = m.end() - 1
+        return _parse_json(html, pos)
+
+    for trial in [
+        "var " + var_name + " = {",
+        var_name + " = {",
+    ]:
+        pos = html.find(trial)
+        if pos >= 0:
+            brace_pos = pos + len(trial) - 1
+            return _parse_json(html, brace_pos)
+
+    return None
+
 def fetch_duration(video_id):
     session = get_session()
     try:
@@ -79,16 +75,11 @@ def fetch_duration(video_id):
     except Exception as e:
         return None, f"http: {e}"
 
-    # Debug: check if key strings exist
-    has_ytipr = 'ytInitialPlayerResponse' in html
-    has_ytid = 'ytInitialData' in html
-    debug = f"ytIPR={has_ytipr} ytID={has_ytid}"
-
     data = extract_json(html, "ytInitialPlayerResponse")
     if data:
         vd = data.get("videoDetails", {})
-        secs = vd.get("lengthSeconds")
-        if secs and str(secs) != "0":
+        secs = str(vd.get("lengthSeconds", "0"))
+        if secs and secs != "0":
             return int(secs), None
 
     data2 = extract_json(html, "ytInitialData")
@@ -111,7 +102,7 @@ def fetch_duration(video_id):
             val = int(m.group(1))
             return round(val / 1000) if val > 1000 else val, None
 
-    return None, debug + f" len={len(html)}"
+    return None, f"parsed_ok_false len={len(html)}"
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
