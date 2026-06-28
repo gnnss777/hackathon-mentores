@@ -190,19 +190,24 @@ Baseado nas transcrições das lives, PDFs e documentos oficiais.<br><br>
 <div class="chat-container" id="gerenciamentoView">
 <div style="padding:16px;max-width:700px;margin:0 auto;width:100%">
 <h3 style="color:#fff;font-weight:800;margin-bottom:8px">Gerenciar Documentos</h3>
-<p style="color:rgba(255,255,255,.4);font-size:.8rem;margin-bottom:20px">Envie PDFs ou arquivos de texto para alimentar a base de conhecimento do chatbot.</p>
+<p style="color:rgba(255,255,255,.4);font-size:.8rem;margin-bottom:20px">Adicione PDFs, TXTs ou transcrições do YouTube para alimentar a base de conhecimento do chatbot.</p>
 
-<div id="dropArea" style="border:2px dashed rgba(255,255,255,.1);border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.02);margin-bottom:20px">
+<div id="dropArea" style="border:2px dashed rgba(255,255,255,.1);border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.02);margin-bottom:16px">
 <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(255,255,255,.2)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
 <p style="color:rgba(255,255,255,.3);margin:10px 0 4px;font-size:.85rem">Arraste arquivos aqui ou clique para selecionar</p>
 <p style="color:rgba(255,255,255,.15);font-size:.7rem">PDF ou TXT até 4MB</p>
 <input type="file" id="fileInput" accept=".pdf,.txt" multiple style="display:none">
 </div>
 
+<div style="display:flex;gap:8px;margin-bottom:16px">
+<input type="text" id="ytUrl" placeholder="Link do YouTube (ex: https://youtu.be/...)" style="flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;font-size:.82rem;outline:none;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito Sans',sans-serif">
+<button onclick="importarYoutube()" style="padding:10px 20px;border:none;border-radius:8px;background:#FF0000;color:#fff;font-size:.82rem;cursor:pointer;font-weight:800;font-family:'Nunito Sans',sans-serif;white-space:nowrap">YouTube</button>
+</div>
+
 <div id="uploadStatus" style="display:none;padding:12px;border-radius:8px;margin-bottom:16px;font-size:.82rem;font-weight:600"></div>
 
 <div id="docsList">
-<h4 style="color:rgba(255,255,255,.4);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:10px">Todos os documentos <span id="baseCount" style="color:rgba(255,255,255,.15)">(carregando...)</span></h4>
+<h4 style="color:rgba(255,255,255,.4);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:10px">Documentos <span id="baseCount" style="color:rgba(255,255,255,.15)">(carregando...)</span></h4>
 <div id="baseDocsContainer" style="margin-bottom:20px"><div style="color:rgba(255,255,255,.15);font-size:.8rem;padding:10px 0">Carregando...</div></div>
 </div>
 </div>
@@ -512,47 +517,74 @@ function carregarDocsBase(){
   var customDocs = getCustomDocs();
   fetch('/api/docs').then(function(r){ return r.json() }).then(function(data){
     if(data.erro){ container.innerHTML = '<div style="color:rgba(255,0,0,.5);font-size:.8rem">Erro ao carregar</div>'; return; }
-    var totalChunks = data.total_chunks + customDocs.length;
-    var h = '';
-    // base docs
+    var merged = [];
     data.documentos.forEach(function(d){
       if(deleted.indexOf(d.fonte) !== -1) return;
+      merged.push({fonte: d.fonte, nome: d.nome, total: d.total, color: d.fonte.startsWith('yt_') ? '#00BFFF' : d.fonte === 'mentores' ? '#EC008C' : 'rgba(255,255,255,.5)'});
+    });
+    var agrup = {};
+    customDocs.forEach(function(c){
+      var nm = c.fonte;
+      if(!agrup[nm]) agrup[nm] = {count: 0, nome: c.fonte.replace(/^custom_/,'').replace(/_/g,'.'), fonte: nm};
+      agrup[nm].count++;
+    });
+    for(var fonte in agrup){
+      var g = agrup[fonte];
+      if(deleted.indexOf(fonte) !== -1) continue;
+      merged.push({fonte: fonte, nome: g.nome, total: g.count, color: '#EC008C'});
+    }
+    merged.sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+    var totalChunks = data.total_chunks + customDocs.length;
+    var h = '';
+    merged.forEach(function(d){
       var oculto = hidden.indexOf(d.fonte) !== -1;
-      var cor = d.fonte.startsWith('yt_') ? '#00BFFF' : d.fonte === 'mentores' ? '#EC008C' : 'rgba(255,255,255,.5)';
       h += '<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:' + (oculto ? 'rgba(255,0,0,.04)' : 'rgba(255,255,255,.03)') + ';opacity:' + (oculto ? '.4' : '1') + '">';
-      h += '<span style="width:6px;height:6px;border-radius:50%;background:' + cor + ';flex-shrink:0"></span>';
+      h += '<span style="width:6px;height:6px;border-radius:50%;background:' + d.color + ';flex-shrink:0"></span>';
       h += '<span style="flex:1;color:rgba(255,255,255,.6);min-width:0">' + esc(d.nome) + ' <span style="color:rgba(255,255,255,.2);font-size:.7rem">' + d.total + ' chunks</span></span>';
       h += '<div style="display:flex;gap:4px;flex-shrink:0">';
       h += btnDesativar(d.fonte, oculto);
       h += btnApagar(d.fonte, d.nome);
       h += '</div></div>';
     });
-    // custom docs
-    var agrup = {};
-    customDocs.forEach(function(c){
-      var nm = c.fonte; // ex: "custom_teste_txt"
-      if(!agrup[nm]) agrup[nm] = {count: 0, label: c.fonte.replace('custom_','').replace(/_/g,'.')};
-      agrup[nm].count++;
-    });
-    for(var fonte in agrup){
-      var g = agrup[fonte];
-      var oculto = hidden.indexOf(fonte) !== -1;
-      h += '<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;margin-bottom:5px;font-size:.78rem;background:' + (oculto ? 'rgba(255,0,0,.04)' : 'rgba(236,0,140,.04)') + ';border:1px solid rgba(236,0,140,.06);opacity:' + (oculto ? '.4' : '1') + '">';
-      h += '<span style="width:6px;height:6px;border-radius:50%;background:#EC008C;flex-shrink:0"></span>';
-      h += '<span style="flex:1;color:rgba(255,255,255,.6);min-width:0">' + esc(g.label) + ' <span style="color:rgba(255,255,255,.2);font-size:.7rem">' + g.count + ' chunks</span></span>';
-      h += '<div style="display:flex;gap:4px;flex-shrink:0">';
-      h += btnDesativar(fonte, oculto);
-      h += btnApagar(fonte, g.label);
-      h += '</div></div>';
-    }
     if(hidden.length > 0){
       h += '<button onclick="restaurarTodos()" style="margin-top:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:700;font-family:\'Nunito Sans\',sans-serif">Ativar todos</button>';
     }
-    var baseCount = data.documentos.filter(function(d){ return deleted.indexOf(d.fonte) === -1; }).length;
-    var customCount = Object.keys(agrup).length;
-    countEl.textContent = '(' + baseCount + ' base + ' + customCount + ' custom, ' + totalChunks + ' chunks)';
+    var totalItems = merged.length;
+    countEl.textContent = '(' + totalItems + ' documentos, ' + totalChunks + ' chunks)';
     container.innerHTML = h;
   }).catch(function(){ container.innerHTML = '<div style="color:rgba(255,0,0,.5);font-size:.8rem">Erro de conexão</div>'; });
+}
+function importarYoutube(){
+  var input = document.getElementById('ytUrl');
+  var url = input.value.trim();
+  if(!url) return;
+  var status = document.getElementById('uploadStatus');
+  status.style.display = 'block';
+  status.style.background = 'rgba(255,0,0,.1)';
+  status.style.color = '#FF0000';
+  status.style.border = '1px solid rgba(255,0,0,.2)';
+  status.innerHTML = 'Buscando transcrição...';
+  fetch('/api/youtube', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({url: url})
+  })
+  .then(function(r){ return r.json() })
+  .then(function(data){
+    if(data.erro){ status.innerHTML = 'Erro: ' + data.erro; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; return; }
+    var stored = [];
+    try { var s = localStorage.getItem('customChunks'); if(s) stored = JSON.parse(s); } catch(ex){}
+    data.chunks.forEach(function(c){ stored.push(c); });
+    localStorage.setItem('customChunks', JSON.stringify(stored));
+    status.innerHTML = 'Transcrição importada! ' + data.total_chunks + ' chunks adicionados.';
+    status.style.background = 'rgba(37,211,102,.1)';
+    status.style.color = '#25D366';
+    status.style.border = '1px solid rgba(37,211,102,.2)';
+    input.value = '';
+    carregarDocsBase();
+    setTimeout(function(){ status.style.display = 'none'; }, 3000);
+  })
+  .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
 }
 function uploadArquivo(file){
   var status = document.getElementById('uploadStatus');
@@ -581,7 +613,7 @@ function uploadArquivo(file){
       status.style.background = 'rgba(37,211,102,.1)';
       status.style.color = '#25D366';
       status.style.border = '1px solid rgba(37,211,102,.2)';
-      carregarDocsCustom();
+      carregarDocsBase();
       setTimeout(function(){ status.style.display = 'none'; }, 3000);
     })
     .catch(function(err){ status.innerHTML = 'Erro de conexão: ' + err.message; status.style.background = 'rgba(255,0,0,.1)'; status.style.color = '#ff4444'; status.style.border = '1px solid rgba(255,0,0,.2)'; });
