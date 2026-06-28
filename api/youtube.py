@@ -31,14 +31,6 @@ def extract_video_id(url):
             return m.group(1)
     return None
 
-def get_video_title(video_id):
-    try:
-        from youtube_transcript_api import YouTubeTranscriptApi
-        # try to get video info via transcript list (contains title in some cases)
-        return None
-    except:
-        return None
-
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
@@ -59,8 +51,9 @@ class handler(BaseHTTPRequestHandler):
                 raise ValueError("URL do YouTube inválida")
 
             from youtube_transcript_api import YouTubeTranscriptApi
-            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['pt', 'en'])
-            text = "\n".join([item["text"] for item in transcript_list])
+            api = YouTubeTranscriptApi()
+            transcript = api.fetch(video_id, languages=["pt"])
+            text = " ".join([s.text for s in transcript.snippets])
 
             if not text.strip():
                 raise ValueError("Nenhuma legenda encontrada para este vídeo")
