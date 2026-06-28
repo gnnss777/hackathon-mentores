@@ -1,4 +1,4 @@
-import json, re, requests
+import json, re, requests, sys
 from http.server import BaseHTTPRequestHandler
 
 CACHE = {}
@@ -13,18 +13,21 @@ def get_session():
             "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
         })
         try:
-            SESSION.get("https://www.youtube.com/", timeout=10)
+            SESSION.get("https://www.youtube.com/", timeout=8)
         except Exception:
             pass
     return SESSION
 
 def fetch_duration(video_id):
     session = get_session()
-    resp = session.get(
-        f"https://www.youtube.com/watch?v={video_id}",
-        timeout=15
-    )
-    html = resp.text
+    try:
+        resp = session.get(
+            f"https://www.youtube.com/watch?v={video_id}",
+            timeout=12
+        )
+        html = resp.text
+    except Exception as e:
+        return None, f"http_error: {e}"
     patterns = [
         r'"approxDurationMs":"(\d+)"',
         r'approxDurationMs["\']?\s*[:=]\s*["\']?(\d+)',
@@ -35,8 +38,10 @@ def fetch_duration(video_id):
         if m:
             val = int(m.group(1))
             secs = round(val / 1000) if val > 1000 else val
-            return secs
-    return None
+            return secs, None
+    snippet = html[:300] if html else ""
+    has_captcha = "captcha" in html.lower() or "recaptcha" in html.lower()
+    return None, f"not_found len={len(html)} captcha={has_captcha} snippet={snippet[:100]}"
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -58,15 +63,15 @@ class handler(BaseHTTPRequestHandler):
             self._respond(CACHE[cache_key])
             return
         try:
-            secs = fetch_duration(video_id)
+            secs, dbg = fetch_duration(video_id)
             if secs:
                 result = {"ok": True, "segundos": secs}
             else:
-                result = {"ok": False, "erro": "duration_not_found"}
+                result = {"ok": False, "erro": dbg or "duration_not_found"}
             CACHE[cache_key] = result
             self._respond(result)
         except Exception as e:
-            self._respond({"ok": False, "erro": type(e).__name__ + ": " + str(e)})
+            self._respond({"ok": False, "erro": f"{type(e).__name__}: {str(e)[:200]}"})
 
     def _respond(self, data):
         self.send_response(200)

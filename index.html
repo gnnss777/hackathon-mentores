@@ -1108,6 +1108,7 @@ function obterDuracaoVideo(link, tipo){
       .then(function(r){ return r.json() })
       .then(function(dados){
         if(!dados.ok || !dados.segundos) {
+          console.warn('API ytduration erro para', id, ':', dados.erro || 'sem erro');
           CACHE_DURACAO[key] = { erro: dados.erro || 'not_found' };
           return resolve(CACHE_DURACAO[key]);
         }
