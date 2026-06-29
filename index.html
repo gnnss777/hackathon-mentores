@@ -1152,10 +1152,19 @@ try{
     CACHE_DURACAO = JSON.parse(saved);
     Object.keys(CACHE_DURACAO).forEach(function(k){
       var e = CACHE_DURACAO[k];
+      // Recalculate excedeu with current limits
       if(e && e.segundos !== undefined && e.segundos !== null){
         var limite = (k.endsWith('|prototipo') ? 120 : 180) + 5;
         e.excedeu = e.segundos > limite;
         e.limite = limite;
+      }
+      // Clear stale indisponivel entries where link now resolves to a valid YT ID
+      if(e && e.indisponivel){
+        var pipe = k.lastIndexOf('|');
+        if(pipe > 0){
+          var link = k.substring(0, pipe);
+          if(getYoutubeId(normalizeUrl(link))) delete CACHE_DURACAO[k];
+        }
       }
     });
   }
