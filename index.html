@@ -1388,7 +1388,7 @@ function renderRanking(data){
   if(!container) return;
   var ranking = data.ranking || [];
   var dateStr = data.atualizadoEm ? new Date(data.atualizadoEm).toLocaleString('pt-BR') : 'desconhecida';
-  if(stats) stats.innerHTML = '<span>'+ranking.length+' participantes &middot; Atualizado em '+dateStr+'</span>';
+  if(stats) stats.innerHTML = '<span>'+ranking.length+' participantes &middot; Atualizado em '+dateStr+' &middot; Ordenado por <strong>total de reações</strong></span>';
 
   var top3 = ranking.slice(0,3);
 
@@ -1405,7 +1405,7 @@ function renderRanking(data){
     h += '<div class="rank-podium-item '+podioClasses[idx]+'">';
     h += '<div class="rank-podium-emoji">'+podioEmojis[idx]+'</div>';
     h += '<div class="rank-podium-nome">'+esc(p.autor)+'</div>';
-    h += '<div class="rank-podium-curtidas">'+(p.curtidas||0)+' 👍</div>';
+    h += '<div class="rank-podium-curtidas">'+(p.total||p.curtidas||0)+' reações</div>';
     h += '<div class="rank-premio">'+(premios[idx]||'')+'</div>';
     h += '</div>';
   }

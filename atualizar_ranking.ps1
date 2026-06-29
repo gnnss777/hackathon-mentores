@@ -79,8 +79,8 @@ foreach ($msg in $messages) {
     }
 }
 
-# Ordenar por curtidas decrescente
-$ranking = $ranking | Sort-Object -Property curtidas -Descending
+# Ordenar por total de reacoes decrescente (desempate: curtidas)
+$ranking = $ranking | Sort-Object -Property total, curtidas -Descending
 
 $rankList = @()
 $pos = 1
