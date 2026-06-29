@@ -92,7 +92,7 @@ foreach ($item in $ranking) {
 
 $output = [PSCustomObject]@{
     atualizadoEm = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ss.fffK")
-    fonte        = "Discord - #📸-tô-no-hacarthon"
+    fonte        = "Discord - canal fotos"
     ranking      = $rankList
 }
 
