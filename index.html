@@ -1231,12 +1231,16 @@ function carregarDuracoesAuto(){
       var pid = getYoutubeId(normalizeUrl(lp));
       if(pid && !seen[pid] && !CACHE_DURACAO[lp+'|prototipo']){
         seen[pid]=true; _ytDurQueue.push(pid);
+      } else if(!pid && !CACHE_DURACAO[lp+'|prototipo']){
+        salvarDuracaoIndisponivel('prototipo',lp);
       }
     }
     if(lpi){
       var pid2 = getYoutubeId(normalizeUrl(lpi));
       if(pid2 && !seen[pid2] && !CACHE_DURACAO[lpi+'|pitch']){
         seen[pid2]=true; _ytDurQueue.push(pid2);
+      } else if(!pid2 && !CACHE_DURACAO[lpi+'|pitch']){
+        salvarDuracaoIndisponivel('pitch',lpi);
       }
     }
   });
