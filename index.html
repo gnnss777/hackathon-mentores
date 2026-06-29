@@ -936,6 +936,7 @@ function montarDashFiltros(){
   h += '<span class="filter-tag" data-val="tempo_ok" data-grp="tempo" onclick="dashFiltroClick(this)">✅ Dentro do limite</span>';
   h += '<span class="filter-tag" data-val="tempo_excedeu" data-grp="tempo" onclick="dashFiltroClick(this)">⚠️ Excedeu limite</span>';
   h += '<span class="filter-tag" data-val="tempo_sem" data-grp="tempo" onclick="dashFiltroClick(this)">⏳ Verificando</span>';
+  h += '<span class="filter-tag" data-val="tempo_indisponivel" data-grp="tempo" onclick="dashFiltroClick(this)">🔒 Indisponível</span>';
   h += '</div></div>';
   area.innerHTML = h;
 }
@@ -1083,8 +1084,11 @@ function renderDash(){
       var durCachedPi = linkPitch ? CACHE_DURACAO[linkPitch+'|pitch'] : null;
       var semLink = !linkProto && !linkPitch;
       var hasUnknown = (linkProto && !durCachedP) || (linkPitch && !durCachedPi);
+      var hasIndisp = (durCachedP && durCachedP.indisponivel) || (durCachedPi && durCachedPi.indisponivel);
       if(semLink) return;
-      if(hasUnknown){
+      if(hasIndisp){
+        if(!fltTempo.includes('tempo_indisponivel')) return;
+      } else if(hasUnknown){
         if(!fltTempo.includes('tempo_sem')) return;
       } else {
         var excedeuP = durCachedP && durCachedP.excedeu;
@@ -1149,7 +1153,11 @@ try{
 function atualizarDuracaoCard(eq, tipo, dur){
   var span = document.getElementById('dash-'+eq+'-'+tipo);
   if(!span) return;
-  if(dur && dur.segundos !== undefined){
+  if(dur && dur.indisponivel){
+    span.innerHTML = '<span style="color:#FFA500">🔒 Indisponível</span>';
+    span.setAttribute('data-dur', 'indisponivel');
+    span.setAttribute('data-exc', '1');
+  } else if(dur && dur.segundos !== undefined){
     var s = Math.round(dur.segundos);
     var m = Math.floor(s/60);
     var seg = s % 60;
@@ -1169,6 +1177,19 @@ function salvarDuracaoEmbed(tipo, link, secs){
   secs = Math.round(secs);
   var limite = tipo === 'prototipo' ? 120 : 180;
   CACHE_DURACAO[key] = { segundos: secs, excedeu: secs>limite, limite: limite };
+  try{ localStorage.setItem('_ytDurCache', JSON.stringify(CACHE_DURACAO)); }catch(e){}
+  DASH.forEach(function(r){
+    var lp = cleanLink(r['LINK PROTOTIPO']);
+    var lpi = cleanLink(r['LINK PITCH']);
+    var eq = r['EQUIPE'];
+    if(lp===link) atualizarDuracaoCard(eq, 'prototipo', CACHE_DURACAO[key]);
+    if(lpi===link) atualizarDuracaoCard(eq, 'pitch', CACHE_DURACAO[key]);
+  });
+}
+function salvarDuracaoIndisponivel(tipo, link){
+  var key = link+'|'+tipo;
+  if(CACHE_DURACAO[key] && (CACHE_DURACAO[key].indisponivel || CACHE_DURACAO[key].segundos)) return;
+  CACHE_DURACAO[key] = { erro: true, indisponivel: true };
   try{ localStorage.setItem('_ytDurCache', JSON.stringify(CACHE_DURACAO)); }catch(e){}
   DASH.forEach(function(r){
     var lp = cleanLink(r['LINK PROTOTIPO']);
@@ -1258,6 +1279,11 @@ function processarProximoYT(){
                 });
               } else {
                 console.warn('[YTDUR] Failed duration for',vid);
+                DASH.forEach(function(r){
+                  var lp=cleanLink(r['LINK PROTOTIPO']),lpi=cleanLink(r['LINK PITCH']);
+                  if(lp && getYoutubeId(normalizeUrl(lp))===vid) salvarDuracaoIndisponivel('prototipo',lp);
+                  if(lpi && getYoutubeId(normalizeUrl(lpi))===vid) salvarDuracaoIndisponivel('pitch',lpi);
+                });
               }
               try{ e.target.destroy(); }catch(ex){}
               var el=document.getElementById('_yt-player-'+vid);
@@ -1271,8 +1297,13 @@ function processarProximoYT(){
           };
           check();
         },
-        onError:function(){
-          console.warn('[YTDUR] Error for',vid);
+          onError:function(){
+            console.warn('[YTDUR] Error for',vid);
+            DASH.forEach(function(r){
+              var lp=cleanLink(r['LINK PROTOTIPO']),lpi=cleanLink(r['LINK PITCH']);
+              if(lp && getYoutubeId(normalizeUrl(lp))===vid) salvarDuracaoIndisponivel('prototipo',lp);
+              if(lpi && getYoutubeId(normalizeUrl(lpi))===vid) salvarDuracaoIndisponivel('pitch',lpi);
+            });
           var el=document.getElementById('_yt-player-'+vid);
           if(el) el.remove();
           _ytPlayer=null;
