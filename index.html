@@ -1150,9 +1150,12 @@ function atualizarDuracaoCard(eq, tipo, dur){
   var span = document.getElementById('dash-'+eq+'-'+tipo);
   if(!span) return;
   if(dur && dur.segundos !== undefined){
-    var min = Math.round(dur.segundos/60*10)/10;
+    var s = Math.round(dur.segundos);
+    var m = Math.floor(s/60);
+    var seg = s % 60;
+    var display = m+':'+(seg<10?'0':'')+seg;
     var cor = dur.excedeu ? '#ff4444' : '#25D366';
-    span.innerHTML = '<span style="color:'+cor+'">'+(dur.excedeu?'\u26A0\uFE0F'+min:'\u2714')+'min</span>';
+    span.innerHTML = '<span style="color:'+cor+'">'+(dur.excedeu?'\u26A0\uFE0F':'')+display+'</span>';
     span.setAttribute('data-dur', dur.segundos);
     span.setAttribute('data-exc', dur.excedeu?'1':'0');
   } else {
@@ -1163,6 +1166,7 @@ function atualizarDuracaoCard(eq, tipo, dur){
 function salvarDuracaoEmbed(tipo, link, secs){
   var key = link+'|'+tipo;
   if(CACHE_DURACAO[key] && CACHE_DURACAO[key].segundos) return;
+  secs = Math.round(secs);
   var limite = tipo === 'prototipo' ? 120 : 180;
   CACHE_DURACAO[key] = { segundos: secs, excedeu: secs>limite, limite: limite };
   try{ localStorage.setItem('_ytDurCache', JSON.stringify(CACHE_DURACAO)); }catch(e){}
