@@ -1182,12 +1182,14 @@ window.addEventListener('message', function(e){
       if(lp && getYoutubeId(normalizeUrl(lp))===vid) salvarDuracaoEmbed('prototipo', lp, durSecs);
       if(lpi && getYoutubeId(normalizeUrl(lpi))===vid) salvarDuracaoEmbed('pitch', lpi, durSecs);
     });
-    // Signal auto-loader to move to next video
-    if(window._ytDurCb) window._ytDurCb();
   }
 });
 var _ytDurQueue = [];
 var _ytDurActive = false;
+var _ytPlayer = null;
+window.onYouTubeIframeAPIReady = function(){
+  console.log('[YTDUR] IFrame API ready');
+};
 function carregarDuracoesAuto(){
   var seen = {};
   DASH.forEach(function(r){
@@ -1213,25 +1215,67 @@ function carregarDuracoesAuto(){
 function processarProximoYT(){
   if(!_ytDurQueue.length){ _ytDurActive = false; return; }
   var vid = _ytDurQueue.shift();
-  var iframe = document.createElement('iframe');
-  iframe.src = 'https://www.youtube.com/embed/'+vid+'?enablejsapi=1&origin='+encodeURIComponent(window.location.origin)+'&autoplay=0&controls=0&showinfo=0';
-  iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:200px;height:120px;border:0;';
-  iframe.id = '_yt-hidden-iframe';
-  var oldIframe = document.getElementById('_yt-hidden-iframe');
-  if(oldIframe) oldIframe.remove();
-  document.body.appendChild(iframe);
-  window._ytDurCb = function(){
-    console.log('[YTDUR] Received duration for', vid);
-    processarProximoYT();
-  };
-  // Timeout: move to next after 20s even if no message
-  setTimeout(function(){
-    if(window._ytDurCb){
-      console.warn('[YTDUR] Timeout for', vid);
-      window._ytDurCb = null;
-      processarProximoYT();
-    }
-  }, 20000);
+  if(typeof YT==='undefined' || !YT.loaded){
+    console.warn('[YTDUR] API not ready, requeueing', vid);
+    _ytDurQueue.unshift(vid);
+    setTimeout(processarProximoYT,2000);
+    return;
+  }
+  if(_ytPlayer){ try{ _ytPlayer.destroy(); }catch(e){} _ytPlayer=null; }
+  var old = document.getElementById('_yt-player-'+vid);
+  if(old) old.remove();
+  var div = document.createElement('div');
+  div.style.cssText = 'position:fixed;left:-9999px;top:0;width:200px;height:120px;';
+  div.id = '_yt-player-'+vid;
+  document.body.appendChild(div);
+  var attempts = 0;
+  try{
+    _ytPlayer = new YT.Player(div.id,{
+      width:200,height:120,videoId:vid,
+      playerVars:{autoplay:0,controls:0,modestbranding:1},
+      events:{
+        onReady:function(e){
+          var check=function(){
+            var dur = e.target.getDuration();
+            if(dur>0 || attempts>=12){
+              if(dur>0){
+                console.log('[YTDUR] Got duration',dur,'for',vid);
+                DASH.forEach(function(r){
+                  var lp=cleanLink(r['LINK PROTOTIPO']),lpi=cleanLink(r['LINK PITCH']);
+                  if(lp && getYoutubeId(normalizeUrl(lp))===vid) salvarDuracaoEmbed('prototipo',lp,dur);
+                  if(lpi && getYoutubeId(normalizeUrl(lpi))===vid) salvarDuracaoEmbed('pitch',lpi,dur);
+                });
+              } else {
+                console.warn('[YTDUR] Failed duration for',vid);
+              }
+              try{ e.target.destroy(); }catch(ex){}
+              var el=document.getElementById('_yt-player-'+vid);
+              if(el) el.remove();
+              _ytPlayer=null;
+              setTimeout(processarProximoYT,300);
+            } else {
+              attempts++;
+              setTimeout(check,500);
+            }
+          };
+          check();
+        },
+        onError:function(){
+          console.warn('[YTDUR] Error for',vid);
+          var el=document.getElementById('_yt-player-'+vid);
+          if(el) el.remove();
+          _ytPlayer=null;
+          setTimeout(processarProximoYT,300);
+        }
+      }
+    });
+  } catch(ex){
+    console.error('[YTDUR] Exception for',vid,ex);
+    var el=document.getElementById('_yt-player-'+vid);
+    if(el) el.remove();
+    _ytPlayer=null;
+    setTimeout(processarProximoYT,300);
+  }
 }
 function youtubeEmbed(url){
   url = normalizeUrl(url);
