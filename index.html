@@ -1077,19 +1077,21 @@ function renderDash(){
     var statusBg = cadastroOk ? 'rgba(37,211,102,.12)' : 'rgba(255,165,0,.12)';
     var statusCor = cadastroOk ? '#25D366' : '#FFA500';
     var statusTxt = cadastroOk ? '\u2705 Cadastro OK' : '\u23F3 Pendente';
-    // Tempo filter (only apply if cache has values)
+    // Tempo filter
     if(fltTempo.length){
       var durCachedP = linkProto ? CACHE_DURACAO[linkProto+'|prototipo'] : null;
       var durCachedPi = linkPitch ? CACHE_DURACAO[linkPitch+'|pitch'] : null;
       var semLink = !linkProto && !linkPitch;
       var hasUnknown = (linkProto && !durCachedP) || (linkPitch && !durCachedPi);
-      if(!hasUnknown && !semLink){
+      if(semLink) return;
+      if(hasUnknown){
+        if(!fltTempo.includes('tempo_sem')) return;
+      } else {
         var excedeuP = durCachedP && durCachedP.excedeu;
         var excedeuPi = durCachedPi && durCachedPi.excedeu;
-        var isOk = !excedeuP && !excedeuPi && ((durCachedP||!linkProto) && (durCachedPi||!linkPitch));
+        var isOk = !excedeuP && !excedeuPi;
         var isExc = excedeuP || excedeuPi;
-        var pass = (fltTempo.includes('tempo_ok') && isOk) || (fltTempo.includes('tempo_excedeu') && isExc) || (fltTempo.includes('tempo_sem') && semLink);
-        if(!pass) return;
+        if(!((fltTempo.includes('tempo_ok') && isOk) || (fltTempo.includes('tempo_excedeu') && isExc))) return;
       }
     }
     var jaAvaliado = (function(){
@@ -1140,6 +1142,10 @@ function getYoutubeId(url){
   return m ? m[1] : null;
 }
 var CACHE_DURACAO = {};
+try{
+  var saved = localStorage.getItem('_ytDurCache');
+  if(saved) CACHE_DURACAO = JSON.parse(saved);
+}catch(e){}
 function atualizarDuracaoCard(eq, tipo, dur){
   var span = document.getElementById('dash-'+eq+'-'+tipo);
   if(!span) return;
@@ -1159,6 +1165,7 @@ function salvarDuracaoEmbed(tipo, link, secs){
   if(CACHE_DURACAO[key] && CACHE_DURACAO[key].segundos) return;
   var limite = tipo === 'prototipo' ? 120 : 180;
   CACHE_DURACAO[key] = { segundos: secs, excedeu: secs>limite, limite: limite };
+  try{ localStorage.setItem('_ytDurCache', JSON.stringify(CACHE_DURACAO)); }catch(e){}
   DASH.forEach(function(r){
     var lp = cleanLink(r['LINK PROTOTIPO']);
     var lpi = cleanLink(r['LINK PITCH']);
