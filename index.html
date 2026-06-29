@@ -1213,21 +1213,23 @@ function processarProximoYT(){
   var vid = _ytDurQueue.shift();
   var iframe = document.createElement('iframe');
   iframe.src = 'https://www.youtube.com/embed/'+vid+'?enablejsapi=1&origin='+encodeURIComponent(window.location.origin)+'&autoplay=0&controls=0&showinfo=0';
-  iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:3px;height:3px;border:0;opacity:0;pointer-events:none;';
+  iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:200px;height:120px;border:0;';
   iframe.id = '_yt-hidden-iframe';
   var oldIframe = document.getElementById('_yt-hidden-iframe');
   if(oldIframe) oldIframe.remove();
   document.body.appendChild(iframe);
   window._ytDurCb = function(){
+    console.log('[YTDUR] Received duration for', vid);
     processarProximoYT();
   };
-  // Timeout: move to next after 10s even if no message
+  // Timeout: move to next after 20s even if no message
   setTimeout(function(){
     if(window._ytDurCb){
+      console.warn('[YTDUR] Timeout for', vid);
       window._ytDurCb = null;
       processarProximoYT();
     }
-  }, 10000);
+  }, 20000);
 }
 function youtubeEmbed(url){
   url = normalizeUrl(url);
@@ -1387,7 +1389,6 @@ function renderRanking(data){
   if(stats) stats.innerHTML = '<span>'+ranking.length+' participantes &middot; Atualizado em '+dateStr+'</span>';
 
   var top3 = ranking.slice(0,3);
-  var demais = ranking.slice(3);
 
   var h = '';
 
@@ -1402,14 +1403,14 @@ function renderRanking(data){
     h += '<div class="rank-podium-item '+podioClasses[idx]+'">';
     h += '<div class="rank-podium-emoji">'+podioEmojis[idx]+'</div>';
     h += '<div class="rank-podium-nome">'+esc(p.autor)+'</div>';
-    h += '<div class="rank-podium-curtidas">'+p.curtidas+' 👍</div>';
+    h += '<div class="rank-podium-curtidas">'+(p.curtidas||0)+' 👍</div>';
     h += '<div class="rank-premio">'+(premios[idx]||'')+'</div>';
     h += '</div>';
   }
   h += '</div>';
 
   // Tabela completa
-  h += '<table class="rank-table"><thead><tr><th>#</th><th>Participante</th><th style="text-align:center">Curtidas</th><th>Resumo</th></tr></thead><tbody>';
+  h += '<table class="rank-table"><thead><tr><th>#</th><th>Participante</th><th>👍</th><th>Reações</th><th>Total</th><th>Resumo</th></tr></thead><tbody>';
   ranking.forEach(function(item){
     var posClass = 'normal';
     if(item.posicao===1) posClass = 'gold';
@@ -1422,9 +1423,20 @@ function renderRanking(data){
     else if(item.posicao===2) medalha = '🥈';
     else if(item.posicao===3) medalha = '🥉';
 
+    var reacoes = item.reacoes || {};
+    var reacoesHtml = '';
+    Object.keys(reacoes).forEach(function(k){
+      reacoesHtml += '<span style="display:inline-flex;align-items:center;gap:2px;margin-right:4px;font-size:.9rem">'+esc(k)+' <span style="font-size:.7rem;color:rgba(255,255,255,.5)">'+reacoes[k]+'</span></span>';
+    });
+
+    var curtidas = item.curtidas || (reacoes['👍']||0);
+    var total = item.total || curtidas;
+
     h += '<tr><td class="rank-pos '+posClass+'">'+(medalha||item.posicao)+'</td>';
     h += '<td><div class="rank-autor">'+esc(item.autor)+'</div><div class="rank-nick">@'+esc(item.nick)+'</div></td>';
-    h += '<td class="rank-curtidas">'+item.curtidas+'</td>';
+    h += '<td class="rank-curtidas">'+curtidas+'</td>';
+    h += '<td style="font-size:.8rem;max-width:200px">'+reacoesHtml+'</td>';
+    h += '<td style="text-align:center;font-weight:800;color:#fff;font-size:.9rem">'+total+'</td>';
     h += '<td class="rank-resumo">'+esc(item.resumo)+'</td></tr>';
   });
   h += '</tbody></table>';

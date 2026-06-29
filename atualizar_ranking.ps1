@@ -42,8 +42,8 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# 2. Processar JSON extraindo curtidas
-Write-Host "[2/4] Processando curtidas..." -ForegroundColor Cyan
+# 2. Processar JSON extraindo todas as reacoes
+Write-Host "[2/4] Processando reacoes..." -ForegroundColor Cyan
 $raw = Get-Content $TempJson -Raw -Encoding UTF8 | ConvertFrom-Json
 $messages = $raw.messages
 
@@ -52,13 +52,16 @@ foreach ($msg in $messages) {
     $temAnexo = ($msg.attachments | Measure-Object).Count -gt 0
     if (-not $temAnexo) { continue }
 
-    $curtidas = 0
+    $reacoes = @{}
+    $totalReacoes = 0
     foreach ($react in $msg.reactions) {
-        if ($react.emoji.name -eq "👍" -or $react.emoji.code -eq "thumbsup") {
-            $curtidas = $react.count
-            break
-        }
+        $emojiName = $react.emoji.name
+        $count = $react.count
+        $reacoes[$emojiName] = $count
+        $totalReacoes += $count
     }
+
+    $curtidas = if ($reacoes.ContainsKey("👍")) { $reacoes["👍"] } else { 0 }
 
     $autor = if ($msg.author.nickname) { $msg.author.nickname } else { $msg.author.name }
     $nick = $msg.author.name
@@ -70,6 +73,8 @@ foreach ($msg in $messages) {
         autor    = $autor
         nick     = $nick
         curtidas = $curtidas
+        reacoes  = $reacoes
+        total    = $totalReacoes
         resumo   = $texto
     }
 }
@@ -85,6 +90,8 @@ foreach ($item in $ranking) {
         autor    = $item.autor
         nick     = $item.nick
         curtidas = $item.curtidas
+        reacoes  = $item.reacoes
+        total    = $item.total
         resumo   = $item.resumo
     }
     $pos++
