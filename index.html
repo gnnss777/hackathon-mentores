@@ -1168,10 +1168,12 @@ function salvarDuracaoEmbed(tipo, link, secs){
   });
 }
 window.addEventListener('message', function(e){
+  console.log('[YTDUR] postMessage from', e.origin, typeof e.data, e.data);
   var info = e.data;
   if(typeof info === 'string'){ try { info = JSON.parse(info); } catch(ex){ return; } }
   if(!info || typeof info !== 'object') return;
   if(info.event === 'infoDelivery' && info.info && info.info.duration && info.info.videoId){
+    console.log('[YTDUR] Parsed infoDelivery:', info);
     var durSecs = info.info.duration;
     var vid = info.info.videoId;
     DASH.forEach(function(r){
