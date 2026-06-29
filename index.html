@@ -1142,7 +1142,7 @@ function normalizeUrl(url){
 function getYoutubeId(url){
   url = normalizeUrl(url);
   if(!url) return null;
-  var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/|v\/)|youtu\.be\/|youtube\.com\/attribution_link\?.*v=)([a-zA-Z0-9_-]{11})/);
   return m ? m[1] : null;
 }
 var CACHE_DURACAO = {};
