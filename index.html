@@ -1148,7 +1148,17 @@ function getYoutubeId(url){
 var CACHE_DURACAO = {};
 try{
   var saved = localStorage.getItem('_ytDurCache');
-  if(saved) CACHE_DURACAO = JSON.parse(saved);
+  if(saved){
+    CACHE_DURACAO = JSON.parse(saved);
+    Object.keys(CACHE_DURACAO).forEach(function(k){
+      var e = CACHE_DURACAO[k];
+      if(e && e.segundos !== undefined && e.segundos !== null){
+        var limite = (k.endsWith('|prototipo') ? 120 : 180) + 5;
+        e.excedeu = e.segundos > limite;
+        e.limite = limite;
+      }
+    });
+  }
 }catch(e){}
 function atualizarDuracaoCard(eq, tipo, dur){
   var span = document.getElementById('dash-'+eq+'-'+tipo);
