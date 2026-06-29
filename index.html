@@ -1175,7 +1175,7 @@ function salvarDuracaoEmbed(tipo, link, secs){
   var key = link+'|'+tipo;
   if(CACHE_DURACAO[key] && CACHE_DURACAO[key].segundos) return;
   secs = Math.round(secs);
-  var limite = tipo === 'prototipo' ? 120 : 180;
+  var limite = (tipo === 'prototipo' ? 120 : 180) + 5;
   CACHE_DURACAO[key] = { segundos: secs, excedeu: secs>limite, limite: limite };
   try{ localStorage.setItem('_ytDurCache', JSON.stringify(CACHE_DURACAO)); }catch(e){}
   DASH.forEach(function(r){
